@@ -1,12 +1,11 @@
-# Traefik Middleware déléguant l'authentification à l'outpost embarqué
-# d'Authentik. Le service `ak-outpost-authentik-embedded-outpost` est
-# créé automatiquement par le chart Authentik dans son namespace.
+# Traefik Middleware déléguant l'authentification à l'outpost Authentik
+# dédié `homelab-apps`. Cet outpost est provisionné par OpenTofu+Terragrunt
+# dans le repo homelab (tofu/live/mgmt/authentik/outposts/homelab-apps/),
+# qui crée aussi le Deployment + Service k8s `ak-outpost-homelab-apps`
+# dans le namespace `authentik`.
 #
-# Pré-requis dans Authentik (à faire une fois via l'UI ou un blueprint) :
-#   1. Provider → Proxy : type "Forward auth (single application)",
-#      external host = https://footing.lab.musso.io
-#   2. Application : slug `footing`, lié au Proxy Provider ci-dessus
-#   3. Outpost embarqué : ajouter l'application `footing`
+# Provider Proxy + Application Authentik liés à cet outpost sont également
+# provisionnés via tofu (tofu/live/mgmt/authentik/apps/footing/).
 #
 # Les overlays peuvent patcher `forwardAuth.address` pour pointer ailleurs
 # si l'outpost vit dans un autre cluster / namespace (cas staging).
@@ -16,7 +15,7 @@ metadata:
   name: authentik-forward-auth
 spec:
   forwardAuth:
-    address: http://ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+    address: http://ak-outpost-homelab-apps.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-Authentik-Username
