@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: footing-web
+  labels:
+    app.kubernetes.io/name: footing-web
+spec:
+  selector:
+    app.kubernetes.io/name: footing-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

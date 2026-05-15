@@ -1,0 +1,51 @@
+name: web-cd-mgmt
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Tag d'image à déployer sur mgmt (ex: sha-abcd1234ef, main). Doit exister sur ghcr.io/popul/footing-web."
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: web-cd-mgmt
+  cancel-in-progress: false
+
+jobs:
+  bump-mgmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install kustomize
+        run: |
+          curl -sLo kustomize.tgz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.5.0/kustomize_v5.5.0_linux_amd64.tar.gz
+          tar -xzf kustomize.tgz
+          sudo install kustomize /usr/local/bin/
+
+      - name: Bump image tag in mgmt overlay
+        env:
+          TAG: ${{ inputs.image_tag }}
+        run: |
+          cd deploy/web/overlays/mgmt
+          kustomize edit set image "ghcr.io/popul/footing-web=ghcr.io/popul/footing-web:${TAG}"
+
+      - name: Commit bump
+        env:
+          TAG: ${{ inputs.image_tag }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git add deploy/web/overlays/mgmt/kustomization.yaml
+          git commit -m "cd(web): bump mgmt to ${TAG}"
+          git push

@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: footing-web
+  labels:
+    app.kubernetes.io/name: footing-web
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: footing-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: footing-web
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: app
+          image: ghcr.io/popul/footing-web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: USER_HEADER
+              value: X-Authentik-Username
+            - name: DEFAULT_USER
+              value: default
+            - name: LLM_BASE_URL
+              value: http://macbookprom5.home:1234/v1
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 30
+            initialDelaySeconds: 30
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: footing-web-data

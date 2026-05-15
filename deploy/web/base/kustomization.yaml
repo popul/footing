@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: footing
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - middleware-authentik.yaml
+  - httproute.yaml
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/part-of: footing
+      app.kubernetes.io/component: web
+images:
+  - name: ghcr.io/popul/footing-web
+    newTag: latest

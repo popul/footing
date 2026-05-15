@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Footing — Petit traité du coureur</title>
+<meta name="description" content="Sept chapitres pour bien commencer, durer, et y prendre du plaisir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #1a1814;
+    --ink-soft:   #4a463f;
+    --paper:      #f6f1e7;
+    --paper-deep: #ece4d2;
+    --rule:       #c9bfa6;
+    --accent:     #8a2419;
+    --serif:      "EB Garamond", Georgia, "Times New Roman", serif;
+    --display:    "Cormorant Garamond", Georgia, serif;
+    --mono:       "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.65;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(0,0,0,0.018) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.018) 0%, transparent 40%);
+  }
+
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  /* ---------- LAYOUT ---------- */
+  .page {
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .page--wide { max-width: 52rem; }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    padding: 3rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .cover::before, .cover::after {
+    content: "";
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    width: 6rem; height: 1px;
+    background: var(--ink);
+    opacity: 0.7;
+  }
+  .cover::before { top: 4rem; }
+  .cover::after  { bottom: 4rem; }
+
+  .cover__top, .cover__bottom {
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display);
+    font-style: italic;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+  .cover__bottom { align-items: end; }
+
+  .cover__title {
+    text-align: center;
+    align-self: center;
+  }
+  .cover__title h1 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+  }
+  .cover__title h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .cover__title .ornament {
+    display: inline-block;
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--accent);
+    margin: 0.5rem 0 1.5rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.4em;
+  }
+  .cover__title .subtitle {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--ink-soft);
+    max-width: 28rem;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+
+  .cover__author {
+    font-family: var(--display);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    padding: 5rem 1.5rem 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc__title {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    font-size: 1.3rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 3rem;
+  }
+  .toc__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: tocchap;
+  }
+  .toc__list li {
+    counter-increment: tocchap;
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px dashed var(--rule);
+    gap: 1rem;
+  }
+  .toc__list li:last-child { border-bottom: 0; }
+  .toc__num {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+  .toc__num::before {
+    content: counter(tocchap, upper-roman);
+  }
+  .toc__list a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--display);
+    font-size: 1.25rem;
+    transition: color 0.15s;
+  }
+  .toc__list a:hover { color: var(--accent); }
+  .toc__page {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- CHAPTERS ---------- */
+  .chapter {
+    padding: 5rem 1.5rem 4rem;
+    border-bottom: 1px solid var(--rule);
+    counter-increment: chapter;
+  }
+  .chapter:last-of-type { border-bottom: 0; }
+
+  .chapter__head {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .chapter__num {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+  }
+  .chapter__num::before {
+    content: "Chapitre " counter(chapter, upper-roman);
+  }
+  .chapter__title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 0 auto;
+    max-width: 26rem;
+  }
+  .chapter__title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .chapter__epigraph {
+    margin-top: 1.5rem;
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+  .chapter__epigraph cite {
+    display: block;
+    font-style: normal;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  body { counter-reset: chapter; }
+
+  .chapter__body {
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
+  .chapter__body > p,
+  .chapter__body > ul,
+  .chapter__body > ol,
+  .chapter__body > blockquote,
+  .chapter__body > h3 {
+    margin-top: 1.1em;
+  }
+  .chapter__body > p:first-child { margin-top: 0; }
+
+  .chapter__body p.lead::first-letter {
+    font-family: var(--display);
+    font-weight: 500;
+    float: left;
+    font-size: 5em;
+    line-height: 0.85;
+    padding: 0.05em 0.1em 0 0;
+    color: var(--accent);
+  }
+
+  .chapter__body h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.5rem;
+    margin-top: 2.5em;
+    margin-bottom: 0.4em;
+    color: var(--ink);
+  }
+
+  .chapter__body ul, .chapter__body ol {
+    padding-left: 1.4rem;
+  }
+  .chapter__body li {
+    margin: 0.4em 0;
+  }
+  .chapter__body li::marker { color: var(--accent); }
+
+  .chapter__body blockquote {
+    border: 0;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.55rem;
+    line-height: 1.35;
+    color: var(--ink);
+    position: relative;
+  }
+  .chapter__body blockquote::before,
+  .chapter__body blockquote::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 3rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+  .chapter__body blockquote::before { margin-bottom: 1.2rem; }
+  .chapter__body blockquote::after  { margin-top: 1.2rem; }
+  .chapter__body blockquote cite {
+    display: block;
+    font-style: normal;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.6rem;
+  }
+
+  .aside {
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 1.75rem;
+    margin: 2.5rem 0;
+    font-size: 0.95em;
+  }
+  .aside__title {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    margin: 0 0 0.6rem;
+    font-weight: 600;
+  }
+  .aside p { margin: 0.5em 0; }
+  .aside p:first-child { margin-top: 0; }
+  .aside p:last-child { margin-bottom: 0; }
+
+  /* ---------- COLOPHON ---------- */
+  .colophon {
+    padding: 5rem 1.5rem 6rem;
+    text-align: center;
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .colophon p { margin: 0.4em 0; }
+  .colophon .end-mark {
+    color: var(--accent);
+    font-size: 1.5rem;
+    letter-spacing: 0.5em;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ---------- PROGRESS BAR ---------- */
+  .progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .progress__bar {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.05s linear;
+  }
+
+  /* ---------- CHAPTER MARK ---------- */
+  .chapter-mark {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    background: var(--paper);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 40;
+  }
+  .chapter-mark.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 18px; }
+    .chapter { padding: 3.5rem 1.25rem 3rem; }
+    .toc { padding: 3.5rem 1.25rem 3rem; }
+    .chapter__body blockquote { padding: 1rem; font-size: 1.3rem; }
+    .toc__list li { grid-template-columns: 2rem 1fr auto; }
+  }
+
+  @media print {
+    .progress, .chapter-mark { display: none; }
+    body { background: white; font-size: 12pt; }
+    .chapter { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__bar" id="bar"></div></div>
+<div class="chapter-mark" id="mark"></div>
+
+<header class="cover">
+  <div class="cover__top">Petit traité &nbsp;·&nbsp; Édition de poche</div>
+
+  <div class="cover__title">
+    <h1>Footing</h1>
+    <div class="ornament">❦ ✦ ❦</div>
+    <p class="subtitle">Sept chapitres pour bien commencer, durer, et y prendre du plaisir.</p>
+  </div>
+
+  <div class="cover__bottom">
+    <span class="cover__author">Maison Musso</span>
+  </div>
+</header>
+
+<section class="toc page" id="sommaire">
+  <h2 class="toc__title">Sommaire</h2>
+  <ol class="toc__list">
+    <li><span class="toc__num"></span><a href="#chapitre-1">Pourquoi courir</a><span class="toc__page">9</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-2">L'équipement nécessaire</a><span class="toc__page">17</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-3">L'échauffement</a><span class="toc__page">29</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-4">La technique de course</a><span class="toc__page">41</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-5">Construire son endurance</a><span class="toc__page">55</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-6">Récupération &amp; nutrition</a><span class="toc__page">71</span></li>
+    <li><span class="toc__num"></span><a href="#chapitre-7">Le mental du coureur</a><span class="toc__page">85</span></li>
+  </ol>
+</section>
+
+<!-- ============= CHAPITRE I ============= -->
+<article class="chapter" id="chapitre-1" data-chapter="Pourquoi courir">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">Pourquoi <em>courir</em></h2>
+    <p class="chapter__epigraph">« On ne court pas pour ajouter des jours à sa vie. On court pour ajouter de la vie à ses jours. »<cite>Emil Zátopek</cite></p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">Avant de parler de cadence, de foulée ou de fréquence cardiaque, il faut s'entendre sur l'essentiel : pourquoi se mettre à courir. La question n'a rien d'oiseux. C'est elle qui dictera vos choix de chaussures, votre régularité, votre patience devant les blessures, et surtout votre plaisir — car sans plaisir, aucun coureur ne dure.</p>
+
+    <p>Les motifs sont aussi nombreux que les coureurs. Certains cherchent à perdre du poids, d'autres à dormir mieux, d'autres encore à se vider la tête après une journée de bureau. Tous ces motifs sont légitimes. Aucun n'est meilleur qu'un autre. Le coureur qui prétend mépriser le coureur du dimanche oublie souvent qu'il a lui aussi commencé un dimanche.</p>
+
+    <h3>Trois bénéfices solides</h3>
+    <p>La science a documenté trois bénéfices que la course apporte de manière reproductible, à condition de pratiquer régulièrement et sans excès :</p>
+    <ul>
+      <li><strong>Sur le cœur :</strong> trente minutes de course modérée, trois fois par semaine, suffisent à diminuer significativement la pression artérielle et à réduire le risque cardiovasculaire à moyen terme.</li>
+      <li><strong>Sur l'humeur :</strong> l'exercice aérobie modifie la chimie cérébrale (sérotonine, dopamine, endorphines, BDNF). Le bénéfice apparaît dès vingt minutes d'effort et persiste plusieurs heures.</li>
+      <li><strong>Sur le sommeil :</strong> à condition de courir avant 19 h, la qualité du sommeil profond augmente. Le cycle nuit–jour se régule.</li>
+    </ul>
+
+    <blockquote>Le footing est l'une des rares disciplines où l'on progresse sans complexité matérielle, sans partenaire obligatoire, et sans condition de lieu.<cite>Adage populaire</cite></blockquote>
+
+    <h3>Mais aussi : se redécouvrir</h3>
+    <p>Au-delà des effets mesurables, le footing offre quelque chose de plus difficile à quantifier — un certain rapport au temps, au corps, et à la ville. On voit son quartier autrement. On apprend à reconnaître la fatigue de la lassitude. On accepte l'inconfort comme une étape, non comme un signal d'arrêt.</p>
+
+    <p>C'est aussi, pour beaucoup, le seul moment où l'on n'est sollicité par personne. Ni mail, ni notification, ni discussion. Le téléphone, s'il vous accompagne, n'a qu'une mission : vous laisser tranquille.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">À retenir</h4>
+      <p>Avant de chercher un plan d'entraînement, demandez-vous ce que vous attendez de la course. La réponse vous évitera de courir trop vite, trop longtemps, ou pour les mauvaises raisons.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE II ============= -->
+<article class="chapter" id="chapitre-2" data-chapter="L'équipement nécessaire">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">L'équipement <em>nécessaire</em></h2>
+    <p class="chapter__epigraph">« Tout ce dont vous avez besoin pour courir tient dans un sac de sport. Le reste est commercial. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">Un magasin de course propose aujourd'hui des dizaines de catégories d'objets, dont la plupart sont accessoires. Pour bien démarrer, l'équipement essentiel se résume à trois pièces : une paire de chaussures adaptées, des vêtements respirants, et — pour la vraie débutante ou le vrai débutant — un soutien-gorge de sport ou un short avec une coulisse correcte.</p>
+
+    <h3>Les chaussures, point névralgique</h3>
+    <p>C'est la seule dépense qui mérite vraiment qu'on s'y attarde. Une chaussure mal adaptée provoque, à terme, des douleurs aux genoux, aux tendons d'Achille, ou aux hanches. À l'inverse, une chaussure adaptée se fait oublier — c'est exactement ce qu'on lui demande.</p>
+
+    <p>Trois critères comptent vraiment :</p>
+    <ol>
+      <li><strong>Le drop</strong> (différence de hauteur entre talon et pointe). Pour un débutant, un drop de 8 à 10 mm est classique et plus indulgent. Les drops bas (4 mm ou moins) supposent un mollet bien préparé.</li>
+      <li><strong>L'amorti</strong>. Plus on est lourd, plus on apprécie un amorti généreux. Le coureur léger peut aller vers des semelles plus fermes.</li>
+      <li><strong>La largeur d'avant-pied.</strong> Pieds larges, modèles larges. C'est la première cause d'ongles noirs.</li>
+    </ol>
+
+    <p>L'idéal, lors d'un premier achat, est un essai en boutique spécialisée — avec analyse de foulée si possible. Le prix d'une bonne paire neuve se situe autour de cent euros ; on en trouve d'excellentes à soixante-dix en fin de série.</p>
+
+    <blockquote>Une chaussure tient entre 600 et 900 kilomètres. Au-delà, l'amorti se tasse silencieusement et le risque de blessure remonte.</blockquote>
+
+    <h3>Le textile</h3>
+    <p>Le coton est l'ennemi du coureur — il retient la sueur, frotte, refroidit. Les fibres synthétiques (polyester, polyamide) ou la laine mérinos sèchent vite et limitent les irritations. Pour les longues sorties, vaseliner les zones sensibles (intérieur des cuisses, mamelons) prévient les frottements douloureux.</p>
+
+    <p>En hiver, on s'habille comme s'il faisait dix degrés de plus que la température réelle : on aura froid les premières minutes, puis ce sera parfait. En été, on choisit la couleur claire, et le bonnet ou la casquette n'est pas un luxe au-dessus de vingt-cinq degrés.</p>
+
+    <h3>Ce qui n'est pas indispensable</h3>
+    <p>Une montre GPS, un cardiofréquencemètre, des chaussettes de compression, des semelles personnalisées : tout cela est utile <em>après</em> les premiers mois, lorsqu'on sait pourquoi on court et qu'on cherche à progresser. Pas avant. Une simple application gratuite sur le téléphone, posée dans la poche d'un brassard, suffit largement à mesurer sa première année.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">L'erreur classique</h4>
+      <p>Acheter les chaussures les plus chères ou les plus en vue. Une chaussure de marathon élite n'est pas faite pour un débutant : son drop est bas, sa plaque carbone exigeante, et son amorti minimaliste. C'est un outil de course rapide, pas un outil d'apprentissage.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE III ============= -->
+<article class="chapter" id="chapitre-3" data-chapter="L'échauffement">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">L'<em>échauffement</em></h2>
+    <p class="chapter__epigraph">« Les dix premières minutes ne sont pas du temps perdu. Ce sont les dix minutes qui rendent les cinquante suivantes possibles. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">Beaucoup de coureurs sautent l'échauffement, persuadés qu'il s'agit d'un luxe pour les sportifs sérieux. C'est une erreur. Un corps sorti de la chaise n'est pas prêt à encaisser trois fois son poids à chaque foulée. L'échauffement n'est pas une formalité — c'est l'assurance d'une séance sans douleur et d'une progression durable.</p>
+
+    <h3>Trois phases simples</h3>
+    <p>Un échauffement complet tient en dix à quinze minutes et suit toujours la même logique :</p>
+
+    <ol>
+      <li><strong>Mobilité articulaire</strong> (deux minutes). Cercles de chevilles, de genoux, de hanches, de bras, de tête. Lent, ample, sans à-coup. L'objectif est de réveiller le liquide synovial.</li>
+      <li><strong>Marche active puis trottinement</strong> (cinq à huit minutes). On commence en marche dynamique, on accélère progressivement jusqu'à un footing très lent. La fréquence cardiaque monte par paliers.</li>
+      <li><strong>Gammes athlétiques</strong> (deux à trois minutes). Talons-fesses, montées de genoux, foulées bondissantes — sur de courtes distances, vingt mètres suffisent. Cela prépare le système neuromusculaire.</li>
+    </ol>
+
+    <blockquote>Si vous n'avez pas le temps de vous échauffer, vous n'avez pas le temps de courir.</blockquote>
+
+    <h3>Et les étirements ?</h3>
+    <p>Contrairement à une idée encore répandue, les étirements statiques (tenir une posture trente secondes) <em>avant</em> la course ne préviennent pas les blessures. Pire : ils réduisent temporairement la puissance musculaire. On les réserve à <em>après</em> l'effort, ou à des séances dédiées en dehors des sorties course.</p>
+
+    <p>Ce qui marche avant la course, c'est le mouvement : balancement de jambes, fentes alternées, rotations contrôlées. Le muscle s'allonge en étant utilisé, pas en étant tiré.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">Cas particulier : les sorties matinales</h4>
+      <p>Au saut du lit, le corps est froid et raide. Allonger l'échauffement à vingt minutes complètes n'est pas excessif. La première vraie accélération doit attendre que la respiration soit déjà bien installée.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE IV ============= -->
+<article class="chapter" id="chapitre-4" data-chapter="La technique de course">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">La <em>technique</em> de course</h2>
+    <p class="chapter__epigraph">« Une bonne foulée se reconnaît à ce qu'elle ne fait pas de bruit. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">Il n'existe pas une technique de course universelle. Chaque morphologie produit sa foulée. Mais il existe des principes communs qui distinguent une foulée économe d'une foulée qui blesse — et ces principes peuvent s'apprendre.</p>
+
+    <h3>La cadence avant tout</h3>
+    <p>La cadence est le nombre de pas par minute. Les coureurs réguliers tournent autour de 170 à 185 pas/minute. Sous 160, on a tendance à faire des foulées trop longues qui surchargent les genoux. Augmenter sa cadence de cinq à dix pour cent diminue mécaniquement l'impact à chaque foulée.</p>
+
+    <p>Comment savoir où l'on en est ? Pendant un footing tranquille, comptez les pas d'un seul pied pendant quinze secondes, multipliez par huit. Si vous trouvez moins de quatre-vingts, votre cadence est probablement trop basse.</p>
+
+    <h3>L'attaque du pied</h3>
+    <p>Trois écoles existent, mais l'attaque <strong>médio-pied</strong> (sous le centre de gravité) est aujourd'hui considérée comme la plus économe pour l'allure de footing. L'attaque talon, longtemps dominante, n'est pas catastrophique mais favorise les freinages successifs et fatigue plus vite.</p>
+
+    <p>Plutôt que de chercher à modifier consciemment l'attaque, augmentez votre cadence : la position du pied au sol s'ajustera presque toujours d'elle-même.</p>
+
+    <blockquote>Courir, ce n'est pas pousser le sol vers l'arrière. C'est tomber en avant et rattraper sa chute.</blockquote>
+
+    <h3>Le buste et les bras</h3>
+    <p>Le buste reste droit, légèrement incliné en avant — pas cassé à la taille. Les épaules sont basses, détendues. Si vous sentez vos trapèzes se contracter au bout de dix minutes, vous serrez trop.</p>
+
+    <p>Les bras se balancent dans l'axe de la course, coude plié à environ quatre-vingt-dix degrés, mains relâchées (imaginez tenir une feuille de papier dans chaque main sans la froisser). Croiser les bras devant le corps gaspille de l'énergie.</p>
+
+    <h3>La respiration</h3>
+    <p>Inspirez par le nez si possible, expirez par la bouche. À haute intensité, tout le monde respire par la bouche — c'est normal et nécessaire. La règle utile : pendant un footing tranquille, vous devez pouvoir tenir une conversation. Si vous ne pouvez plus parler, ralentissez.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">Test du caillou</h4>
+      <p>De temps à autre, écoutez le bruit de vos pas. Une foulée bruyante, qui claque sur le bitume, indique un freinage important. Cherchez à courir <em>silencieusement</em> : c'est le meilleur signe d'une mécanique propre.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE V ============= -->
+<article class="chapter" id="chapitre-5" data-chapter="Construire son endurance">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">Construire son <em>endurance</em></h2>
+    <p class="chapter__epigraph">« La régularité bat l'intensité. Toujours. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">L'endurance se construit lentement, par accumulation de séances faciles. C'est probablement la leçon la plus mal comprise du débutant : pour courir plus vite, il faut d'abord apprendre à courir lentement — beaucoup, et longtemps.</p>
+
+    <h3>La règle des dix pour cent</h3>
+    <p>Ne jamais augmenter le volume hebdomadaire de plus de dix pour cent d'une semaine sur l'autre. Si vous avez couru vingt kilomètres cette semaine, n'allez pas au-delà de vingt-deux la suivante. Les tendons et les articulations s'adaptent plus lentement que les muscles ; un saut trop rapide est la cause numéro un de blessure de surutilisation.</p>
+
+    <h3>Quatre types de séance</h3>
+    <ol>
+      <li><strong>Endurance fondamentale</strong> (70 à 80 % du temps total). Allure très facile, conversation possible, fréquence cardiaque autour de 70 % du maximum. C'est la base de tout. C'est celle qu'on néglige le plus.</li>
+      <li><strong>Allure spécifique</strong>. Une fois par semaine, après plusieurs mois de fondamental, on travaille l'allure de course visée (par exemple celle d'un futur 10 km).</li>
+      <li><strong>Fractionné</strong>. Des accélérations courtes (200 à 400 m) entrecoupées de récupération. À introduire seulement après deux à trois mois de pratique régulière.</li>
+      <li><strong>Sortie longue</strong>. Une fois par semaine, on dépasse la durée habituelle, à allure encore plus facile. C'est ce qui développe la capacité aérobie et la robustesse mentale.</li>
+    </ol>
+
+    <blockquote>Les coureurs amateurs courent presque toujours leurs séances faciles trop vite, et leurs séances rapides trop lentement.</blockquote>
+
+    <h3>Le repos est un entraînement</h3>
+    <p>Un débutant n'a pas besoin de courir tous les jours. Trois sorties par semaine bien réparties produisent plus de progrès que cinq sorties au bord du surentraînement. Les jours de repos sont ceux où le corps se reconstruit ; sans eux, on ne progresse pas, on s'use.</p>
+
+    <h3>Un plan-type pour les huit premières semaines</h3>
+    <p>Trois sorties hebdomadaires, alternant <em>vingt minutes</em> et <em>trente minutes</em> en endurance fondamentale, en augmentant graduellement la fraction courue par rapport à la fraction marchée. À la fin du deuxième mois, courir trente minutes d'affilée doit être devenu confortable.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">Signaux d'alerte</h4>
+      <p>Une fatigue persistante au réveil, une fréquence cardiaque de repos qui augmente sur plusieurs jours, une perte de motivation soudaine : ce sont les premiers signes du surentraînement. La réponse est presque toujours la même : <strong>moins courir, mieux dormir.</strong></p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE VI ============= -->
+<article class="chapter" id="chapitre-6" data-chapter="Récupération &amp; nutrition">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">Récupération <em>&amp; nutrition</em></h2>
+    <p class="chapter__epigraph">« On ne progresse pas pendant la course. On progresse pendant la nuit qui suit. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">La course n'est qu'un stimulus. L'adaptation — c'est-à-dire le progrès réel — se produit pendant la récupération. Un coureur qui dort mal, mange peu, et ne s'hydrate pas correctement progresse mal, même avec le meilleur plan d'entraînement du monde.</p>
+
+    <h3>L'après-course immédiat</h3>
+    <p>Les trente minutes qui suivent une sortie sont une fenêtre métabolique privilégiée. Les muscles absorbent mieux les glucides, les protéines initient la réparation des fibres. Un en-cas mêlant glucides et protéines (par exemple : un fruit et un yaourt, ou un morceau de pain et une tranche de jambon) suffit largement. Pas besoin de boissons isotoniques onéreuses.</p>
+
+    <h3>Le sommeil, premier outil</h3>
+    <p>Sept à neuf heures de sommeil de qualité sont nécessaires à la récupération sportive. Le sommeil profond, en particulier, est celui qui sécrète l'hormone de croissance, indispensable à la reconstruction tissulaire. Une nuit sacrifiée fait perdre une à deux séances de progrès.</p>
+
+    <p>Quelques règles simples : pas d'écran lumineux dans l'heure précédant le coucher, chambre fraîche (autour de dix-huit degrés), heure de coucher régulière même le week-end.</p>
+
+    <blockquote>Le meilleur supplément du coureur n'est en vente nulle part : c'est la nuit suivante.</blockquote>
+
+    <h3>L'hydratation</h3>
+    <p>Un demi-litre d'eau dans les deux heures qui précèdent une sortie, un verre toutes les vingt minutes pendant l'effort si la séance dépasse une heure, et de l'eau à volonté après. Pas besoin de boissons spéciales pour des courses de moins de soixante-dix minutes.</p>
+
+    <p>Vérifier l'hydratation est simple : la couleur des urines doit rester jaune pâle. Plus foncé, vous avez du retard.</p>
+
+    <h3>L'alimentation au quotidien</h3>
+    <p>Pas de régime miracle. Un coureur amateur n'a pas besoin de manger autrement qu'une personne en bonne santé : varié, peu transformé, suffisant pour combler la dépense, riche en légumes et en protéines, sans peur des glucides — ils sont le carburant principal du fond aérobie.</p>
+
+    <ul>
+      <li>Un repas pré-course se prend deux à trois heures avant : facile à digérer, pauvre en graisses, riche en glucides lents (pâtes, riz, pain).</li>
+      <li>Pour les sorties courtes du matin (moins de quarante-cinq minutes), partir à jeun est tout à fait possible — utile même pour habituer le corps à utiliser ses graisses.</li>
+      <li>Pour les sorties longues (au-delà d'une heure et demie), prévoir un ravitaillement glucidique en cours.</li>
+    </ul>
+
+    <div class="aside">
+      <h4 class="aside__title">Le rôle des étirements après la course</h4>
+      <p>Cinq à dix minutes d'étirements doux après l'effort, sur les mollets, les ischios et les fessiers, ne préviennent pas les blessures de manière prouvée — mais ils maintiennent une amplitude articulaire confortable et limitent les sensations de raideur le lendemain.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============= CHAPITRE VII ============= -->
+<article class="chapter" id="chapitre-7" data-chapter="Le mental du coureur">
+  <header class="chapter__head">
+    <div class="chapter__num"></div>
+    <h2 class="chapter__title">Le <em>mental</em> du coureur</h2>
+    <p class="chapter__epigraph">« La course n'est pas un sport mental parce qu'on serre les dents. C'est un sport mental parce qu'on apprend à ne pas serrer les dents. »</p>
+  </header>
+
+  <div class="chapter__body">
+    <p class="lead">Tous les coureurs réguliers vous le diront : ce qui distingue celui qui dure et celui qui abandonne, ce n'est ni le talent, ni le matériel, ni la condition initiale. C'est la capacité à courir aussi quand l'envie n'est pas là — sans pour autant se faire violence.</p>
+
+    <h3>La motivation est un mauvais chef</h3>
+    <p>Si vous attendez d'avoir envie de courir pour aller courir, vous courrez peu et irrégulièrement. La motivation est un état émotionnel par nature instable — la <strong>routine</strong>, en revanche, ne dépend pas de l'humeur du jour. Les coureurs qui durent ont presque tous des créneaux fixes : tel matin, tel soir, tel jour de la semaine. Le rendez-vous est pris avec soi-même.</p>
+
+    <h3>La règle des cinq minutes</h3>
+    <p>Quand l'envie manque vraiment, on s'engage à sortir et à courir cinq minutes. Pas plus. Au bout des cinq minutes, on a le droit d'arrêter sans culpabilité. Dans quatre-vingt-dix pour cent des cas, on continue. Le plus dur, c'est de mettre les chaussures.</p>
+
+    <blockquote>Ce n'est pas l'effort qui est difficile. C'est la décision de l'effort.</blockquote>
+
+    <h3>Apprivoiser l'inconfort</h3>
+    <p>Toute séance comporte un moment difficile — un essoufflement, une lourdeur de jambes, un instant où l'on se demande pourquoi on continue. Ce moment est inévitable, et il passe. Le coureur expérimenté ne le combat pas : il l'observe, le laisse traverser, et constate qu'il s'estompe au bout de quelques minutes. Ce qu'on appelle <em>second souffle</em> n'est rien d'autre que cela.</p>
+
+    <h3>Comparer son progrès, pas ses chronos</h3>
+    <p>Sur Strava et autres applications, on est entouré de coureurs plus rapides, plus assidus, plus impressionnants. C'est démoralisant si on regarde de travers. La seule comparaison qui vaut, c'est celle avec soi-même il y a six mois. Êtes-vous capable de courir plus longtemps ? Plus régulièrement ? Avec plus de plaisir ? Si oui, vous progressez.</p>
+
+    <h3>Aimer ses sorties faciles</h3>
+    <p>L'erreur commune est de mépriser les footings lents et de ne valoriser que les séances « qui rapportent ». Or ce sont précisément ces sorties faciles, où l'on regarde le paysage, où l'on ne pense à rien, qui fondent la pratique sur la durée. Apprendre à les aimer, c'est apprendre à durer.</p>
+
+    <div class="aside">
+      <h4 class="aside__title">Pour finir</h4>
+      <p>Un coureur ne devient pas coureur en courant beaucoup. Il le devient en courant un peu, longtemps, sans se blesser, et en y trouvant assez de plaisir pour avoir envie de recommencer le lendemain.</p>
+    </div>
+  </div>
+</article>
+
+<footer class="colophon">
+  <p class="end-mark">❦ ❦ ❦</p>
+  <p>Composé en EB Garamond et Cormorant Garamond.</p>
+  <p>Imprimé sur écran chez Maison Musso, an 2026.</p>
+  <p style="margin-top:1.2rem;"><a href="#sommaire" style="color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;">↑ Retour au sommaire</a></p>
+</footer>
+
+<script>
+  const bar = document.getElementById('bar');
+  const mark = document.getElementById('mark');
+  const chapters = document.querySelectorAll('.chapter');
+
+  function update() {
+    const h = document.documentElement;
+    const top = h.scrollTop || document.body.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (top / max) * 100 : 0;
+    bar.style.width = pct + '%';
+
+    let current = '';
+    const offset = h.clientHeight * 0.4;
+    chapters.forEach(c => {
+      const r = c.getBoundingClientRect();
+      if (r.top - offset <= 0 && r.bottom > 0) {
+        current = c.dataset.chapter || '';
+      }
+    });
+    if (current) {
+      mark.textContent = current;
+      mark.classList.add('visible');
+    } else {
+      mark.classList.remove('visible');
+    }
+  }
+
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+name: web-cd-staging
+
+# Déclenché automatiquement à chaque succès de web-ci sur main.
+# Recalcule le tag à partir du SHA du commit ayant déclenché la CI,
+# et bump deploy/web/overlays/staging.
+
+on:
+  workflow_run:
+    workflows: ["web-ci"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: web-cd-staging
+  cancel-in-progress: false
+
+jobs:
+  bump-staging:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Compute image tag from triggering commit
+        id: meta
+        env:
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          SHORT="${HEAD_SHA:0:12}"
+          echo "tag=sha-${SHORT}" >> "$GITHUB_OUTPUT"
+
+      - name: Install kustomize
+        run: |
+          curl -sLo kustomize.tgz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.5.0/kustomize_v5.5.0_linux_amd64.tar.gz
+          tar -xzf kustomize.tgz
+          sudo install kustomize /usr/local/bin/
+
+      - name: Bump image tag in staging overlay
+        env:
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          cd deploy/web/overlays/staging
+          kustomize edit set image "ghcr.io/popul/footing-web=ghcr.io/popul/footing-web:${TAG}"
+
+      - name: Commit bump
+        env:
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git add deploy/web/overlays/staging/kustomization.yaml
+          git commit -m "cd(web): bump staging to ${TAG}"
+          git push origin main

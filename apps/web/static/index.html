@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUB 45 — 10 km · 11 octobre 2026</title>
+<meta name="description" content="Plan d'entraînement 10 km — objectif 45:00 le 11 octobre 2026.">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #0a0b0d;
+    --bg-1:         #111316;
+    --bg-2:         #181b20;
+    --bg-3:         #20242b;
+    --line:         #2a2f37;
+    --line-strong:  #3a4150;
+    --text:         #f2f3f5;
+    --text-mute:    #9aa1ad;
+    --text-dim:     #5e6573;
+    --accent:       #d4ff3a;
+    --accent-deep:  #a8d100;
+    --race:         #ff6b35;
+    --done:         #4ade80;
+    --display:      "Space Grotesk", -apple-system, system-ui, sans-serif;
+    --sans:         "Inter", -apple-system, system-ui, sans-serif;
+    --mono:         "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,255,58,0.08), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255,107,53,0.04), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--text); }
+
+  .page { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ============== TOP BAR ============== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(10,11,13,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar__inner {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .brand__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+  .brand__name { font-size: 0.95rem; }
+  .brand__sep { color: var(--text-dim); }
+  .brand__date { color: var(--text-mute); font-family: var(--mono); font-size: 0.82rem; font-weight: 500; }
+  .topbar__right { display: flex; align-items: center; gap: 0.6rem; }
+  .user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-mute);
+  }
+  .user-pill__dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--done);
+  }
+  .topbar__link {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-mute);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: all 0.15s;
+  }
+  .topbar__link:hover {
+    color: var(--text);
+    border-color: var(--line-strong);
+  }
+
+  /* ============== STATE BANNER ============== */
+  .banner {
+    display: none;
+    margin: 1rem 1.5rem 0;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: var(--mono);
+  }
+  .banner.is-shown { display: block; }
+  .banner.banner--error {
+    background: rgba(255,107,53,0.08);
+    border: 1px solid var(--race);
+    color: var(--race);
+  }
+  .banner.banner--syncing {
+    background: rgba(212,255,58,0.06);
+    border: 1px solid var(--accent-deep);
+    color: var(--accent);
+  }
+
+  /* ============== HERO ============== */
+  .hero {
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero__kicker {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hero__kicker::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin: 0;
+    color: var(--text);
+  }
+  .hero__title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero__sub {
+    margin: 1.5rem 0 0;
+    font-size: 1.1rem;
+    color: var(--text-mute);
+    max-width: 38rem;
+  }
+  .hero__sub strong { color: var(--text); font-weight: 600; }
+
+  .stats {
+    margin: 2.5rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .stat { background: var(--bg-1); padding: 1.4rem 1.2rem; transition: background 0.2s; }
+  .stat:hover { background: var(--bg-2); }
+  .stat__label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 0.6rem;
+  }
+  .stat__value {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat__unit { font-family: var(--sans); font-weight: 500; font-size: 0.85rem; color: var(--text-mute); margin-left: 0.3rem; }
+  .stat--accent .stat__value { color: var(--accent); }
+
+  .progress { margin: 1.5rem 0 0; }
+  .progress__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.6rem; }
+  .progress__label { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mute); }
+  .progress__value { font-family: var(--display); font-weight: 600; font-size: 0.9rem; color: var(--text); font-variant-numeric: tabular-nums; }
+  .progress__value strong { color: var(--accent); }
+  .progress-bar { height: 6px; background: var(--bg-2); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+  .progress-bar__fill { height: 100%; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); width: 0%; transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 12px rgba(212,255,58,0.4); }
+
+  /* ============== SECTION ============== */
+  .section { margin: 4rem 0 0; }
+  .section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .section__title { font-family: var(--display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
+  .section__sub { font-family: var(--mono); font-size: 0.78rem; font-weight: 500; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ============== CURRENT WEEK ============== */
+  .now {
+    background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .now::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212,255,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .now__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.5rem; position: relative; }
+  .now__title { font-family: var(--display); font-weight: 700; font-size: 1.4rem; margin: 0; letter-spacing: -0.01em; }
+  .now__title em { font-style: normal; color: var(--accent); font-family: var(--mono); }
+  .now__phase {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+  }
+
+  /* ============== SESSION CARD ============== */
+  .session {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    margin: 0.6rem 0;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .session:hover { border-color: var(--line-strong); }
+  .session.is-today {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(212,255,58,0.04) 0%, var(--bg-1) 100%);
+    box-shadow: 0 0 0 1px rgba(212,255,58,0.2), 0 8px 24px rgba(212,255,58,0.08);
+  }
+  .session.is-today::before {
+    content: "";
+    position: absolute;
+    left: -1px; top: 1.1rem; bottom: 1.1rem;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 3px 3px 0;
+  }
+  .session.is-done { background: var(--bg); border-color: var(--line); }
+  .session.is-done .session__title { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--done); text-decoration-thickness: 1.5px; }
+  .session.is-race { border-color: var(--race); background: linear-gradient(135deg, rgba(255,107,53,0.06) 0%, var(--bg-1) 100%); }
+
+  .session__head { display: flex; align-items: flex-start; gap: 1rem; }
+  .session__check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 0.2rem;
+    position: relative;
+  }
+  .session__check:hover { border-color: var(--accent); }
+  .session__check:checked { background: var(--done); border-color: var(--done); }
+  .session__check:checked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/14px no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/14px no-repeat;
+  }
+
+  .session__main { flex: 1; min-width: 0; }
+  .session__day {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .session.is-today .session__day { color: var(--accent); }
+  .session__today-tag { color: var(--accent); font-weight: 700; }
+  .session__title { font-family: var(--display); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; margin: 0 0 0.6rem; color: var(--text); }
+  .session__items { margin: 0.4rem 0 0; padding: 0; list-style: none; font-size: 0.92rem; color: var(--text-mute); }
+  .session__items li { padding: 0.2rem 0 0.2rem 1.2rem; position: relative; }
+  .session__items li::before { content: ""; position: absolute; left: 0; top: 0.6rem; width: 6px; height: 1px; background: var(--text-dim); }
+  .session__note {
+    margin: 0.8rem 0 0;
+    padding: 0.7rem 0.9rem;
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.88rem;
+    color: var(--text-mute);
+    font-style: italic;
+  }
+  .session__actions { margin-top: 0.9rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-mute);
+    text-decoration: none;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg);
+    transition: all 0.15s;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+  .btn-link:hover { color: var(--accent); border-color: var(--accent); background: rgba(212,255,58,0.05); }
+
+  /* ============== WEEKS LIST ============== */
+  .phase-group { margin: 2.5rem 0 0; }
+  .phase-group__title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    margin: 0 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .phase-group__title strong { color: var(--accent); font-weight: 600; }
+  .phase-group__title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .week {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .week:hover { border-color: var(--line-strong); }
+  .week.is-current { border-color: var(--accent); background: linear-gradient(135deg, rgba(212,255,58,0.03) 0%, var(--bg-1) 100%); }
+  .week__head { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .week__head:hover { background: var(--bg-2); }
+  .week__head[aria-expanded="true"] { border-bottom: 1px solid var(--line); }
+  .week__num { flex-shrink: 0; font-family: var(--display); font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; color: var(--text); min-width: 5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .week__num em { font-style: normal; font-family: var(--mono); color: var(--text-mute); font-size: 0.85rem; font-weight: 500; }
+  .week.is-current .week__num em { color: var(--accent); }
+  .week__num-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); flex-shrink: 0; }
+  .week.is-current .week__num-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .week__meta { flex: 1; font-family: var(--mono); font-size: 0.8rem; color: var(--text-mute); }
+  .week__tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-left: 0.4rem; }
+  .week__tag--light { background: rgba(154,161,173,0.1); color: var(--text-mute); border: 1px solid var(--line-strong); }
+  .week__tag--race { background: rgba(255,107,53,0.12); color: var(--race); border: 1px solid var(--race); }
+  .week__progress {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-mute);
+    background: var(--bg);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .week__progress.is-complete { color: var(--done); border-color: var(--done); background: rgba(74,222,128,0.08); }
+  .week__chevron { flex-shrink: 0; color: var(--text-dim); font-size: 1rem; transition: transform 0.2s; line-height: 1; }
+  .week.is-open .week__chevron { transform: rotate(90deg); }
+  .week__body { display: none; padding: 1rem 1.2rem 1.2rem; }
+  .week.is-open .week__body { display: block; }
+
+  /* ============== PACE TABLE ============== */
+  .pace-table { background: var(--bg-1); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .pace-table table { width: 100%; border-collapse: collapse; }
+  .pace-table th { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-align: left; padding: 0.8rem 1.2rem; background: var(--bg-2); border-bottom: 1px solid var(--line); }
+  .pace-table th:last-child { text-align: right; }
+  .pace-table td { padding: 0.7rem 1.2rem; border-bottom: 1px solid var(--line); font-size: 0.93rem; }
+  .pace-table tr:last-child td { border-bottom: 0; }
+  .pace-table td:last-child { text-align: right; font-family: var(--mono); font-weight: 500; color: var(--text-mute); }
+  .pace-table tr.highlight { background: rgba(212,255,58,0.05); }
+  .pace-table tr.highlight td { color: var(--text); font-weight: 600; }
+  .pace-table tr.highlight td:last-child { color: var(--accent); font-weight: 700; }
+
+  /* ============== DETAILS ============== */
+  details { background: var(--bg-1); border: 1px solid var(--line); border-radius: 12px; margin: 0.7rem 0; overflow: hidden; }
+  details[open] { border-color: var(--line-strong); }
+  summary { cursor: pointer; padding: 1rem 1.2rem; list-style: none; display: flex; align-items: center; gap: 0.8rem; font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--text); transition: background 0.15s; }
+  summary:hover { background: var(--bg-2); }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "+"; color: var(--accent); font-family: var(--mono); font-weight: 400; font-size: 1.3rem; line-height: 1; width: 1rem; transition: transform 0.2s; }
+  details[open] summary::before { content: "−"; }
+  details .body { padding: 0 1.2rem 1.2rem; color: var(--text-mute); font-size: 0.93rem; }
+  details .body p { margin: 0.6em 0; }
+  details .body strong { color: var(--text); font-weight: 600; }
+  details .body table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  details .body table th, details .body table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--line); text-align: left; }
+  details .body table th { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+  details .body table td:last-child { text-align: right; font-family: var(--mono); color: var(--text); }
+  details .body ul { list-style: none; padding: 0; margin: 0.5rem 0; }
+  details .body ul li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; }
+  details .body ul li::before { content: ""; position: absolute; left: 0; top: 0.85rem; width: 6px; height: 1px; background: var(--accent); }
+
+  /* ============== FOOTER ============== */
+  footer { margin-top: 5rem; padding: 3rem 0 4rem; border-top: 1px solid var(--line); text-align: center; color: var(--text-dim); font-size: 0.85rem; }
+  footer p { margin: 0.4rem 0; }
+  footer .footer__signature { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+
+  .reset-btn {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 1.5rem;
+  }
+  .reset-btn:hover { color: var(--race); border-color: var(--race); }
+
+  @media (max-width: 720px) {
+    .page { padding: 0 1rem; }
+    .topbar__inner { padding: 0.7rem 1rem; }
+    .brand__date { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 2.2rem 0 1.8rem; }
+    .stat { padding: 1.1rem 1rem; }
+    .stat__value { font-size: 1.8rem; }
+    .now { padding: 1.3rem; border-radius: 12px; }
+    .week__head { padding: 0.85rem 1rem; gap: 0.7rem; }
+    .week__num { min-width: 4rem; font-size: 0.88rem; }
+    .week__meta { font-size: 0.72rem; }
+    .week__progress { font-size: 0.72rem; padding: 0.18rem 0.5rem; }
+    .session { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__inner">
+    <div class="brand">
+      <span class="brand__dot"></span>
+      <span class="brand__name">SUB&nbsp;45</span>
+      <span class="brand__sep">/</span>
+      <span class="brand__date">10K · 11.10.2026</span>
+    </div>
+    <div class="topbar__right">
+      <span class="user-pill" id="user-pill" style="display:none">
+        <span class="user-pill__dot"></span>
+        <span id="user-name">—</span>
+      </span>
+      <a class="topbar__link" href="/livre.html">Le livre →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="banner" id="banner"></div>
+
+<header class="hero page">
+  <p class="hero__kicker">Plan personnel · 23 semaines · allure cible 4:30/km</p>
+  <h1 class="hero__title">Sub <em>45:00</em></h1>
+  <p class="hero__sub">10 km le <strong>dimanche 11 octobre 2026</strong>. Passer de <strong>51 min</strong> à <strong>45 min</strong> à la Garmin Forerunner 165.</p>
+
+  <div class="stats">
+    <div class="stat stat--accent">
+      <p class="stat__label">J −</p>
+      <div><span class="stat__value" id="cd-days">—</span><span class="stat__unit">jours</span></div>
+    </div>
+    <div class="stat">
+      <p class="stat__label">Restant</p>
+      <div><span class="stat__value" id="cd-weeks">—</span><span class="stat__unit">semaines</span></div>
+    </div>
+    <div class="stat">
+      <p class="stat__label">Validé</p>
+      <div><span class="stat__value" id="cd-done">—</span><span class="stat__unit">séances</span></div>
+    </div>
+    <div class="stat">
+      <p class="stat__label">Volume total</p>
+      <div><span class="stat__value" id="cd-total">69</span><span class="stat__unit">prévues</span></div>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="progress__head">
+      <span class="progress__label">Progression du plan</span>
+      <span class="progress__value" id="progress-text">—</span>
+    </div>
+    <div class="progress-bar"><div class="progress-bar__fill" id="progress-fill"></div></div>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="section">
+    <div class="section__head">
+      <h2 class="section__title">Cette semaine</h2>
+      <span class="section__sub" id="now-num-sub">—</span>
+    </div>
+    <div class="now">
+      <div class="now__head">
+        <h3 class="now__title">Semaine <em id="now-num">…</em> / <span id="now-total">23</span></h3>
+        <span class="now__phase" id="now-phase">…</span>
+      </div>
+      <div id="now-sessions"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head">
+      <h2 class="section__title">Plan complet</h2>
+      <span class="section__sub">04.05 → 11.10.2026</span>
+    </div>
+    <div id="all-weeks"></div>
+    <div style="text-align:center;">
+      <button class="reset-btn" id="reset">↺  Tout décocher</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head">
+      <h2 class="section__title">Allures de référence</h2>
+      <span class="section__sub">min/km</span>
+    </div>
+    <div class="pace-table">
+      <table>
+        <thead><tr><th>Type d'allure</th><th>Allure</th></tr></thead>
+        <tbody>
+          <tr><td>Endurance fondamentale</td><td>5:50 – 6:30</td></tr>
+          <tr><td>Endurance active</td><td>5:20 – 5:40</td></tr>
+          <tr><td>Seuil léger</td><td>4:55 – 4:45</td></tr>
+          <tr><td>Seuil soutenu</td><td>4:45 – 4:35</td></tr>
+          <tr><td>10 km — actuel</td><td>5:05</td></tr>
+          <tr class="highlight"><td>10 km — objectif</td><td>4:30</td></tr>
+          <tr><td>Intervalles courts</td><td>4:20 – 4:05</td></tr>
+          <tr><td>30 sec rapide (≈14 km/h)</td><td>4:10 – 4:25</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head">
+      <h2 class="section__title">Préparation à la course</h2>
+      <span class="section__sub">stratégie · règles · objectifs</span>
+    </div>
+
+    <details>
+      <summary>Stratégie de course</summary>
+      <div class="body">
+        <p>Ne pas partir trop vite. Le piège principal est de partir à 4:20/km sur le premier kilomètre.</p>
+        <table>
+          <tr><th>Km</th><th>Allure</th></tr>
+          <tr><td>1</td><td>4:35/km</td></tr>
+          <tr><td>2</td><td>4:33/km</td></tr>
+          <tr><td>3</td><td>4:32/km</td></tr>
+          <tr><td>4</td><td>4:30/km</td></tr>
+          <tr><td>5</td><td>passage 22:40 – 22:45</td></tr>
+          <tr><td>6 – 8</td><td>4:28 – 4:30/km</td></tr>
+          <tr><td>9</td><td>accélération progressive</td></tr>
+          <tr><td>10</td><td>finir au mental</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Règles importantes</summary>
+      <div class="body">
+        <p><strong>1. Les footings doivent rester faciles.</strong> 5:50 – 6:30/km.</p>
+        <p><strong>2. Ne pas transformer chaque séance en test.</strong> « J'aurais pu faire une rep de plus » est meilleur que « je suis explosé ».</p>
+        <p><strong>3. Respecter les semaines allégées.</strong> Pas optionnelles — elles servent à assimiler.</p>
+        <p><strong>4. En cas de fatigue ou douleur.</strong> Remplacer la séance rapide par 45 min facile, repos, ou vélo / nat.</p>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  <p class="footer__signature">— Forerunner 165 · 23 semaines · 1 objectif —</p>
+  <p>Suivi à la Garmin Forerunner 165 · Cocher chaque séance après l'enregistrement sur Garmin Connect.</p>
+  <p>Lecture complémentaire : <a href="/livre.html">le petit traité du coureur</a></p>
+</footer>
+
+<script>
+// ============== CONFIG / FALLBACK PLAN ==============
+// Si le backend ne renvoie pas de plan via /api/plan, on retombe sur ce
+// plan en dur (l'objectif perso du repo d'origine).
+const FALLBACK_PLAN_START = new Date(2026, 4, 4);   // Mon May 4 2026
+const FALLBACK_RACE_DATE  = new Date(2026, 9, 11);  // Sun Oct 11 2026
+
+const FALLBACK_PHASES = [
+  { name: 'Base + vitesse propre',     range: [1, 5] },
+  { name: 'Développement du seuil',    range: [6, 10] },
+  { name: 'Spécifique 10 km',          range: [11, 16] },
+  { name: 'Bloc objectif 45 min',      range: [17, 20] },
+  { name: 'Affûtage',                  range: [21, 23] },
+];
+
+const FALLBACK_WEEKS = [
+  { num: 1, light: false, volume: '30–34 km', sessions: [
+    { day: 'Mardi',    title: 'Vitesse légère',     items: ['20 min échauffement','10 × 30 sec rapide / 1 min lente','10 min retour au calme'], note: '14 km/h sur les fractions rapides (≈4:10–4:25/km).' },
+    { day: 'Jeudi',    title: 'Seuil facile',       items: ['20 min endurance','3 × 8 min à 4:55–5:00/km','Récup 2 min trot','Retour au calme'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h10 endurance fondamentale (5:50–6:25/km)'] },
+  ]},
+  { num: 2, light: false, volume: '32–35 km', sessions: [
+    { day: 'Mardi',    title: '8 × 400 m',          items: ['20 min échauffement','8 × 400 m à 4:25–4:20/km','Récup 1 min 15','Retour au calme'] },
+    { day: 'Jeudi',    title: 'Tempo progressif',   items: ['20 min endurance','20 min à 4:55–4:50/km','Retour au calme'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h15 facile'], note: 'Finir 10 dernières min vers 5:30/km si bonnes sensations.' },
+  ]},
+  { num: 3, light: false, volume: '33–36 km', sessions: [
+    { day: 'Mardi',    title: 'Côtes courtes',      items: ['20 min échauffement','10 × 20 sec en côte fort mais propre','Récup en redescendant','Retour au calme'] },
+    { day: 'Jeudi',    title: 'Blocs seuil',        items: ['20 min échauffement','4 × 6 min à 4:50/km','Récup 2 min','Retour au calme'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h15 à 1h20 facile'] },
+  ]},
+  { num: 4, light: true, volume: '28–32 km', sessions: [
+    { day: 'Mardi',    title: 'Rappel vitesse',     items: ['45 min facile','6 × 20 sec rapides en fin de séance'] },
+    { day: 'Jeudi',    title: 'Seuil court',        items: ['20 min échauffement','2 × 10 min à 4:55/km','Récup 3 min','Retour au calme'] },
+    { day: 'Dimanche', title: 'Sortie longue réduite', items: ['1h05 facile'] },
+  ]},
+  { num: 5, light: false, volume: '34–37 km', sessions: [
+    { day: 'Mardi',    title: '8 × 500 m',          items: ['20 min échauffement','8 × 500 m à 4:20/km','Récup 1 min 15 à 1 min 30','Retour au calme'] },
+    { day: 'Jeudi',    title: 'Seuil continu',      items: ['20 min échauffement','25 min à 4:50–4:55/km','Retour au calme'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile','Option : 3 × 5 min à 5:20/km dans la 2e moitié'] },
+  ]},
+  { num: 6, light: false, volume: '35–38 km', sessions: [
+    { day: 'Mardi',    title: '10 × 400 m',         items: ['10 × 400 m à 4:15–4:20/km','Récup 1 min'] },
+    { day: 'Jeudi',    title: '3 × 2 km',           items: ['3 × 2 km à 4:50/km','Récup 2 min 30'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile'] },
+  ]},
+  { num: 7, light: false, volume: '35–39 km', sessions: [
+    { day: 'Mardi',    title: '7 × 600 m',          items: ['7 × 600 m à 4:20/km','Récup 1 min 30'] },
+    { day: 'Jeudi',    title: 'Tempo 2 × 15 min',   items: ['2 × 15 min à 4:50 puis 4:45/km','Récup 3 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 à 1h25 facile'] },
+  ]},
+  { num: 8, light: true, volume: '30–33 km', sessions: [
+    { day: 'Mardi',    title: 'Allégé',             items: ['45 à 50 min facile','6 lignes droites de 15 à 20 sec'] },
+    { day: 'Jeudi',    title: 'Seuil court',        items: ['3 × 8 min à 4:50/km','Récup 2 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h10 facile'] },
+  ]},
+  { num: 9, light: false, volume: '36–39 km', sessions: [
+    { day: 'Mardi',    title: '6 × 800 m',          items: ['6 × 800 m à 4:20–4:25/km','Récup 1 min 45'] },
+    { day: 'Jeudi',    title: 'Seuil long',         items: ['3 × 2 km à 4:45/km','Récup 2 min 30'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h25 facile'] },
+  ]},
+  { num: 10, light: false, volume: '33–36 km', sessions: [
+    { day: 'Mardi',    title: '12 × 300 m',         items: ['12 × 300 m à 4:05–4:15/km','Récup 1 min'] },
+    { day: 'Jeudi',    title: 'Test contrôlé 5 km', items: ['20 min échauffement','5 km à allure soutenue','Viser 23:45 à 24:15','Retour au calme'], note: 'Si le 5 km passe vers 24 min sans finir détruit, la progression est bien engagée.' },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h15 facile'] },
+  ]},
+  { num: 11, light: false, volume: '36–39 km', sessions: [
+    { day: 'Mardi',    title: '8 × 500 m',          items: ['8 × 500 m à 4:15/km','Récup 1 min 15'] },
+    { day: 'Jeudi',    title: '3 × 2 km',           items: ['3 × 2 km à 4:42–4:45/km','Récup 2 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h25 facile'] },
+  ]},
+  { num: 12, light: false, volume: '35–38 km', sessions: [
+    { day: 'Mardi',    title: '5 × 1000 m',         items: ['5 × 1000 m à 4:30–4:35/km','Récup 2 min'] },
+    { day: 'Jeudi',    title: 'Seuil 25–30 min',    items: ['25 à 30 min à 4:45–4:50/km'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile'] },
+  ]},
+  { num: 13, light: true, volume: '30–33 km', sessions: [
+    { day: 'Mardi',    title: 'Allégé',             items: ['45 min facile','6 × 20 sec rapides'] },
+    { day: 'Jeudi',    title: '2 × 2 km',           items: ['2 × 2 km à 4:40/km','Récup 3 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h10 facile'] },
+  ]},
+  { num: 14, light: false, volume: '36–40 km', sessions: [
+    { day: 'Mardi',    title: '10 × 400 m',         items: ['10 × 400 m à 4:10–4:15/km','Récup 1 min'] },
+    { day: 'Jeudi',    title: '4 × 1,5 km',         items: ['4 × 1,5 km à 4:38–4:40/km','Récup 2 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h25 facile'] },
+  ]},
+  { num: 15, light: false, volume: '37–40 km', sessions: [
+    { day: 'Mardi',    title: '6 × 800 m',          items: ['6 × 800 m à 4:15–4:20/km','Récup 1 min 45'] },
+    { day: 'Jeudi',    title: '3 × 2 km',           items: ['3 × 2 km à 4:38/km','Récup 2 min 30'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h25 facile'] },
+  ]},
+  { num: 16, light: false, volume: '35–38 km', sessions: [
+    { day: 'Mardi',    title: '5 × 1000 m',         items: ['5 × 1000 m à 4:25–4:30/km','Récup 2 min'] },
+    { day: 'Jeudi',    title: 'Pivot 2 × 3 km',     items: ['2 × 3 km à 4:40/km','Récup 3 min'], note: 'Séance pivot. À ce stade 4:40/km doit devenir dur mais contrôlable.' },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile'] },
+  ]},
+  { num: 17, light: false, volume: '36–40 km', sessions: [
+    { day: 'Mardi',    title: '12 × 400 m',         items: ['12 × 400 m à 4:05–4:10/km','Récup 1 min'] },
+    { day: 'Jeudi',    title: '3 × 2 km',           items: ['3 × 2 km à 4:35/km','Récup 2 min 30'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h25 facile'] },
+  ]},
+  { num: 18, light: false, volume: '35–38 km', sessions: [
+    { day: 'Mardi',    title: '6 × 1000 m',         items: ['6 × 1000 m à 4:25–4:30/km','Récup 1 min 45 à 2 min'] },
+    { day: 'Jeudi',    title: 'Seuil 30 min',       items: ['30 min à 4:45/km','Ne pas aller plus vite'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile'] },
+  ]},
+  { num: 19, light: false, volume: '35–38 km', sessions: [
+    { day: 'Mardi',    title: '5 × 800 m',          items: ['5 × 800 m à 4:15/km','Récup 1 min 45'] },
+    { day: 'Jeudi',    title: 'Spécifique forte',   items: ['3 × 2 km à 4:30–4:33/km','Récup 2 min 30'], note: 'Très importante. Si elle passe correctement, l\'objectif 45 min devient crédible.' },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h20 facile'] },
+  ]},
+  { num: 20, light: false, volume: '32–36 km', sessions: [
+    { day: 'Mardi',    title: '4 × 1000 m + 4 × 200 m', items: ['4 × 1000 m à 4:25/km, récup 2 min','Puis 4 × 200 m rapides mais relâchés'] },
+    { day: 'Jeudi',    title: 'Test spécifique',    items: ['5 km à 4:35/km','5 min récupération','1 km à 4:25–4:30/km'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h15 facile'] },
+  ]},
+  { num: 21, light: false, volume: '30–34 km', sessions: [
+    { day: 'Mardi',    title: '8 × 400 m',          items: ['8 × 400 m à 4:10/km','Récup 1 min'] },
+    { day: 'Jeudi',    title: '2 × 3 km',           items: ['2 × 3 km à 4:35/km','Récup 3 min'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h10 facile'] },
+  ]},
+  { num: 22, light: true, volume: '26–30 km', sessions: [
+    { day: 'Mardi',    title: '5 × 1000 m',         items: ['5 × 1000 m à 4:28–4:30/km','Récup 2 min','Finir avec de la marge'] },
+    { day: 'Jeudi',    title: 'Allégé',             items: ['40 à 45 min facile','6 × 20 sec rapides'] },
+    { day: 'Dimanche', title: 'Sortie longue',      items: ['1h00 facile'] },
+  ]},
+  { num: 23, light: false, race: true, volume: 'Course', sessions: [
+    { day: 'Mardi',    title: 'Rappel allure',      items: ['20 min facile','3 × 1000 m à 4:30/km','Récup 2 min','10 min retour au calme'] },
+    { day: 'Jeudi',    title: 'Déverrouillage',     items: ['35 à 40 min facile','5 × 20 sec rapides','Récupération complète'] },
+    { day: 'Dimanche', title: 'COURSE — 10 km',     items: ['Objectif 45:00','Stratégie : ne pas partir trop vite, passage 5 km vers 22:40–22:45'], note: 'Course officielle — 11 octobre 2026.' },
+  ]},
+];
+
+// ============== RUNTIME STATE ==============
+let state = {};            // map "<weekNum>-<sessionIdx>" -> true
+let plan = FALLBACK_WEEKS;
+let phases = FALLBACK_PHASES;
+let planStart = FALLBACK_PLAN_START;
+let raceDate = FALLBACK_RACE_DATE;
+let totalSessions = plan.reduce((a, w) => a + w.sessions.length, 0);
+
+// Buffered PUT to avoid hammering the API on rapid clicks.
+let putTimer = null;
+let inflight = null;
+
+function banner(kind, msg) {
+  const el = document.getElementById('banner');
+  if (!msg) { el.className = 'banner'; el.textContent = ''; return; }
+  el.className = `banner is-shown banner--${kind}`;
+  el.textContent = msg;
+}
+
+async function api(method, path, body) {
+  const opts = { method, headers: {} };
+  if (body !== undefined) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  }
+  const r = await fetch(path, opts);
+  if (!r.ok && r.status !== 404) {
+    const err = await r.text().catch(() => '');
+    throw new Error(`${method} ${path} → HTTP ${r.status} ${err.slice(0, 200)}`);
+  }
+  if (r.status === 204) return null;
+  if (r.status === 404) return { __notFound: true };
+  const ct = r.headers.get('Content-Type') || '';
+  if (ct.includes('application/json')) return r.json();
+  return r.text();
+}
+
+function scheduleSave() {
+  if (putTimer) clearTimeout(putTimer);
+  putTimer = setTimeout(saveState, 300);
+}
+
+async function saveState() {
+  putTimer = null;
+  if (inflight) { scheduleSave(); return; }
+  inflight = api('PUT', '/api/state', state)
+    .then(() => banner(null, null))
+    .catch(e => banner('error', `Sync KO : ${e.message}`))
+    .finally(() => { inflight = null; });
+}
+
+// ============== HELPERS ==============
+function key(week, idx) { return `${week}-${idx}`; }
+function isDone(week, idx) { return !!state[key(week, idx)]; }
+function setDone(week, idx, v) {
+  if (v) state[key(week, idx)] = true;
+  else delete state[key(week, idx)];
+  scheduleSave();
+}
+
+function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+
+function currentWeekNum() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (today < planStart) return 1;
+  const diff = daysBetween(planStart, today);
+  return Math.min(plan.length, Math.floor(diff / 7) + 1);
+}
+
+function todayDayKey() {
+  const idx = new Date().getDay();
+  if (idx === 0) return 'Dimanche';
+  if (idx === 2) return 'Mardi';
+  if (idx === 4) return 'Jeudi';
+  return null;
+}
+
+function phaseFor(weekNum) {
+  return phases.find(p => weekNum >= p.range[0] && weekNum <= p.range[1])
+    || { name: '', range: [1, plan.length] };
+}
+
+// ============== RENDER ==============
+function renderSession(week, idx, session, opts = {}) {
+  const done = isDone(week.num, idx);
+  const isToday = opts.markToday && session.day === todayDayKey();
+  const isRace = !!week.race && session.day === 'Dimanche';
+  const cls = ['session'];
+  if (done) cls.push('is-done');
+  if (isToday) cls.push('is-today');
+  if (isRace) cls.push('is-race');
+
+  const items = session.items || [];
+  const itemsHtml = items.map(i => {
+    if (typeof i === 'string') return `<li>${i}</li>`;
+    const pace = i.pace ? ` <span style="color:var(--text-dim)">— ${i.pace}</span>` : '';
+    return `<li>${i.do}${pace}</li>`;
+  }).join('');
+  const noteHtml = session.note ? `<p class="session__note">${session.note}</p>` : '';
+  const todayTag = isToday ? '<span class="session__today-tag">· aujourd\'hui</span>' : '';
+
+  return `
+    <div class="${cls.join(' ')}" data-week="${week.num}" data-idx="${idx}">
+      <div class="session__head">
+        <input type="checkbox" class="session__check" ${done ? 'checked' : ''} aria-label="Marquer terminée">
+        <div class="session__main">
+          <p class="session__day">${session.day}${todayTag}</p>
+          <h4 class="session__title">${session.title}</h4>
+          <ul class="session__items">${itemsHtml}</ul>
+          ${noteHtml}
+          <div class="session__actions">
+            <a class="btn-link" href="https://connect.garmin.com/modern/calendar" target="_blank" rel="noopener">Garmin Connect →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCurrentWeek() {
+  const num = currentWeekNum();
+  const w = plan.find(x => x.num === num) || plan[0];
+  document.getElementById('now-num').textContent = num;
+  document.getElementById('now-total').textContent = plan.length;
+  document.getElementById('now-num-sub').textContent = `S${String(num).padStart(2,'0')} / ${plan.length}`;
+  const ph = phaseFor(num);
+  let phaseLabel = w.phase || ph.name;
+  if (w.light) phaseLabel += ' · allégée';
+  if (w.race) phaseLabel = '⏵ Course';
+  document.getElementById('now-phase').textContent = phaseLabel;
+
+  const html = w.sessions.map((s, i) => renderSession(w, i, s, { markToday: true })).join('');
+  document.getElementById('now-sessions').innerHTML = html;
+}
+
+function renderAllWeeks() {
+  const today = currentWeekNum();
+  const container = document.getElementById('all-weeks');
+  let html = '';
+  for (const ph of phases) {
+    html += `<div class="phase-group"><h3 class="phase-group__title"><strong>S${ph.range[0]}–S${ph.range[1]}</strong> · ${ph.name}</h3>`;
+    for (let n = ph.range[0]; n <= ph.range[1]; n++) {
+      const w = plan.find(x => x.num === n);
+      if (!w) continue;
+      const totalS = w.sessions.length;
+      const doneCount = w.sessions.reduce((a, _, i) => a + (isDone(n, i) ? 1 : 0), 0);
+      const isCurrent = n === today;
+      const isOpen = n === today;
+      let tags = '';
+      if (w.light) tags += '<span class="week__tag week__tag--light">Allégée</span>';
+      if (w.race) tags += '<span class="week__tag week__tag--race">Course</span>';
+      html += `
+        <div class="week ${isCurrent ? 'is-current' : ''} ${isOpen ? 'is-open' : ''}" data-week="${n}">
+          <div class="week__head" tabindex="0" role="button" aria-expanded="${isOpen}">
+            <span class="week__num"><span class="week__num-dot"></span>Semaine <em>${String(n).padStart(2,'0')}</em></span>
+            <span class="week__meta">${w.volume || ''}${tags}</span>
+            <span class="week__progress ${doneCount === totalS ? 'is-complete' : ''}">${doneCount}/${totalS}</span>
+            <span class="week__chevron">›</span>
+          </div>
+          <div class="week__body">
+            ${w.sessions.map((s, i) => renderSession(w, i, s)).join('')}
+          </div>
+        </div>
+      `;
+    }
+    html += '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function renderProgress() {
+  const total = plan.reduce((a, w) => a + w.sessions.length, 0);
+  const done = plan.reduce((a, w) => a + w.sessions.reduce((b, _, i) => b + (isDone(w.num, i) ? 1 : 0), 0), 0);
+  document.getElementById('cd-done').textContent = done;
+  document.getElementById('cd-total').textContent = total;
+  const pct = total ? (done / total * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').innerHTML =
+    `<strong>${done}</strong> / ${total} séances · ${pct.toFixed(0)}%`;
+}
+
+function renderCountdown() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.max(0, daysBetween(today, raceDate));
+  const weeks = Math.max(0, Math.ceil(days / 7));
+  document.getElementById('cd-days').textContent = days;
+  document.getElementById('cd-weeks').textContent = weeks;
+}
+
+function refresh() {
+  renderCurrentWeek();
+  renderAllWeeks();
+  renderProgress();
+  renderCountdown();
+  bindEvents();
+}
+
+function bindEvents() {
+  document.querySelectorAll('.session__check').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const sess = e.target.closest('.session');
+      const w = parseInt(sess.dataset.week, 10);
+      const i = parseInt(sess.dataset.idx, 10);
+      setDone(w, i, e.target.checked);
+      refresh();
+    });
+  });
+  document.querySelectorAll('.week__head').forEach(h => {
+    h.addEventListener('click', () => {
+      const w = h.closest('.week');
+      const open = w.classList.toggle('is-open');
+      h.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    h.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); h.click(); }
+    });
+  });
+  const reset = document.getElementById('reset');
+  if (reset && !reset.dataset.bound) {
+    reset.dataset.bound = '1';
+    reset.addEventListener('click', () => {
+      if (confirm('Tout décocher ? Cette action est irréversible.')) {
+        state = {};
+        scheduleSave();
+        refresh();
+      }
+    });
+  }
+}
+
+function adoptServerPlan(p) {
+  // Accept the LLM-generated schema (weeks[] with phase strings) and rebuild
+  // a grouping by phase. Falls back to the hardcoded plan on shape errors.
+  try {
+    if (!p || !Array.isArray(p.weeks) || !p.weeks.length) return false;
+    plan = p.weeks.map(w => ({
+      num: w.num,
+      light: !!w.light,
+      race: !!w.race,
+      volume: w.volume || '',
+      phase: w.phase || '',
+      sessions: (w.sessions || []).map(s => ({
+        day: s.day,
+        title: s.title,
+        items: (s.items || []).map(it =>
+          typeof it === 'string' ? it : { do: it.do, pace: it.pace }
+        ),
+        note: s.note,
+      })),
+    }));
+    // Re-group phases by their phase string in week order.
+    const groups = [];
+    for (const w of plan) {
+      const last = groups[groups.length - 1];
+      if (last && last.name === w.phase) last.range[1] = w.num;
+      else groups.push({ name: w.phase || 'Plan', range: [w.num, w.num] });
+    }
+    phases = groups;
+    if (p.raceDate) {
+      const [y, m, d] = p.raceDate.split('-').map(Number);
+      raceDate = new Date(y, m - 1, d);
+    }
+    if (p._inputs && p._inputs.startDate) {
+      const [y, m, d] = p._inputs.startDate.split('-').map(Number);
+      planStart = new Date(y, m - 1, d);
+    }
+    return true;
+  } catch (e) {
+    console.warn('plan serveur invalide, fallback :', e);
+    return false;
+  }
+}
+
+// ============== BOOT ==============
+async function boot() {
+  // 1) Who am I (forward-auth header)?
+  try {
+    const me = await api('GET', '/api/whoami');
+    if (me && me.user) {
+      document.getElementById('user-name').textContent = me.user;
+      document.getElementById('user-pill').style.display = '';
+    }
+  } catch (e) {
+    banner('error', `whoami KO : ${e.message}`);
+  }
+
+  // 2) Load remote state.
+  try {
+    const remote = await api('GET', '/api/state');
+    if (remote && typeof remote === 'object' && !remote.__notFound) state = remote;
+  } catch (e) {
+    banner('error', `Chargement état KO (mode lecture seule) : ${e.message}`);
+  }
+
+  // 3) Optional remote plan.
+  try {
+    const remotePlan = await api('GET', '/api/plan');
+    if (remotePlan && !remotePlan.__notFound) {
+      if (adoptServerPlan(remotePlan)) {
+        // plan switched
+      }
+    }
+  } catch (e) {
+    // non-fatal — fallback plan stays.
+    console.warn('plan distant indisponible :', e.message);
+  }
+
+  refresh();
+}
+
+boot();
+</script>
+
+</body>
+</html>
