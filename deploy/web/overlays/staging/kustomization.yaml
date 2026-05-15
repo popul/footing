@@ -1,12 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
+- ../../base
 patches:
-  - target:
-      kind: HTTPRoute
-      name: footing-web
-    path: httproute-staging.yaml
+- path: httproute-staging.yaml
+  target:
+    kind: HTTPRoute
+    name: footing-web
 images:
-  - name: ghcr.io/popul/footing-web
-    newTag: latest
+- name: ghcr.io/popul/footing-web
+  newName: ghcr.io/popul/footing-web
+  newTag: sha-601d3cdcb2ea
