@@ -1,15 +1,22 @@
-# Traefik Middleware déléguant l'authentification à l'outpost Authentik.
-# L'outpost est attendu sous le service `ak-outpost-footing` (cf. Authentik
-# UI → Applications → Footing → Outpost) dans le namespace `authentik`. Les
-# overlays peuvent patcher `forwardAuth.address` pour pointer ailleurs si
-# l'outpost vit dans un autre cluster / namespace.
+# Traefik Middleware déléguant l'authentification à l'outpost embarqué
+# d'Authentik. Le service `ak-outpost-authentik-embedded-outpost` est
+# créé automatiquement par le chart Authentik dans son namespace.
+#
+# Pré-requis dans Authentik (à faire une fois via l'UI ou un blueprint) :
+#   1. Provider → Proxy : type "Forward auth (single application)",
+#      external host = https://footing.lab.musso.io
+#   2. Application : slug `footing`, lié au Proxy Provider ci-dessus
+#   3. Outpost embarqué : ajouter l'application `footing`
+#
+# Les overlays peuvent patcher `forwardAuth.address` pour pointer ailleurs
+# si l'outpost vit dans un autre cluster / namespace (cas staging).
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: authentik-forward-auth
 spec:
   forwardAuth:
-    address: http://ak-outpost-footing.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+    address: http://ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-Authentik-Username
