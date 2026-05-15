@@ -55,11 +55,15 @@ Le seul gate manuel pour mgmt est le déclenchement du workflow `web-cd-mgmt` av
 
 ## Dev local
 
+Tous les usages courants passent par `make`. Hiérarchie : un Makefile racine agrège les sous-Makefiles `apps/web` et `deploy/web`. `make help` à la racine ou dans un sous-dossier liste les commandes auto-documentées.
+
 ```bash
-cd apps/web
-pip install -r requirements.txt
-DATA_DIR=./data DEFAULT_USER=dev python server.py
-# → http://localhost:8080
+make help              # liste toutes les cibles (root + apps/web + deploy/web)
+make dev               # lance apps/web sur :8080 avec DEFAULT_USER=dev
+make image             # build l'image docker locale
+make check             # python syntax + kustomize build des deux overlays
+make kustomize-staging # rend l'overlay staging
+make bump-mgmt TAG=... # déclenche le workflow web-cd-mgmt
 ```
 
 Simuler le forward-auth via curl :
