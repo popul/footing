@@ -1,22 +1,23 @@
 # Traefik Middleware déléguant l'authentification à l'outpost embarqué
-# d'Authentik. Pas de Deployment séparé : l'outpost tourne dans le pod
-# `authentik-server` et est joignable via le Service `authentik-server`
-# port 80 (= targetPort 9000 dans le pod).
+# d'Authentik. URL publique LAN/Tailscale plutôt que le Service interne :
+# ça permet à la Traefik staging (qui ne peut pas résoudre les Services
+# du namespace authentik du mgmt) de joindre le même outpost via le
+# routage normal vers homelab01:443 → Traefik mgmt → authentik-server.
 #
-# Provider Proxy + Application Authentik + liaison à l'outpost embarqué
+# Provider Proxy + Application Authentik + binding à l'outpost embarqué
 # sont provisionnés via tofu dans le repo homelab :
-#   tofu/live/mgmt/authentik/apps/footing/
-#   tofu/live/mgmt/authentik/outposts/embedded/
+#   tofu/live/staging/authentik/apps/footing/   (Provider + Application)
+#   tofu/live/mgmt/authentik/outposts/embedded/ (binding sur l'outpost)
 #
-# Les overlays peuvent patcher `forwardAuth.address` ou stripper le filter
-# de la HTTPRoute pour désactiver l'auth (cas staging, dev).
+# Les overlays peuvent stripper le filter de la HTTPRoute pour désactiver
+# l'auth quand aucun Provider Authentik n'est défini pour ce hostname.
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: authentik-forward-auth
 spec:
   forwardAuth:
-    address: http://authentik-server.authentik.svc.cluster.local/outpost.goauthentik.io/auth/traefik
+    address: http://auth.lab.musso.io/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-Authentik-Username

@@ -7,6 +7,16 @@ patches:
       kind: HTTPRoute
       name: footing-web
     path: httproute-mgmt.yaml
+  # Pas d'IaC Authentik pour le hostname mgmt aujourd'hui (le Provider
+  # Authentik est défini pour footing.staging.lab.musso.io uniquement).
+  # On strip le filter forward-auth jusqu'à ce qu'on ajoute un 2e Provider
+  # sous tofu/live/mgmt/authentik/apps/footing/.
+  - target:
+      kind: HTTPRoute
+      name: footing-web
+    patch: |-
+      - op: remove
+        path: /spec/rules/0/filters
 images:
   - name: ghcr.io/popul/footing-web
     newTag: latest
