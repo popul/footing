@@ -7,6 +7,16 @@ patches:
   target:
     kind: HTTPRoute
     name: footing-web
+# Staging = terrain de dev, pas de forward-auth Authentik. Le pod footing
+# répond directement, X-Authentik-Username absent → DEFAULT_USER côté
+# serveur. À retirer le jour où on déploiera un outpost staging branché
+# sur l'Authentik mgmt.
+- target:
+    kind: HTTPRoute
+    name: footing-web
+  patch: |-
+    - op: remove
+      path: /spec/rules/0/filters
 images:
 - name: ghcr.io/popul/footing-web
   newName: ghcr.io/popul/footing-web

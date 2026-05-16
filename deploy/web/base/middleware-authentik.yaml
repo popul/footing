@@ -1,21 +1,22 @@
-# Traefik Middleware déléguant l'authentification à l'outpost Authentik
-# dédié `homelab-apps`. Cet outpost est provisionné par OpenTofu+Terragrunt
-# dans le repo homelab (tofu/live/mgmt/authentik/outposts/homelab-apps/),
-# qui crée aussi le Deployment + Service k8s `ak-outpost-homelab-apps`
-# dans le namespace `authentik`.
+# Traefik Middleware déléguant l'authentification à l'outpost embarqué
+# d'Authentik. Pas de Deployment séparé : l'outpost tourne dans le pod
+# `authentik-server` et est joignable via le Service `authentik-server`
+# port 80 (= targetPort 9000 dans le pod).
 #
-# Provider Proxy + Application Authentik liés à cet outpost sont également
-# provisionnés via tofu (tofu/live/mgmt/authentik/apps/footing/).
+# Provider Proxy + Application Authentik + liaison à l'outpost embarqué
+# sont provisionnés via tofu dans le repo homelab :
+#   tofu/live/mgmt/authentik/apps/footing/
+#   tofu/live/mgmt/authentik/outposts/embedded/
 #
-# Les overlays peuvent patcher `forwardAuth.address` pour pointer ailleurs
-# si l'outpost vit dans un autre cluster / namespace (cas staging).
+# Les overlays peuvent patcher `forwardAuth.address` ou stripper le filter
+# de la HTTPRoute pour désactiver l'auth (cas staging, dev).
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: authentik-forward-auth
 spec:
   forwardAuth:
-    address: http://ak-outpost-homelab-apps.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+    address: http://authentik-server.authentik.svc.cluster.local/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-Authentik-Username
