@@ -112,6 +112,20 @@
     border-radius: 50%;
     background: var(--done);
   }
+  .user-pill__sep {
+    width: 1px;
+    align-self: stretch;
+    background: var(--line);
+    margin: 0 0.15rem 0 0.5rem;
+  }
+  .user-pill__logout {
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .user-pill__logout:hover { color: var(--race); }
   .topbar__link {
     font-family: var(--display);
     font-size: 0.85rem;
@@ -526,6 +540,11 @@
       <span class="user-pill" id="user-pill" style="display:none">
         <span class="user-pill__dot"></span>
         <span id="user-name">—</span>
+        <span class="user-pill__sep" id="user-pill-sep" style="display:none"></span>
+        <a class="user-pill__logout" id="user-logout"
+           href="https://auth.lab.musso.io/outpost.goauthentik.io/sign_out"
+           style="display:none"
+           title="Se déconnecter d'Authentik (invalide le cookie de session lab.musso.io)">↪ logout</a>
       </span>
       <a class="topbar__link" href="/livre.html">Le livre →</a>
     </div>
@@ -1081,6 +1100,15 @@ async function boot() {
       if (me.name) pill.title = `${me.name} — ${me.user}`;
       else pill.title = me.user;
       pill.style.display = '';
+      // Le lien logout n'a de sens que si on est passé par forward-auth :
+      // au moins un header Authentik secondaire doit être présent. Côté
+      // mgmt (overlay strip le filter) ou en dev local (DEFAULT_USER),
+      // aucun de ces headers n'est posé → on cache le lien pour éviter
+      // qu'il envoie l'utilisateur sur une page de logout sans contexte.
+      if (me.email || me.name || me.uid) {
+        document.getElementById('user-pill-sep').style.display = '';
+        document.getElementById('user-logout').style.display = '';
+      }
     }
   } catch (e) {
     banner('error', `whoami KO : ${e.message}`);
