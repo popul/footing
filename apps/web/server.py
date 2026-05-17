@@ -886,7 +886,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             user_id = self._require_user()
             if not user_id:
                 return
-            return self._json(200, {'user': user_id})
+            # Les headers Authentik supplémentaires (email/name/groups/uid)
+            # sont injectés par la Middleware forward-auth quand le user est
+            # logué via la gate forward_domain. Ils servent uniquement à
+            # l'affichage côté UI — le user_id reste la seule clé de
+            # namespacing data sur /data/<user_id>/.
+            return self._json(200, {
+                'user':   user_id,
+                'email':  self.headers.get('X-Authentik-Email') or '',
+                'name':   self.headers.get('X-Authentik-Name') or '',
+                'groups': self.headers.get('X-Authentik-Groups') or '',
+                'uid':    self.headers.get('X-Authentik-Uid') or '',
+            })
         if self.path == '/api/state':
             user_id = self._require_user()
             if not user_id:

@@ -1071,8 +1071,16 @@ async function boot() {
   try {
     const me = await api('GET', '/api/whoami');
     if (me && me.user) {
-      document.getElementById('user-name').textContent = me.user;
-      document.getElementById('user-pill').style.display = '';
+      // Affiche l'email en priorité (vient de X-Authentik-Email injecté
+      // par la gate forward_domain) ; fallback sur le username si le
+      // compte Authentik n'a pas d'email (cas dev / DEFAULT_USER local).
+      const label = me.email || me.user;
+      const pill = document.getElementById('user-pill');
+      document.getElementById('user-name').textContent = label;
+      // Tooltip : nom complet si présent, sinon le username
+      if (me.name) pill.title = `${me.name} — ${me.user}`;
+      else pill.title = me.user;
+      pill.style.display = '';
     }
   } catch (e) {
     banner('error', `whoami KO : ${e.message}`);
