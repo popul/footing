@@ -29,7 +29,7 @@ spec:
               name: http
           env:
             - name: USER_HEADER
-              value: X-Authentik-Username
+              value: X-Authentik-Email
             - name: DEFAULT_USER
               value: default
             - name: LLM_BASE_URL

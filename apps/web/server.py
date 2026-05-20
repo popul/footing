@@ -2,7 +2,8 @@
 """footing — serveur multitenant.
 
 Le tenant est l'identité injectée par le forward-auth en amont (Traefik +
-Authentik). On lit `X-Authentik-Username` et on namespace tout l'état
+Authentik). On lit `X-Authentik-Email` (clé canonique du compte, stable
+quand l'utilisateur renomme son username) et on namespace tout l'état
 disque sous /data/<user_id>/. Les sessions en mémoire (login Garmin, jobs
 de génération de plan) sont également scopées par user_id.
 """
@@ -23,9 +24,9 @@ LLM_BASE_URL = os.environ.get('LLM_BASE_URL', 'http://macbookprom5.home:1234/v1'
 LLM_MODEL = os.environ.get('LLM_MODEL', 'qwen/qwen3.6-35b-a3b')
 LLM_TIMEOUT = float(os.environ.get('LLM_TIMEOUT', '300'))
 PORT = int(os.environ.get('PORT', '8080'))
-# Fallback user when X-Authentik-Username is absent (dev local, smoke tests).
+# Fallback user when USER_HEADER absent (dev local, smoke tests).
 DEFAULT_USER = os.environ.get('DEFAULT_USER', 'default')
-USER_HEADER = os.environ.get('USER_HEADER', 'X-Authentik-Username')
+USER_HEADER = os.environ.get('USER_HEADER', 'X-Authentik-Email')
 MAX_BODY = 1_000_000
 
 # A user_id is normalised to [a-zA-Z0-9_-]{1,64}. Anything else is rejected
