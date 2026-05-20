@@ -1160,6 +1160,22 @@
     footer { padding: 2rem 0 2.5rem; font-size: 0.78rem; }
   }
 
+  /* Empty state quand l'utilisateur n'a pas de plan persisté. */
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem 1.2rem;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    color: var(--text-mute);
+  }
+  .empty-state__title {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+  }
+  .empty-state__hint { margin: 0; font-size: 0.9rem; }
+
   /* Tenant chip injecté par le forward-auth Authentik. Cf. boot() */
   .user-pill {
     display: inline-flex;
@@ -1480,7 +1496,7 @@
     </div>
 
     <p class="modal__hint">
-      Le nouveau plan remplace l'actuel et réinitialise l'état des séances cochées. <a href="#" id="plan-delete">Revenir au plan par défaut</a>
+      Le nouveau plan remplace l'actuel et réinitialise l'état des séances cochées. <a href="#" id="plan-delete">Supprimer le plan actuel</a>
     </p>
   </form>
 </div>
@@ -1492,476 +1508,16 @@
 </footer>
 
 <script>
-const PLAN_START = new Date(2026, 4, 4);  // Mon May 4 2026
-const RACE_DATE  = new Date(2026, 9, 11); // Sun Oct 11 2026
+let PLAN_START = null;    // populé par loadDynamicPlan (data._inputs.startDate)
+let RACE_DATE = null;     // populé par loadDynamicPlan (data.raceDate)
 const STORAGE_KEY = 'footing_plan_v1';
 
-let phases = [
-  { name: 'Base + vitesse propre',     range: [1, 5] },
-  { name: 'Développement du seuil',    range: [6, 10] },
-  { name: 'Spécifique 10 km',          range: [11, 16] },
-  { name: 'Bloc objectif 45 min',      range: [17, 20] },
-  { name: 'Affûtage',                  range: [21, 23] },
-];
-
-// Pace presets — display string + Garmin numeric range (sec/km, slow→fast).
-const F   = '5:50–6:30/km';   // endurance fondamentale
-const T   = '6:30–7:00/km';   // trot récup
-const F_P = [390, 350];
-const T_P = [420, 390];
-
-// Garmin step authoring helpers. Each session can carry an optional `garmin: {name, steps}` block,
-// which the backend translates into a Garmin Connect workout JSON and schedules on the right date.
-const MIN  = mn => ({ time: mn * 60 });
-const MS   = (mn, ss) => ({ time: mn * 60 + ss });
-const SEC  = n => ({ time: n });
-const M    = n => ({ dist: n });
-const KM   = n => ({ dist: Math.round(n * 1000) });
-const LAP  = { lap: true };
-const WU   = (dur, pace) => ({ type: 'warmup',   dur, pace });
-const CD   = (dur, pace) => ({ type: 'cooldown', dur, pace });
-const IV   = (dur, pace) => ({ type: 'interval', dur, pace });
-const RC   = (dur, pace) => ({ type: 'recovery', dur, pace });
-const OT   = (dur, pace) => ({ type: 'other',    dur, pace });
-const REP  = (count, ...steps) => ({ type: 'repeat', count, steps });
-const p    = (a, b) => {
-  const parse = x => {
-    if (typeof x === 'number') return x;
-    const [mm, ss = '0'] = String(x).replace(/[~]|\/km/g, '').trim().split(':');
-    return parseInt(mm, 10) * 60 + parseInt(ss, 10);
-  };
-  const x = parse(a);
-  if (b === undefined) return [x + 5, x - 5];
-  const y = parse(b);
-  return [Math.max(x, y), Math.min(x, y)];
-};
-
-let plan = [
-  { num: 1, light: false, volume: '30–34 km', sessions: [
-    { day: 'Mardi', title: 'Vitesse légère', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '10 × 30 sec rapide / 1 min lente', pace: '~4:10–4:25/km' },
-      { do: '10 min retour au calme', pace: F },
-    ], note: '14 km/h sur les fractions rapides (≈4:10–4:25/km).',
-      garmin: { name: 'S01 Mardi · Vitesse légère', steps: [
-        WU(MIN(20), F_P), REP(10, IV(SEC(30), p('4:10','4:25')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-      ]} },
-    { day: 'Jeudi', title: 'Seuil facile', items: [
-      { do: '20 min endurance', pace: F },
-      { do: '3 × 8 min', pace: '4:55–5:00/km' },
-      { do: 'Récup 2 min trot', pace: T },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S01 Jeudi · Seuil facile', steps: [
-      WU(MIN(20), F_P), REP(3, IV(MIN(8), p('5:00','4:55')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h10 endurance fondamentale', pace: F },
-    ], garmin: { name: 'S01 Dim · Sortie longue', steps: [ OT(MIN(70), F_P) ]} },
-  ]},
-  { num: 2, light: false, volume: '32–35 km', sessions: [
-    { day: 'Mardi', title: '8 × 400 m', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '8 × 400 m', pace: '4:25–4:20/km' },
-      { do: 'Récup 1 min 15', pace: T },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S02 Mardi · 8 × 400 m', steps: [
-      WU(MIN(20), F_P), REP(8, IV(M(400), p('4:25','4:20')), RC(MS(1,15), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Tempo progressif', items: [
-      { do: '20 min endurance', pace: F },
-      { do: '20 min', pace: '4:55–4:50/km' },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S02 Jeudi · Tempo progressif', steps: [
-      WU(MIN(20), F_P), IV(MIN(20), p('4:55','4:50')), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h15 facile', pace: F },
-    ], note: 'Finir 10 dernières min vers 5:30/km si bonnes sensations.',
-      garmin: { name: 'S02 Dim · Sortie longue', steps: [ OT(MIN(75), F_P) ]} },
-  ]},
-  { num: 3, light: false, volume: '33–36 km', sessions: [
-    { day: 'Mardi', title: 'Côtes courtes', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '10 × 20 sec en côte fort mais propre' },
-      { do: 'Récup en redescendant' },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S03 Mardi · Côtes courtes', steps: [
-      WU(MIN(20), F_P), REP(10, IV(SEC(20), null), RC(LAP, null)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Blocs seuil', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '4 × 6 min', pace: '4:50/km' },
-      { do: 'Récup 2 min', pace: T },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S03 Jeudi · Blocs seuil', steps: [
-      WU(MIN(20), F_P), REP(4, IV(MIN(6), p('4:50')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h15 à 1h20 facile', pace: F },
-    ], garmin: { name: 'S03 Dim · Sortie longue', steps: [ OT(MIN(75), F_P) ]} },
-  ]},
-  { num: 4, light: true, volume: '28–32 km', sessions: [
-    { day: 'Mardi', title: 'Rappel vitesse', items: [
-      { do: '45 min facile', pace: F },
-      { do: '6 × 20 sec rapides en fin de séance', pace: '~4:00–4:10/km' },
-    ], garmin: { name: 'S04 Mardi · Rappel vitesse', steps: [
-      OT(MIN(45), F_P), REP(6, IV(SEC(20), p('4:00','4:10')), RC(LAP, null)),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil court', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '2 × 10 min', pace: '4:55/km' },
-      { do: 'Récup 3 min', pace: T },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S04 Jeudi · Seuil court', steps: [
-      WU(MIN(20), F_P), REP(2, IV(MIN(10), p('4:55')), RC(MIN(3), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue réduite', items: [
-      { do: '1h05 facile', pace: F },
-    ], garmin: { name: 'S04 Dim · Sortie longue réduite', steps: [ OT(MIN(65), F_P) ]} },
-  ]},
-  { num: 5, light: false, volume: '34–37 km', sessions: [
-    { day: 'Mardi', title: '8 × 500 m', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '8 × 500 m', pace: '4:20/km' },
-      { do: 'Récup 1 min 15 à 1 min 30', pace: T },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S05 Mardi · 8 × 500 m', steps: [
-      WU(MIN(20), F_P), REP(8, IV(M(500), p('4:20')), RC(MS(1,15), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil continu', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '25 min', pace: '4:50–4:55/km' },
-      { do: 'Retour au calme', pace: F },
-    ], garmin: { name: 'S05 Jeudi · Seuil continu', steps: [
-      WU(MIN(20), F_P), IV(MIN(25), p('4:55','4:50')), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-      { do: 'Option : 3 × 5 min en 2e moitié', pace: '5:20/km' },
-    ], garmin: { name: 'S05 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 6, light: false, volume: '35–38 km', sessions: [
-    { day: 'Mardi', title: '10 × 400 m', items: [
-      { do: '10 × 400 m', pace: '4:15–4:20/km' },
-      { do: 'Récup 1 min', pace: T },
-    ], garmin: { name: 'S06 Mardi · 10 × 400 m', steps: [
-      WU(MIN(15), F_P), REP(10, IV(M(400), p('4:15','4:20')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '3 × 2 km', items: [
-      { do: '3 × 2 km', pace: '4:50/km' },
-      { do: 'Récup 2 min 30', pace: T },
-    ], garmin: { name: 'S06 Jeudi · 3 × 2 km', steps: [
-      WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:50')), RC(MS(2,30), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-    ], garmin: { name: 'S06 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 7, light: false, volume: '35–39 km', sessions: [
-    { day: 'Mardi', title: '7 × 600 m', items: [
-      { do: '7 × 600 m', pace: '4:20/km' },
-      { do: 'Récup 1 min 30', pace: T },
-    ], garmin: { name: 'S07 Mardi · 7 × 600 m', steps: [
-      WU(MIN(15), F_P), REP(7, IV(M(600), p('4:20')), RC(MS(1,30), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Tempo 2 × 15 min', items: [
-      { do: '2 × 15 min', pace: '4:50 puis 4:45/km' },
-      { do: 'Récup 3 min', pace: T },
-    ], garmin: { name: 'S07 Jeudi · Tempo 2 × 15 min', steps: [
-      WU(MIN(15), F_P), REP(2, IV(MIN(15), p('4:50','4:45')), RC(MIN(3), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 à 1h25 facile', pace: F },
-    ], garmin: { name: 'S07 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 8, light: true, volume: '30–33 km', sessions: [
-    { day: 'Mardi', title: 'Allégé', items: [
-      { do: '45 à 50 min facile', pace: F },
-      { do: '6 lignes droites de 15 à 20 sec' },
-    ], garmin: { name: 'S08 Mardi · Allégé', steps: [
-      OT(MIN(45), F_P), REP(6, IV(SEC(20), null), RC(LAP, null)),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil court', items: [
-      { do: '3 × 8 min', pace: '4:50/km' },
-      { do: 'Récup 2 min', pace: T },
-    ], garmin: { name: 'S08 Jeudi · Seuil court', steps: [
-      WU(MIN(15), F_P), REP(3, IV(MIN(8), p('4:50')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h10 facile', pace: F },
-    ], garmin: { name: 'S08 Dim · Sortie longue', steps: [ OT(MIN(70), F_P) ]} },
-  ]},
-  { num: 9, light: false, volume: '36–39 km', sessions: [
-    { day: 'Mardi', title: '6 × 800 m', items: [
-      { do: '6 × 800 m', pace: '4:20–4:25/km' },
-      { do: 'Récup 1 min 45', pace: T },
-    ], garmin: { name: 'S09 Mardi · 6 × 800 m', steps: [
-      WU(MIN(15), F_P), REP(6, IV(M(800), p('4:25','4:20')), RC(MS(1,45), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil long', items: [
-      { do: '3 × 2 km', pace: '4:45/km' },
-      { do: 'Récup 2 min 30', pace: T },
-    ], garmin: { name: 'S09 Jeudi · Seuil long', steps: [
-      WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:45')), RC(MS(2,30), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h25 facile', pace: F },
-    ], garmin: { name: 'S09 Dim · Sortie longue', steps: [ OT(MIN(85), F_P) ]} },
-  ]},
-  { num: 10, light: false, volume: '33–36 km', sessions: [
-    { day: 'Mardi', title: '12 × 300 m', items: [
-      { do: '12 × 300 m', pace: '4:05–4:15/km' },
-      { do: 'Récup 1 min', pace: T },
-    ], garmin: { name: 'S10 Mardi · 12 × 300 m', steps: [
-      WU(MIN(15), F_P), REP(12, IV(M(300), p('4:05','4:15')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Test contrôlé 5 km', items: [
-      { do: '20 min échauffement', pace: F },
-      { do: '5 km soutenu mais pas sprinté', pace: '~4:45–4:50/km' },
-      { do: 'Viser 23:45 à 24:15' },
-      { do: 'Retour au calme', pace: F },
-    ], note: 'Si le 5 km passe vers 24 min sans finir détruit, la progression est bien engagée.',
-      garmin: { name: 'S10 Jeudi · Test 5 km', steps: [
-        WU(MIN(20), F_P), IV(KM(5), p('4:50','4:45')), CD(MIN(10), F_P),
-      ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h15 facile', pace: F },
-    ], garmin: { name: 'S10 Dim · Sortie longue', steps: [ OT(MIN(75), F_P) ]} },
-  ]},
-  { num: 11, light: false, volume: '36–39 km', sessions: [
-    { day: 'Mardi', title: '8 × 500 m', items: [
-      { do: '8 × 500 m', pace: '4:15/km' },
-      { do: 'Récup 1 min 15', pace: T },
-    ], garmin: { name: 'S11 Mardi · 8 × 500 m', steps: [
-      WU(MIN(15), F_P), REP(8, IV(M(500), p('4:15')), RC(MS(1,15), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '3 × 2 km', items: [
-      { do: '3 × 2 km', pace: '4:42–4:45/km' },
-      { do: 'Récup 2 min', pace: T },
-    ], garmin: { name: 'S11 Jeudi · 3 × 2 km', steps: [
-      WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:45','4:42')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h25 facile', pace: F },
-    ], garmin: { name: 'S11 Dim · Sortie longue', steps: [ OT(MIN(85), F_P) ]} },
-  ]},
-  { num: 12, light: false, volume: '35–38 km', sessions: [
-    { day: 'Mardi', title: '5 × 1000 m', items: [
-      { do: '5 × 1000 m', pace: '4:30–4:35/km' },
-      { do: 'Récup 2 min', pace: T },
-    ], garmin: { name: 'S12 Mardi · 5 × 1000 m', steps: [
-      WU(MIN(15), F_P), REP(5, IV(M(1000), p('4:35','4:30')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil 25–30 min', items: [
-      { do: '25 à 30 min', pace: '4:45–4:50/km' },
-    ], garmin: { name: 'S12 Jeudi · Seuil 25 min', steps: [
-      WU(MIN(15), F_P), IV(MIN(25), p('4:50','4:45')), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-    ], garmin: { name: 'S12 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 13, light: true, volume: '30–33 km', sessions: [
-    { day: 'Mardi', title: 'Allégé', items: [
-      { do: '45 min facile', pace: F },
-      { do: '6 × 20 sec rapides', pace: '~4:00–4:10/km' },
-    ], garmin: { name: 'S13 Mardi · Allégé', steps: [
-      OT(MIN(45), F_P), REP(6, IV(SEC(20), p('4:00','4:10')), RC(LAP, null)),
-    ]} },
-    { day: 'Jeudi', title: '2 × 2 km', items: [
-      { do: '2 × 2 km', pace: '4:40/km' },
-      { do: 'Récup 3 min', pace: T },
-    ], garmin: { name: 'S13 Jeudi · 2 × 2 km', steps: [
-      WU(MIN(15), F_P), REP(2, IV(KM(2), p('4:40')), RC(MIN(3), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h10 facile', pace: F },
-    ], garmin: { name: 'S13 Dim · Sortie longue', steps: [ OT(MIN(70), F_P) ]} },
-  ]},
-  { num: 14, light: false, volume: '36–40 km', sessions: [
-    { day: 'Mardi', title: '10 × 400 m', items: [
-      { do: '10 × 400 m', pace: '4:10–4:15/km' },
-      { do: 'Récup 1 min', pace: T },
-    ], garmin: { name: 'S14 Mardi · 10 × 400 m', steps: [
-      WU(MIN(15), F_P), REP(10, IV(M(400), p('4:10','4:15')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '4 × 1,5 km', items: [
-      { do: '4 × 1,5 km', pace: '4:38–4:40/km' },
-      { do: 'Récup 2 min', pace: T },
-    ], garmin: { name: 'S14 Jeudi · 4 × 1,5 km', steps: [
-      WU(MIN(15), F_P), REP(4, IV(M(1500), p('4:40','4:38')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h25 facile', pace: F },
-      { do: 'Finir 15 min plus rapide si bonnes sensations', pace: '5:20–5:30/km' },
-    ], garmin: { name: 'S14 Dim · Sortie longue', steps: [ OT(MIN(85), F_P) ]} },
-  ]},
-  { num: 15, light: false, volume: '37–40 km', sessions: [
-    { day: 'Mardi', title: '6 × 800 m', items: [
-      { do: '6 × 800 m', pace: '4:15–4:20/km' },
-      { do: 'Récup 1 min 45', pace: T },
-    ], garmin: { name: 'S15 Mardi · 6 × 800 m', steps: [
-      WU(MIN(15), F_P), REP(6, IV(M(800), p('4:15','4:20')), RC(MS(1,45), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '3 × 2 km', items: [
-      { do: '3 × 2 km', pace: '4:38/km' },
-      { do: 'Récup 2 min 30', pace: T },
-    ], garmin: { name: 'S15 Jeudi · 3 × 2 km', steps: [
-      WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:38')), RC(MS(2,30), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h25 facile', pace: F },
-    ], garmin: { name: 'S15 Dim · Sortie longue', steps: [ OT(MIN(85), F_P) ]} },
-  ]},
-  { num: 16, light: false, volume: '35–38 km', sessions: [
-    { day: 'Mardi', title: '5 × 1000 m', items: [
-      { do: '5 × 1000 m', pace: '4:25–4:30/km' },
-      { do: 'Récup 2 min', pace: T },
-    ], garmin: { name: 'S16 Mardi · 5 × 1000 m', steps: [
-      WU(MIN(15), F_P), REP(5, IV(M(1000), p('4:25','4:30')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Pivot 2 × 3 km', items: [
-      { do: '2 × 3 km', pace: '4:40/km' },
-      { do: 'Récup 3 min', pace: T },
-    ], note: 'Séance pivot. À ce stade 4:40/km doit devenir dur mais contrôlable.',
-      garmin: { name: 'S16 Jeudi · Pivot 2 × 3 km', steps: [
-        WU(MIN(15), F_P), REP(2, IV(KM(3), p('4:40')), RC(MIN(3), T_P)), CD(MIN(10), F_P),
-      ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-    ], garmin: { name: 'S16 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 17, light: false, volume: '36–40 km', sessions: [
-    { day: 'Mardi', title: '12 × 400 m', items: [
-      { do: '12 × 400 m', pace: '4:05–4:10/km' },
-      { do: 'Récup 1 min', pace: T },
-    ], garmin: { name: 'S17 Mardi · 12 × 400 m', steps: [
-      WU(MIN(15), F_P), REP(12, IV(M(400), p('4:05','4:10')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '3 × 2 km', items: [
-      { do: '3 × 2 km', pace: '4:35/km' },
-      { do: 'Récup 2 min 30', pace: T },
-    ], garmin: { name: 'S17 Jeudi · 3 × 2 km', steps: [
-      WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:35')), RC(MS(2,30), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h25 facile', pace: F },
-    ], garmin: { name: 'S17 Dim · Sortie longue', steps: [ OT(MIN(85), F_P) ]} },
-  ]},
-  { num: 18, light: false, volume: '35–38 km', sessions: [
-    { day: 'Mardi', title: '6 × 1000 m', items: [
-      { do: '6 × 1000 m', pace: '4:25–4:30/km' },
-      { do: 'Récup 1 min 45 à 2 min', pace: T },
-    ], garmin: { name: 'S18 Mardi · 6 × 1000 m', steps: [
-      WU(MIN(15), F_P), REP(6, IV(M(1000), p('4:25','4:30')), RC(MS(1,45), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Seuil 30 min', items: [
-      { do: '30 min', pace: '4:45/km' },
-      { do: 'Ne pas aller plus vite' },
-    ], garmin: { name: 'S18 Jeudi · Seuil 30 min', steps: [
-      WU(MIN(15), F_P), IV(MIN(30), p('4:45')), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-    ], garmin: { name: 'S18 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 19, light: false, volume: '35–38 km', sessions: [
-    { day: 'Mardi', title: '5 × 800 m', items: [
-      { do: '5 × 800 m', pace: '4:15/km' },
-      { do: 'Récup 1 min 45', pace: T },
-    ], garmin: { name: 'S19 Mardi · 5 × 800 m', steps: [
-      WU(MIN(15), F_P), REP(5, IV(M(800), p('4:15')), RC(MS(1,45), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Spécifique forte', items: [
-      { do: '3 × 2 km', pace: '4:30–4:33/km' },
-      { do: 'Récup 2 min 30', pace: T },
-    ], note: 'Très importante. Si elle passe correctement, l\'objectif 45 min devient crédible.',
-      garmin: { name: 'S19 Jeudi · Spécifique forte', steps: [
-        WU(MIN(15), F_P), REP(3, IV(KM(2), p('4:33','4:30')), RC(MS(2,30), T_P)), CD(MIN(10), F_P),
-      ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h20 facile', pace: F },
-    ], garmin: { name: 'S19 Dim · Sortie longue', steps: [ OT(MIN(80), F_P) ]} },
-  ]},
-  { num: 20, light: false, volume: '32–36 km', sessions: [
-    { day: 'Mardi', title: '4 × 1000 m + 4 × 200 m', items: [
-      { do: '4 × 1000 m', pace: '4:25/km' },
-      { do: 'Récup 2 min', pace: T },
-      { do: '4 × 200 m rapides mais relâchés', pace: '~4:00/km' },
-    ], garmin: { name: 'S20 Mardi · 4 × 1000 + 4 × 200', steps: [
-      WU(MIN(15), F_P),
-      REP(4, IV(M(1000), p('4:25')), RC(MIN(2), T_P)),
-      REP(4, IV(M(200), p('~4:00')), RC(LAP, null)),
-      CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Test spécifique', items: [
-      { do: '5 km', pace: '4:35/km' },
-      { do: '5 min récupération', pace: T },
-      { do: '1 km', pace: '4:25–4:30/km' },
-    ], garmin: { name: 'S20 Jeudi · Test spécifique', steps: [
-      WU(MIN(15), F_P), IV(KM(5), p('4:35')), RC(MIN(5), T_P), IV(KM(1), p('4:30','4:25')), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h15 facile', pace: F },
-    ], garmin: { name: 'S20 Dim · Sortie longue', steps: [ OT(MIN(75), F_P) ]} },
-  ]},
-  { num: 21, light: false, volume: '30–34 km', sessions: [
-    { day: 'Mardi', title: '8 × 400 m', items: [
-      { do: '8 × 400 m', pace: '4:10/km' },
-      { do: 'Récup 1 min', pace: T },
-    ], garmin: { name: 'S21 Mardi · 8 × 400 m', steps: [
-      WU(MIN(15), F_P), REP(8, IV(M(400), p('4:10')), RC(MIN(1), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: '2 × 3 km', items: [
-      { do: '2 × 3 km', pace: '4:35/km' },
-      { do: 'Récup 3 min', pace: T },
-    ], garmin: { name: 'S21 Jeudi · 2 × 3 km', steps: [
-      WU(MIN(15), F_P), REP(2, IV(KM(3), p('4:35')), RC(MIN(3), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h10 facile', pace: F },
-    ], garmin: { name: 'S21 Dim · Sortie longue', steps: [ OT(MIN(70), F_P) ]} },
-  ]},
-  { num: 22, light: true, volume: '26–30 km', sessions: [
-    { day: 'Mardi', title: '5 × 1000 m', items: [
-      { do: '5 × 1000 m', pace: '4:28–4:30/km' },
-      { do: 'Récup 2 min', pace: T },
-      { do: 'Finir avec de la marge' },
-    ], garmin: { name: 'S22 Mardi · 5 × 1000 m', steps: [
-      WU(MIN(15), F_P), REP(5, IV(M(1000), p('4:28','4:30')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Allégé', items: [
-      { do: '40 à 45 min facile', pace: F },
-      { do: '6 × 20 sec rapides', pace: '~4:00–4:10/km' },
-    ], garmin: { name: 'S22 Jeudi · Allégé', steps: [
-      OT(MIN(40), F_P), REP(6, IV(SEC(20), p('4:00','4:10')), RC(LAP, null)),
-    ]} },
-    { day: 'Dimanche', title: 'Sortie longue', items: [
-      { do: '1h00 facile', pace: F },
-    ], garmin: { name: 'S22 Dim · Sortie longue', steps: [ OT(MIN(60), F_P) ]} },
-  ]},
-  { num: 23, light: false, race: true, volume: 'Course', sessions: [
-    { day: 'Mardi', title: 'Rappel allure', items: [
-      { do: '20 min facile', pace: F },
-      { do: '3 × 1000 m', pace: '4:30/km' },
-      { do: 'Récup 2 min', pace: T },
-      { do: '10 min retour au calme', pace: F },
-    ], garmin: { name: 'S23 Mardi · Rappel allure', steps: [
-      WU(MIN(20), F_P), REP(3, IV(M(1000), p('4:30')), RC(MIN(2), T_P)), CD(MIN(10), F_P),
-    ]} },
-    { day: 'Jeudi', title: 'Déverrouillage', items: [
-      { do: '35 à 40 min facile', pace: F },
-      { do: '5 × 20 sec rapides', pace: '~4:00–4:10/km' },
-      { do: 'Récupération complète' },
-    ], garmin: { name: 'S23 Jeudi · Déverrouillage', steps: [
-      OT(MIN(35), F_P), REP(5, IV(SEC(20), p('4:00','4:10')), RC(LAP, null)),
-    ]} },
-    { day: 'Dimanche', title: 'COURSE — 10 km', items: [
-      { do: 'Objectif 45:00', pace: '4:30/km' },
-      { do: 'Passage 5 km vers 22:40 – 22:45' },
-    ], note: 'Course officielle — 11 octobre 2026. Ne pas partir trop vite.' },
-  ]},
-];
+// Sans plan persisté côté serveur (`/data/<user>/plan.json`), l'app
+// reste sur cet état vide et affiche un empty state dans renderXxx() :
+// pour les nouveaux users, pas de plan fallback hardcoded, juste un
+// appel à action "génère ton plan via Plan IA".
+let phases = [];
+let plan = [];
 
 // ============== STATE ==============
 // Server-backed (PUT /api/state) with localStorage as offline cache.
@@ -2018,10 +1574,11 @@ function daysBetween(a, b) {
   return Math.round((b - a) / 86400000);
 }
 function currentWeekNum() {
+  if (!PLAN_START || !plan.length) return 1;
   const today = new Date(); today.setHours(0,0,0,0);
   if (today < PLAN_START) return 1;
   const diff = daysBetween(PLAN_START, today);
-  return Math.min(23, Math.floor(diff / 7) + 1);
+  return Math.min(plan.length, Math.floor(diff / 7) + 1);
 }
 function todayDayKey() {
   const idx = new Date().getDay();
@@ -2248,13 +1805,29 @@ function renderSession(week, idx, session, opts = {}) {
   `;
 }
 
+// Affiché quand l'utilisateur n'a pas encore de plan persisté côté
+// serveur — pas de fallback hardcoded, juste l'invite vers Plan IA.
+const EMPTY_STATE_HTML = `
+  <div class="empty-state">
+    <p class="empty-state__title">Aucun plan pour l'instant.</p>
+    <p class="empty-state__hint">Clique <strong>⚡ Plan IA</strong> dans la barre du haut pour générer ton plan personnalisé.</p>
+  </div>
+`;
+
 function renderCurrentWeek() {
+  if (!plan.length) {
+    document.getElementById('now-num').textContent = '—';
+    document.getElementById('now-num-sub').textContent = '—';
+    document.getElementById('now-phase').textContent = 'Pas de plan';
+    document.getElementById('now-sessions').innerHTML = EMPTY_STATE_HTML;
+    return;
+  }
   const num = currentWeekNum();
   const w = plan.find(x => x.num === num);
   document.getElementById('now-num').textContent = num;
-  document.getElementById('now-num-sub').textContent = `S${String(num).padStart(2,'0')} / 23`;
+  document.getElementById('now-num-sub').textContent = `S${String(num).padStart(2,'0')} / ${plan.length}`;
   const ph = phaseFor(num);
-  let phaseLabel = ph.name;
+  let phaseLabel = (ph && ph.name) || w.phase || '';
   if (w.light) phaseLabel += ' · allégée';
   if (w.race) phaseLabel = '⏵ Course';
   document.getElementById('now-phase').textContent = phaseLabel;
@@ -2264,8 +1837,12 @@ function renderCurrentWeek() {
 }
 
 function renderAllWeeks() {
-  const today = currentWeekNum();
   const container = document.getElementById('all-weeks');
+  if (!plan.length) {
+    container.innerHTML = '';
+    return;
+  }
+  const today = currentWeekNum();
   let html = '';
   for (const ph of phases) {
     html += `<div class="phase-group"><h3 class="phase-group__title"><strong>S${ph.range[0]}–S${ph.range[1]}</strong> · ${ph.name}</h3>`;
@@ -2309,6 +1886,11 @@ function renderProgress() {
 }
 
 function renderCountdown() {
+  if (!RACE_DATE) {
+    document.getElementById('cd-days').textContent = '—';
+    document.getElementById('cd-weeks').textContent = '—';
+    return;
+  }
   const today = new Date(); today.setHours(0,0,0,0);
   const days = Math.max(0, daysBetween(today, RACE_DATE));
   const weeks = Math.max(0, Math.ceil(days / 7));
@@ -2383,11 +1965,11 @@ async function loadDynamicPlan() {
     if (dp.length) phases = dp;
     if (data.raceDate) {
       const [y, m, d] = data.raceDate.split('-').map(Number);
-      RACE_DATE.setFullYear(y, m - 1, d);
+      RACE_DATE = new Date(y, m - 1, d);
     }
     if (data.weeks[0] && data._inputs && data._inputs.startDate) {
       const [y, m, d] = data._inputs.startDate.split('-').map(Number);
-      PLAN_START.setFullYear(y, m - 1, d);
+      PLAN_START = new Date(y, m - 1, d);
     }
     return true;
   } catch { return false; }
@@ -2683,7 +2265,7 @@ async function resumePlanJobIfAny() {
 }
 
 async function deleteCurrentPlan() {
-  if (!confirm('Supprimer le plan généré et revenir au plan par défaut ?')) return;
+  if (!confirm('Supprimer le plan actuel ? Il faudra en générer un nouveau via Plan IA.')) return;
   await fetch('/api/plan', { method: 'DELETE' });
   state = {};
   saveState();
