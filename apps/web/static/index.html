@@ -1162,8 +1162,10 @@
 
   /* Toggle global : tant que `body.has-plan` n'est pas set, toutes les
      zones marquées `requires-plan` (hero, stats, allures, stratégie,
-     règles, objectifs, footer signature, etc.) sont masquées. */
+     règles, objectifs, footer signature, etc.) sont masquées.
+     Inversement, `.empty-only` n'apparaît QUE sans plan. */
   body:not(.has-plan) .requires-plan { display: none !important; }
+  body.has-plan .empty-only { display: none !important; }
 
   /* Empty state quand l'utilisateur n'a pas de plan persisté. */
   .empty-state {
@@ -1276,7 +1278,14 @@
 
 <main class="page">
 
-  <section class="section">
+  <section class="section empty-only">
+    <div class="empty-state">
+      <p class="empty-state__title">Aucun plan pour l'instant.</p>
+      <p class="empty-state__hint">Clique <strong>⚡ Plan IA</strong> dans la barre du haut pour générer ton plan personnalisé.</p>
+    </div>
+  </section>
+
+  <section class="section requires-plan">
     <div class="section__head">
       <h2 class="section__title">Cette semaine</h2>
       <span class="section__sub" id="now-num-sub">—</span>
@@ -1290,13 +1299,13 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section requires-plan">
     <div class="section__head">
       <h2 class="section__title">Plan complet</h2>
-      <span class="section__sub requires-plan" id="plan-window"></span>
+      <span class="section__sub" id="plan-window"></span>
     </div>
     <div id="all-weeks"></div>
-    <div class="requires-plan" style="text-align:center;">
+    <div style="text-align:center;">
       <button class="reset-btn" id="reset">↺  Tout décocher</button>
     </div>
   </section>

@@ -19,4 +19,10 @@ patches:
         path: /spec/rules/0/filters
 images:
   - name: ghcr.io/popul/footing-web
-    newTag: latest
+    # :latest n'a jamais été publié par la CI (qui ne pousse que
+    # sha-<commit> et :main), d'où l'ImagePullBackOff historique sur
+    # ce overlay. Pin sur un sha fixe = bump manuel par PR. Sha
+    # = état de la prod restauré depuis homelab@8845700 (avant
+    # /welcome.html et le redirect / vers welcome qui sont gated
+    # par l'IaC Authentik côté staging uniquement).
+    newTag: sha-3477fb18655d
