@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SUB 45 — 10 km · 11 octobre 2026</title>
-<meta name="description" content="Plan d'entraînement 10 km — objectif 45:00 le 11 octobre 2026.">
+<title>Footing — plan d'entraînement personnalisé</title>
+<meta name="description" content="Plan d'entraînement personnalisé pour la course à pied.">
 <meta name="theme-color" content="#0a0b0d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1160,6 +1160,11 @@
     footer { padding: 2rem 0 2.5rem; font-size: 0.78rem; }
   }
 
+  /* Toggle global : tant que `body.has-plan` n'est pas set, toutes les
+     zones marquées `requires-plan` (hero, stats, allures, stratégie,
+     règles, objectifs, footer signature, etc.) sont masquées. */
+  body:not(.has-plan) .requires-plan { display: none !important; }
+
   /* Empty state quand l'utilisateur n'a pas de plan persisté. */
   .empty-state {
     text-align: center;
@@ -1215,9 +1220,9 @@
   <div class="topbar__inner">
     <div class="brand">
       <span class="brand__dot"></span>
-      <span class="brand__name">SUB&nbsp;45</span>
-      <span class="brand__sep">/</span>
-      <span class="brand__date">10K · 11.10.2026</span>
+      <span class="brand__name">Footing</span>
+      <span class="brand__sep requires-plan">/</span>
+      <span class="brand__date requires-plan" id="brand-meta"></span>
     </div>
     <div class="topbar__actions">
       <button id="plan-open" class="topbar__link" type="button" title="Générer un plan personnalisé">⚡ Plan IA</button>
@@ -1237,11 +1242,11 @@
 </nav>
 
 <header class="hero page">
-  <p class="hero__kicker">Plan personnel · 23 semaines · allure cible 4:30/km</p>
-  <h1 class="hero__title">Sub <em>45:00</em></h1>
-  <p class="hero__sub">10 km le <strong>dimanche 11 octobre 2026</strong>. Passer de <strong>51 min</strong> à <strong>45 min</strong> à la Garmin Forerunner 165.</p>
+  <p class="hero__kicker requires-plan" id="hero-kicker"></p>
+  <h1 class="hero__title requires-plan" id="hero-title"></h1>
+  <p class="hero__sub requires-plan" id="hero-sub"></p>
 
-  <div class="stats">
+  <div class="stats requires-plan">
     <div class="stat stat--accent">
       <p class="stat__label">J −</p>
       <div><span class="stat__value" id="cd-days">—</span><span class="stat__unit">jours</span></div>
@@ -1256,11 +1261,11 @@
     </div>
     <div class="stat">
       <p class="stat__label">Volume total</p>
-      <div><span class="stat__value" id="cd-total">69</span><span class="stat__unit">prévues</span></div>
+      <div><span class="stat__value" id="cd-total">—</span><span class="stat__unit">prévues</span></div>
     </div>
   </div>
 
-  <div class="progress">
+  <div class="progress requires-plan">
     <div class="progress__head">
       <span class="progress__label">Progression du plan</span>
       <span class="progress__value" id="progress-text">—</span>
@@ -1278,7 +1283,7 @@
     </div>
     <div class="now">
       <div class="now__head">
-        <h3 class="now__title">Semaine <em id="now-num">…</em> / 23</h3>
+        <h3 class="now__title">Semaine <em id="now-num">…</em><span class="requires-plan"> / <span id="now-num-total">—</span></span></h3>
         <span class="now__phase" id="now-phase">…</span>
       </div>
       <div id="now-sessions"></div>
@@ -1288,15 +1293,15 @@
   <section class="section">
     <div class="section__head">
       <h2 class="section__title">Plan complet</h2>
-      <span class="section__sub">04.05 → 11.10.2026</span>
+      <span class="section__sub requires-plan" id="plan-window"></span>
     </div>
     <div id="all-weeks"></div>
-    <div style="text-align:center;">
+    <div class="requires-plan" style="text-align:center;">
       <button class="reset-btn" id="reset">↺  Tout décocher</button>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section requires-plan" id="paces-section">
     <div class="section__head">
       <h2 class="section__title">Allures de référence</h2>
       <span class="section__sub">min/km</span>
@@ -1304,78 +1309,17 @@
     <div class="pace-table">
       <table>
         <thead><tr><th>Type d'allure</th><th>Allure</th></tr></thead>
-        <tbody>
-          <tr><td>Endurance fondamentale</td><td>5:50 – 6:30</td></tr>
-          <tr><td>Endurance active</td><td>5:20 – 5:40</td></tr>
-          <tr><td>Seuil léger</td><td>4:55 – 4:45</td></tr>
-          <tr><td>Seuil soutenu</td><td>4:45 – 4:35</td></tr>
-          <tr><td>10 km — actuel</td><td>5:05</td></tr>
-          <tr class="highlight"><td>10 km — objectif</td><td>4:30</td></tr>
-          <tr><td>Intervalles courts</td><td>4:20 – 4:05</td></tr>
-          <tr><td>30 sec rapide (≈14 km/h)</td><td>4:10 – 4:25</td></tr>
-        </tbody>
+        <tbody id="paces-tbody"></tbody>
       </table>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section requires-plan" id="race-section">
     <div class="section__head">
       <h2 class="section__title">Préparation à la course</h2>
       <span class="section__sub">stratégie · règles · objectifs</span>
     </div>
-
-    <details>
-      <summary>Stratégie de course</summary>
-      <div class="body">
-        <p>Ne pas partir trop vite. Le piège principal est de partir à 4:20/km sur le premier kilomètre.</p>
-        <table>
-          <tr><th>Km</th><th>Allure</th></tr>
-          <tr><td>1</td><td>4:35/km</td></tr>
-          <tr><td>2</td><td>4:33/km</td></tr>
-          <tr><td>3</td><td>4:32/km</td></tr>
-          <tr><td>4</td><td>4:30/km</td></tr>
-          <tr><td>5</td><td>passage 22:40 – 22:45</td></tr>
-          <tr><td>6 – 8</td><td>4:28 – 4:30/km</td></tr>
-          <tr><td>9</td><td>accélération progressive</td></tr>
-          <tr><td>10</td><td>finir au mental</td></tr>
-        </table>
-      </div>
-    </details>
-
-    <details>
-      <summary>Séances repères à valider</summary>
-      <div class="body">
-        <ul>
-          <li><strong>Fin juin</strong> — 3 × 2 km à 4:45/km</li>
-          <li><strong>Fin juillet</strong> — 5 × 1000 m à 4:30 – 4:35/km</li>
-          <li><strong>Fin août</strong> — 3 × 2 km à 4:35/km</li>
-          <li><strong>Mi-septembre</strong> — 3 × 2 km à 4:30 – 4:33/km</li>
-          <li><strong>Fin septembre</strong> — 5 × 1000 m à 4:28 – 4:30/km <em>avec marge</em></li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>Règles importantes</summary>
-      <div class="body">
-        <p><strong>1. Les footings doivent rester faciles.</strong> 5:50 – 6:30/km. Éviter le 5:10 – 5:20/km qui fatigue sans rapporter.</p>
-        <p><strong>2. Ne pas transformer chaque séance en test.</strong> Une bonne séance = il reste de la marge. « J'aurais pu faire une rep de plus » est meilleur que « je suis explosé ».</p>
-        <p><strong>3. Respecter les semaines allégées.</strong> Pas optionnelles — elles servent à assimiler.</p>
-        <p><strong>4. En cas de fatigue ou douleur.</strong> Remplacer la séance rapide par 45 min facile, repos, ou vélo / nat. Mieux vaut perdre une séance que perdre trois semaines.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>Objectifs de course</summary>
-      <div class="body">
-        <ul>
-          <li><strong>Objectif A</strong> — 45:00</li>
-          <li><strong>Objectif B</strong> — 46:00 – 46:30</li>
-          <li><strong>Objectif C</strong> — sous 48:00</li>
-        </ul>
-        <p>Avec ce plan et un bon suivi, le résultat le plus probable est <strong>46 – 47 min</strong>. Le 45:00 est ambitieux mais cohérent si les séances spécifiques passent, la récupération est bonne, les footings restent faciles, l'affûtage est respecté, et la course est bien gérée.</p>
-      </div>
-    </details>
+    <div id="race-details"></div>
   </section>
 
 </main>
@@ -1475,13 +1419,18 @@
         </select>
         <span class="field-error" data-error="daysPerWeek"></span>
       </div>
-      <div class="modal__field" style="grid-column: 1 / -1;">
+      <div class="modal__field">
         <label for="plan-longRunDay">Sortie longue</label>
         <select id="plan-longRunDay">
           <option value="Dimanche" selected>Dimanche</option>
           <option value="Samedi">Samedi</option>
         </select>
         <span class="field-error" data-error="longRunDay"></span>
+      </div>
+      <div class="modal__field">
+        <label for="plan-gear">Matériel (optionnel)</label>
+        <input id="plan-gear" type="text" placeholder="ex Forerunner 165" autocomplete="off">
+        <span class="field-error" data-error="gear"></span>
       </div>
     </div>
 
@@ -1502,8 +1451,8 @@
 </div>
 
 <footer>
-  <p class="footer__signature">— Forerunner 165 · 23 semaines · 1 objectif —</p>
-  <p>Suivi à la Garmin Forerunner 165 · Cocher chaque séance après l'enregistrement sur Garmin Connect.</p>
+  <p class="footer__signature requires-plan" id="footer-signature"></p>
+  <p class="requires-plan" id="footer-tagline"></p>
   <p>Lecture complémentaire : <a href="/livre.html">le petit traité du coureur</a></p>
 </footer>
 
@@ -1967,12 +1916,219 @@ async function loadDynamicPlan() {
       const [y, m, d] = data.raceDate.split('-').map(Number);
       RACE_DATE = new Date(y, m - 1, d);
     }
-    if (data.weeks[0] && data._inputs && data._inputs.startDate) {
+    if (data._inputs && data._inputs.startDate) {
       const [y, m, d] = data._inputs.startDate.split('-').map(Number);
       PLAN_START = new Date(y, m - 1, d);
     }
+    document.body.classList.add('has-plan');
+    renderPlanMeta(data);
     return true;
   } catch { return false; }
+}
+
+// ============== PLAN-DRIVEN METADATA RENDERERS ==============
+// Tout le contenu éditorial (hero, brand date, allures, stratégie de
+// course, séances repères, règles, objectifs, footer) vient du
+// plan.json. Le HTML statique ne contient que des conteneurs vides.
+// Une section avec champ manquant/vide est cachée individuellement
+// (display:none) — le user voit uniquement ce que SON plan a généré.
+
+const FR_MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+function fmtDateLong(d) {
+  if (!d) return '';
+  return `${d.getDate()} ${FR_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function fmtDateShort(d) {
+  if (!d) return '';
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  return `${dd}.${mm}`;
+}
+
+function fmtDateShortFull(d) {
+  if (!d) return '';
+  return `${fmtDateShort(d)}.${d.getFullYear()}`;
+}
+
+function distanceLabel(dist) {
+  return { '5K': '5 km', '10K': '10 km', 'HM': 'Semi-marathon', 'M': 'Marathon' }[dist] || dist;
+}
+
+function targetPaceLabel(data) {
+  const distM = { '5K': 5000, '10K': 10000, 'HM': 21097.5, 'M': 42195 }[data.raceDistance];
+  if (!distM || !data.targetTime) return '';
+  const parts = String(data.targetTime).split(':').map(Number);
+  let sec = 0;
+  if (parts.length === 2) sec = parts[0] * 60 + parts[1];
+  else if (parts.length === 3) sec = parts[0] * 3600 + parts[1] * 60 + parts[2];
+  else return '';
+  const pacePerKm = sec / (distM / 1000);
+  const m = Math.floor(pacePerKm / 60);
+  const s = Math.round(pacePerKm - m * 60);
+  return `${m}:${String(s).padStart(2, '0')}/km`;
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!text) {
+    el.style.display = 'none';
+  } else {
+    el.style.display = '';
+    el.textContent = text;
+  }
+}
+
+function setHTML(id, html) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!html) {
+    el.style.display = 'none';
+  } else {
+    el.style.display = '';
+    el.innerHTML = html;
+  }
+}
+
+function hideSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+
+function escapeHTML(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderPlanMeta(data) {
+  // Brand date dans le topbar : "10K · 11.10.2026"
+  if (data.raceDate && data.raceDistance) {
+    const [y, m, d] = data.raceDate.split('-').map(Number);
+    setText('brand-meta', `${data.raceDistance} · ${fmtDateShortFull(new Date(y, m - 1, d))}`);
+  }
+
+  // Hero : kicker (X semaines · allure cible Y), title, sub.
+  const targetPace = targetPaceLabel(data);
+  const kickerBits = [`${plan.length} semaines`];
+  if (targetPace) kickerBits.push(`allure cible ${targetPace}`);
+  setText('hero-kicker', kickerBits.join(' · '));
+
+  if (data.title) {
+    // "Sub 45:00" → on stylise la partie après le 1er espace en accent.
+    const space = data.title.indexOf(' ');
+    if (space > 0) {
+      setHTML('hero-title', `${escapeHTML(data.title.slice(0, space))} <em>${escapeHTML(data.title.slice(space + 1))}</em>`);
+    } else {
+      setText('hero-title', data.title);
+    }
+  } else if (data.targetTime) {
+    setHTML('hero-title', `Objectif <em>${escapeHTML(data.targetTime)}</em>`);
+  } else {
+    hideSection('hero-title');
+  }
+
+  // Sub-title : on construit "[distance] le [date longue]. [pitch]"
+  const subBits = [];
+  if (data.raceDate && data.raceDistance) {
+    const [y, m, d] = data.raceDate.split('-').map(Number);
+    subBits.push(`${distanceLabel(data.raceDistance)} le <strong>${fmtDateLong(new Date(y, m - 1, d))}</strong>.`);
+  }
+  if (data.pitch) subBits.push(escapeHTML(data.pitch));
+  setHTML('hero-sub', subBits.join(' '));
+
+  // Section "Plan complet" : fenêtre dates
+  if (PLAN_START && RACE_DATE) {
+    setText('plan-window', `${fmtDateShort(PLAN_START)} → ${fmtDateShortFull(RACE_DATE)}`);
+  }
+
+  // now-num-total : "/ N" dans le titre "Cette semaine"
+  setText('now-num-total', String(plan.length));
+
+  // Footer
+  const footerBits = [];
+  if (data.gear) footerBits.push(data.gear);
+  footerBits.push(`${plan.length} semaines`);
+  footerBits.push('1 objectif');
+  setText('footer-signature', `— ${footerBits.join(' · ')} —`);
+  if (data.gear) {
+    setText('footer-tagline', `Suivi à la ${data.gear} · Cocher chaque séance après l'enregistrement sur Garmin Connect.`);
+  } else {
+    setText('footer-tagline', 'Cocher chaque séance après l\'enregistrement sur Garmin Connect.');
+  }
+
+  renderPacesSection(data.paces);
+  renderRaceSection(data);
+}
+
+function renderPacesSection(paces) {
+  if (!Array.isArray(paces) || !paces.length) {
+    hideSection('paces-section');
+    return;
+  }
+  const html = paces.map(p =>
+    `<tr${p.highlight ? ' class="highlight"' : ''}><td>${escapeHTML(p.label)}</td><td>${escapeHTML(p.pace)}</td></tr>`
+  ).join('');
+  setHTML('paces-tbody', html);
+}
+
+function renderRaceSection(data) {
+  const blocks = [];
+  if (Array.isArray(data.raceStrategy) && data.raceStrategy.length) {
+    const rows = data.raceStrategy.map(s =>
+      `<tr><td>${escapeHTML(s.km)}</td><td>${escapeHTML(s.pace)}</td></tr>`
+    ).join('');
+    blocks.push(`
+      <details>
+        <summary>Stratégie de course</summary>
+        <div class="body">
+          <table><tr><th>Km</th><th>Allure</th></tr>${rows}</table>
+        </div>
+      </details>
+    `);
+  }
+  if (Array.isArray(data.keySessions) && data.keySessions.length) {
+    const lis = data.keySessions.map(s => {
+      const note = s.note ? ` <em>${escapeHTML(s.note)}</em>` : '';
+      return `<li><strong>${escapeHTML(s.when)}</strong> — ${escapeHTML(s.description)}${note}</li>`;
+    }).join('');
+    blocks.push(`
+      <details>
+        <summary>Séances repères à valider</summary>
+        <div class="body"><ul>${lis}</ul></div>
+      </details>
+    `);
+  }
+  if (Array.isArray(data.rules) && data.rules.length) {
+    const ps = data.rules.map((r, i) => `<p><strong>${i + 1}.</strong> ${escapeHTML(r)}</p>`).join('');
+    blocks.push(`
+      <details>
+        <summary>Règles importantes</summary>
+        <div class="body">${ps}</div>
+      </details>
+    `);
+  }
+  const obj = data.objectives;
+  if (obj && (obj.A || obj.B || obj.C)) {
+    const lis = [];
+    if (obj.A) lis.push(`<li><strong>Objectif A</strong> — ${escapeHTML(obj.A)}</li>`);
+    if (obj.B) lis.push(`<li><strong>Objectif B</strong> — ${escapeHTML(obj.B)}</li>`);
+    if (obj.C) lis.push(`<li><strong>Objectif C</strong> — ${escapeHTML(obj.C)}</li>`);
+    const comment = obj.comment ? `<p>${escapeHTML(obj.comment)}</p>` : '';
+    blocks.push(`
+      <details>
+        <summary>Objectifs de course</summary>
+        <div class="body"><ul>${lis.join('')}</ul>${comment}</div>
+      </details>
+    `);
+  }
+  if (!blocks.length) {
+    hideSection('race-section');
+    return;
+  }
+  setHTML('race-details', blocks.join(''));
 }
 
 // ============== PLAN MODAL ==============
@@ -2203,6 +2359,7 @@ async function submitPlanGeneration(e) {
     daysPerWeek: parseInt(document.getElementById('plan-daysPerWeek').value, 10) || 3,
     longRunDay: document.getElementById('plan-longRunDay').value,
     startDate: document.getElementById('plan-startDate').value,
+    gear: document.getElementById('plan-gear').value.trim(),
   };
 
   try {

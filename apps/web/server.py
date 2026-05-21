@@ -392,6 +392,50 @@ _TOP_STEP_SCHEMA = {
     "anyOf": [_EXEC_STEP_SCHEMA, _REPEAT_STEP_SCHEMA],
 }
 
+_PACE_ITEM_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "label": {"type": "string"},
+        "pace": {"type": "string"},
+        "highlight": {"type": "boolean"},
+    },
+    "required": ["label", "pace", "highlight"],
+}
+
+_STRATEGY_ITEM_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "km": {"type": "string"},
+        "pace": {"type": "string"},
+    },
+    "required": ["km", "pace"],
+}
+
+_KEY_SESSION_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "when": {"type": "string"},
+        "description": {"type": "string"},
+        "note": {"type": "string"},
+    },
+    "required": ["when", "description", "note"],
+}
+
+_OBJECTIVES_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "A": {"type": "string"},
+        "B": {"type": "string"},
+        "C": {"type": "string"},
+        "comment": {"type": "string"},
+    },
+    "required": ["A", "B", "C", "comment"],
+}
+
 PLAN_SCHEMA = {
     "type": "object",
     "additionalProperties": False,
@@ -399,6 +443,14 @@ PLAN_SCHEMA = {
         "raceDate": {"type": "string"},
         "raceDistance": {"type": "string", "enum": ["5K", "10K", "HM", "M"]},
         "targetTime": {"type": "string"},
+        "title": {"type": "string"},
+        "pitch": {"type": "string"},
+        "gear": {"type": "string"},
+        "paces": {"type": "array", "items": _PACE_ITEM_SCHEMA},
+        "raceStrategy": {"type": "array", "items": _STRATEGY_ITEM_SCHEMA},
+        "keySessions": {"type": "array", "items": _KEY_SESSION_SCHEMA},
+        "rules": {"type": "array", "items": {"type": "string"}},
+        "objectives": _OBJECTIVES_SCHEMA,
         "weeks": {
             "type": "array",
             "items": {
@@ -452,7 +504,11 @@ PLAN_SCHEMA = {
             },
         },
     },
-    "required": ["raceDate", "raceDistance", "targetTime", "weeks"],
+    "required": [
+        "raceDate", "raceDistance", "targetTime", "weeks",
+        "title", "pitch", "gear",
+        "paces", "raceStrategy", "keySessions", "rules", "objectives",
+    ],
 }
 
 
@@ -538,6 +594,7 @@ def build_plan_prompt(inputs, n_weeks):
     long_run_day = inputs.get('longRunDay') or 'Dimanche'
     start_date = inputs['startDate']
     race_date = inputs['raceDate']
+    gear = (inputs.get('gear') or '').strip()
 
     valid_days = ['Mardi', 'Mercredi', 'Jeudi', 'Vendredi'] if days_per_week >= 4 else ['Mardi', 'Jeudi']
     if days_per_week >= 4:
@@ -563,8 +620,9 @@ PARAMÈTRES UTILISATEUR
 - Jours d'entraînement : {days_per_week} par semaine
 - Sortie longue        : {long_run_day}
 - Nombre de semaines   : {n_weeks}
+- Matériel (montre)    : {gear or '—'}
 
-CONTRAINTES
+CONTRAINTES STRUCTURE PLAN
 1. Le plan compte EXACTEMENT {n_weeks} semaines numérotées de 1 à {n_weeks}.
 2. La dernière semaine (num={n_weeks}) a `race: true` et sa séance du dimanche est la course (pas de bloc `garmin`).
 3. Chaque semaine a {days_per_week} séances sur des jours distincts dans : {', '.join(valid_days)}.
@@ -576,13 +634,23 @@ CONTRAINTES
    - {{type:"interval"|"other", dur:{{time:S}} ou {{dist:M}}, pace:[slow,fast]}}
    - {{type:"recovery", dur:{{time:S}} ou {{lap:true}}, pace:[slow,fast]}}
    - {{type:"repeat", count:N, steps:[interval, recovery]}}
-8. Allures de référence (s/km) :
+8. Allures de référence pour les `garmin.steps` (s/km) :
    - Endurance fondamentale : [390, 350]
    - Trot récupération      : [420, 390]
    - Allure cible course    : [{int(target_pace) + 5}, {int(target_pace) - 5}]
    Adapte les autres allures au niveau de l'athlète.
 9. `items` reflète `garmin.steps` en français lisible (ex: {{do:"20 min échauffement", pace:"5:50–6:30/km"}}).
 10. Range les écarts d'allures dans des ranges courts (5–15s).
+
+CONTRAINTES CONTENU ÉDITORIAL (affichés dans l'UI, calibrés pour le coureur)
+11. `title` : titre court genre "Sub {inputs['targetTime']}" si time < 1h, sinon "Objectif {inputs['targetTime']}". Pas de date dedans.
+12. `pitch` : 1 phrase courte sub-title du hero. Format type "Passer de {inputs['currentTime']} à {inputs['targetTime']}." Mentionne `{gear}` en fin si non vide.
+13. `gear` : recopie tel quel l'input matériel ("{gear}"), ou "" si vide.
+14. `paces` : 6 à 10 lignes d'allures de référence du coureur, format ex `{{label:"Endurance fondamentale", pace:"5:50 – 6:30", highlight:false}}`. Marque `highlight:true` UNIQUEMENT sur la ligne "{distance} — objectif" (allure cible course).
+15. `raceStrategy` : 8 à 12 lignes pour parcourir la course km par km, format `{{km:"1", pace:"4:35/km"}}` ou `{{km:"5", pace:"passage 22:40 – 22:45"}}` pour les checkpoints. Stratégie négative (partir prudent, accélérer en 2e moitié).
+16. `keySessions` : 4 à 6 séances repères à valider en cours de plan, format `{{when:"Fin juin", description:"3 × 2 km à 4:45/km", note:"séance pivot"}}`. `note` peut être "" si rien à dire.
+17. `rules` : 3 à 5 règles importantes en phrases complètes, format `["Les footings doivent rester faciles.", "Ne pas ..."]`. Inclure : footings faciles, ne pas tout transformer en test, respecter les semaines allégées, gestion fatigue/douleur.
+18. `objectives` : objet `{{A:"...", B:"...", C:"...", comment:"..."}}` avec A=temps cible, B=intermédiaire optimiste, C=plancher acceptable, et `comment` = 1-2 phrases sur le résultat probable.
 
 Réponds par le JSON conforme au schéma. Aucun commentaire."""}
     ]
