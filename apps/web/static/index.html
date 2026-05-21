@@ -1763,23 +1763,12 @@ function renderSession(week, idx, session, opts = {}) {
   `;
 }
 
-// Affiché quand l'utilisateur n'a pas encore de plan persisté côté
-// serveur — pas de fallback hardcoded, juste l'invite vers Plan IA.
-const EMPTY_STATE_HTML = `
-  <div class="empty-state">
-    <p class="empty-state__title">Aucun plan pour l'instant.</p>
-    <p class="empty-state__hint">Clique <strong>⚡ Plan IA</strong> dans la barre du haut pour générer ton plan personnalisé.</p>
-  </div>
-`;
-
 function renderCurrentWeek() {
-  if (!plan.length) {
-    document.getElementById('now-num').textContent = '—';
-    document.getElementById('now-num-sub').textContent = '—';
-    document.getElementById('now-phase').textContent = 'Pas de plan';
-    document.getElementById('now-sessions').innerHTML = EMPTY_STATE_HTML;
-    return;
-  }
+  // Sans plan, la section "Cette semaine" est masquée par CSS
+  // (.requires-plan vs body.has-plan), donc on a juste à ne rien
+  // toucher : l'empty state visible vient d'une autre section
+  // déclarée `.empty-only` dans le HTML.
+  if (!plan.length) return;
   const num = currentWeekNum();
   const w = plan.find(x => x.num === num);
   document.getElementById('now-num').textContent = num;
