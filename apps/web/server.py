@@ -951,6 +951,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         return self.rfile.read(length)
 
     def do_GET(self):
+        # `/` est exposé en public via skip_path_regex côté Authentik
+        # (l'outpost laisse passer sans 302 vers le login). On distingue
+        # ici visiteur anonyme vs déjà loggué via le cookie outpost
+        # `authentik_proxy_*` (posé après la première auth Google) :
+        #   - cookie absent → 302 vers /welcome.html (page d'accueil
+        #     publique)
+        #   - cookie présent → on sert index.html (l'app) ; si le
+        #     cookie est expiré, le premier fetch /api/whoami fera
+        #     302 vers Authentik comme avant
+        if self.path == '/':
+            cookie = self.headers.get('Cookie', '')
+            if 'authentik_proxy_' not in cookie:
+                self.send_response(302)
+                self.send_header('Location', '/welcome.html')
+                self.end_headers()
+                return
         if self.path == '/api/whoami':
             user_id = self._require_user()
             if not user_id:
