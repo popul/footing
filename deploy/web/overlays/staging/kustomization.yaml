@@ -13,4 +13,4 @@ patches:
 images:
 - name: ghcr.io/popul/footing-web
   newName: ghcr.io/popul/footing-web
-  newTag: sha-076f0c8c7365
+  newTag: sha-64fdd0446a12
