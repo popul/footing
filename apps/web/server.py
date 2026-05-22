@@ -690,7 +690,12 @@ def llm_generate(messages, schema):
         "model": LLM_MODEL,
         "messages": messages,
         "temperature": 0.4,
-        "max_tokens": 16000,
+        # 16000 tokens étaient assez juste pour un 10K (23 semaines, ~58k
+        # chars de JSON). Un marathon (16-24 semaines × 3-5 séances × steps
+        # garmin verbeux) dépasse facilement et tronque le JSON au milieu
+        # → JSONDecodeError. 48000 = marge confortable pour tout type de
+        # plan, y compris marathon 5j/sem.
+        "max_tokens": 48000,
         "chat_template_kwargs": {"enable_thinking": False},
         "response_format": {
             "type": "json_schema",
