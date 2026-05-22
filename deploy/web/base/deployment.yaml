@@ -33,7 +33,14 @@ spec:
             - name: DEFAULT_USER
               value: default
             - name: LLM_BASE_URL
-              value: http://macbookprom5.home:1234/v1
+              # IP LAN du macbook qui héberge LM Studio. Hardcodée parce
+              # que paulmacm5.home / macbookprom5.home sont des noms mDNS
+              # uniquement résolvables sur le LAN local — les pods staging
+              # passent par CoreDNS qui forward sur 1.1.1.1/8.8.8.8 publics
+              # et ne connaissent pas ces noms. À actualiser si l'IP du
+              # macbook change (DHCP), sinon prévoir réservation côté
+              # router.
+              value: http://192.168.1.23:1234/v1
           volumeMounts:
             - name: data
               mountPath: /data
