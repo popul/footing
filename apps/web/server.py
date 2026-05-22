@@ -649,8 +649,31 @@ CONTRAINTES CONTENU ÉDITORIAL (affichés dans l'UI, calibrés pour le coureur)
 14. `paces` : 6 à 10 lignes d'allures de référence du coureur, format ex `{{label:"Endurance fondamentale", pace:"5:50 – 6:30", highlight:false}}`. Marque `highlight:true` UNIQUEMENT sur la ligne "{distance} — objectif" (allure cible course).
 15. `raceStrategy` : 8 à 12 lignes pour parcourir la course km par km, format `{{km:"1", pace:"4:35/km"}}` ou `{{km:"5", pace:"passage 22:40 – 22:45"}}` pour les checkpoints. Stratégie négative (partir prudent, accélérer en 2e moitié).
 16. `keySessions` : 4 à 6 séances repères à valider en cours de plan, format `{{when:"Fin juin", description:"3 × 2 km à 4:45/km", note:"séance pivot"}}`. `note` peut être "" si rien à dire.
-17. `rules` : 3 à 5 règles importantes en phrases complètes, format `["Les footings doivent rester faciles.", "Ne pas ..."]`. Inclure : footings faciles, ne pas tout transformer en test, respecter les semaines allégées, gestion fatigue/douleur.
+17. `rules` : 4 à 6 règles importantes en phrases complètes, format `["Les footings doivent rester faciles.", "Ne pas ..."]`. Inclure obligatoirement :
+    - Footings faciles (allure conversation possible)
+    - Ratio 70 à 80% du volume total en endurance fondamentale (cf. point 19)
+    - Ne pas tout transformer en test (garder de la marge sur les séances dures)
+    - Respecter les semaines allégées (assimilation)
+    - Le repos est un entraînement (au moins 1 jour facile/repos entre 2 séances dures)
+    - Gestion fatigue/douleur (remplacer une séance rapide par 45 min facile ou repos plutôt que pousser)
 18. `objectives` : objet `{{A:"...", B:"...", C:"...", comment:"..."}}` avec A=temps cible, B=intermédiaire optimiste, C=plancher acceptable, et `comment` = 1-2 phrases sur le résultat probable.
+
+PRINCIPES PÉDAGOGIQUES (issus du "Petit Traité du Coureur" — /livre.html)
+19. Volume hebdomadaire respectant la règle 70-80% / 20-30% :
+    - 70 à 80% du volume total en endurance fondamentale (allure facile,
+      conversation possible, FC ≈ 70% max). C'est la BASE — séances de
+      type warmup/cooldown longs, sorties longues entières, footings
+      faciles.
+    - 20 à 30% en qualité (seuil, fractionné, allure spécifique).
+20. "Les amateurs courent leurs séances faciles TROP VITE et leurs séances
+    rapides TROP LENTEMENT." Concrètement :
+    - Pour les `garmin.steps` de type warmup/cooldown/other en endurance,
+      utiliser l'allure [390, 350] (5:50 à 6:30/km) — vraiment lent.
+    - Pour les intervals/spécifiques, viser franchement l'allure cible
+      ou plus rapide. Pas de zone grise.
+21. Repos = entraînement. Entre deux séances dures (interval, seuil,
+    spécifique, sortie longue), prévoir au moins une journée facile ou
+    repos. Ne jamais enchaîner 2 séances dures consécutives.
 
 Réponds par le JSON conforme au schéma. Aucun commentaire."""}
     ]
