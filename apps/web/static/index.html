@@ -1333,6 +1333,17 @@
 
 </main>
 
+<div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div class="modal" style="max-width: 28rem;">
+    <h3 class="modal__title" id="confirm-title">Confirmation</h3>
+    <p class="modal__sub" id="confirm-message" style="white-space: pre-wrap;"></p>
+    <div class="modal__actions">
+      <button type="button" class="modal__btn" id="confirm-cancel">Annuler</button>
+      <button type="button" class="modal__btn modal__btn--primary" id="confirm-ok">OK</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="garmin-modal" role="dialog" aria-modal="true" aria-labelledby="garmin-modal-title">
   <form class="modal" id="garmin-form" autocomplete="on">
     <h3 class="modal__title" id="garmin-modal-title">Connexion Garmin</h3>
@@ -1912,11 +1923,16 @@ function bindEvents() {
     });
   });
   document.getElementById('reset').addEventListener('click', () => {
-    if (confirm('Tout décocher ? Cette action est irréversible.')) {
+    confirmModal('Tout décocher ?\n\nCette action est irréversible.', {
+      title: 'Réinitialiser les coches',
+      okLabel: 'Décocher tout',
+      danger: true,
+    }).then(ok => {
+      if (!ok) return;
       state = {};
       saveState();
       refresh();
-    }
+    });
   });
 }
 
@@ -2303,7 +2319,13 @@ async function handleGeneratedPlan(plan) {
   const action = hadPrevPlan
     ? `Remplacer le plan actuel ? Cette action écrase l'état des séances cochées.`
     : `Adopter ce plan ?`;
-  if (!confirm(`Plan généré : ${plan.weeks.length} semaines.${warnings}\n\n${action}`)) {
+  const ok = await confirmModal(`${plan.weeks.length} semaines.${warnings}`, {
+    title: `Plan généré`,
+    okLabel: hadPrevPlan ? 'Remplacer' : 'Adopter',
+    cancelLabel: 'Garder l\'actuel',
+    danger: hadPrevPlan,
+  });
+  if (!ok) {
     resetSubmit();
     disableForm(false);
     return;
@@ -2473,7 +2495,11 @@ async function resumePlanJobIfAny() {
 }
 
 async function deleteCurrentPlan() {
-  if (!confirm('Supprimer le plan actuel ? Il faudra en générer un nouveau via Plan IA.')) return;
+  const ok = await confirmModal(
+    'Supprimer le plan actuel ?\n\nIl faudra en générer un nouveau via ⚡ Plan IA.',
+    { title: 'Supprimer le plan', okLabel: 'Supprimer', danger: true }
+  );
+  if (!ok) return;
   await fetch('/api/plan', { method: 'DELETE' });
   state = {};
   saveState();
@@ -2535,6 +2561,54 @@ async function showWhoami() {
 // Retry de PUT /api/plan : si une génération précédente a réussi mais
 // le save a échoué (cookie expiré, réseau), le plan est conservé en
 // localStorage pour pouvoir être rejoué au reload de la page.
+// Modal de confirmation custom (remplace window.confirm() qui est moche).
+// Retourne Promise<boolean>. opts = { title?, okLabel?, cancelLabel?, danger? }.
+function confirmModal(message, opts = {}) {
+  return new Promise(resolve => {
+    const modal = document.getElementById('confirm-modal');
+    const titleEl = document.getElementById('confirm-title');
+    const msgEl = document.getElementById('confirm-message');
+    const okBtn = document.getElementById('confirm-ok');
+    const cancelBtn = document.getElementById('confirm-cancel');
+    titleEl.textContent = opts.title || 'Confirmation';
+    msgEl.textContent = message;
+    okBtn.textContent = opts.okLabel || 'OK';
+    cancelBtn.textContent = opts.cancelLabel || 'Annuler';
+    if (opts.danger) okBtn.style.background = 'var(--race)';
+    else okBtn.style.background = '';
+
+    function cleanup(result) {
+      modal.classList.remove('is-open');
+      if (!document.querySelector('.modal-backdrop.is-open')) {
+        document.body.classList.remove('modal-open');
+      }
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      modal.removeEventListener('click', onBackdrop);
+      document.removeEventListener('keydown', onKey);
+      popModalHistory();
+      resolve(result);
+    }
+    function onOk() { cleanup(true); }
+    function onCancel() { cleanup(false); }
+    function onBackdrop(e) { if (e.target.id === 'confirm-modal') cleanup(false); }
+    function onKey(e) {
+      if (e.key === 'Escape') cleanup(false);
+      if (e.key === 'Enter') cleanup(true);
+    }
+
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+    modal.addEventListener('click', onBackdrop);
+    document.addEventListener('keydown', onKey);
+
+    modal.classList.add('is-open');
+    document.body.classList.add('modal-open');
+    pushModalHistory('confirm');
+    setTimeout(() => okBtn.focus(), 50);
+  });
+}
+
 async function flushPendingPlan() {
   const raw = localStorage.getItem('footing_plan_pending');
   if (!raw) return;
