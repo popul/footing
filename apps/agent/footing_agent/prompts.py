@@ -119,6 +119,27 @@ PRINCIPES PÉDAGOGIQUES (issus du "Petit Traité du Coureur")
 13. Repos = entraînement. Entre deux séances dures (interval, seuil,
     spécifique, sortie longue), prévoir au moins une journée facile.
 
+CRITÈRES D'ACCEPTANCE (vérifie chaque point avant de renvoyer le JSON)
+A. raceDistance == "{distance}" (recopie EXACTEMENT la valeur d'entrée, pas
+   d'interprétation libre).
+B. targetTime == "{inputs['targetTime']}" (recopie EXACTEMENT).
+C. weeks contient {n_weeks} entrées, numérotées 1 à {n_weeks} dans l'ordre.
+D. weeks[{n_weeks - 1}].race == true ; aucune autre semaine n'a race=true.
+E. La séance du Dimanche de la dernière semaine (= course) N'A PAS de bloc
+   garmin ; toutes les autres séances de toutes les autres semaines EN ONT
+   un avec name non vide et steps non vide.
+F. Chaque jour de chaque semaine est unique (pas 2 séances le même jour).
+G. Les `phase` se succèdent sans réapparaître (ex: Base → Seuil → Spécifique
+   → Affûtage, jamais retour à Base après Seuil).
+H. Aucun pace inversé : pour chaque step, pace = [slow_s_per_km, fast_s_per_km]
+   avec slow >= fast (l'allure "slow" a une valeur plus GRANDE en s/km).
+I. Toutes les valeurs pace sont entre 120 (sprint 2:00/km) et 570 (marche
+   9:30/km) s/km.
+J. light: true sur ~25% des semaines (ni la 1ère ni la dernière, jamais
+   2 consécutives).
+K. Au moins une séance contient un step à l'allure cible course
+   ([{int(target_pace) + 5}, {int(target_pace) - 5}] s/km).
+
 Réponds par le JSON conforme au schéma. Aucun commentaire."""
 
     return [
