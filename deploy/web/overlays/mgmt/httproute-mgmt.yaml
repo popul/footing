@@ -7,4 +7,11 @@ spec:
     - name: traefik-gateway
       namespace: traefik
   hostnames:
+    # footing.lab.musso.io = accès LAN/Tailscale via le Traefik LB ;
+    # footing.musso.io = entrée publique via le tunnel cloudflared
+    # (qui catch *.musso.io vers le Traefik mgmt — cf. cm
+    # cloudflared-config). Sans cette 2e entrée, footing.musso.io
+    # arrive sur Traefik mgmt sans HTTPRoute correspondant et
+    # retombe en 404 (Cloudflare le voit comme error code 1033).
     - footing.lab.musso.io
+    - footing.musso.io
