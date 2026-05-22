@@ -22,8 +22,14 @@ import requests
 
 
 DEFAULT_BASE_URL = os.environ.get("LLM_BASE_URL", "http://macbookprom5.home:1234/v1")
-DEFAULT_MODEL = os.environ.get("LLM_MODEL", "qwen/qwen3.6-35b-a3b")
-DEFAULT_TIMEOUT = float(os.environ.get("LLM_TIMEOUT", "300"))
+# qwen3.5-27b distillé sur Claude Opus 4.6 pour le reasoning. Suit
+# bien les critères d'acceptance du prompt sans dégénérer (vs MLX
+# Qwen 3.5 35B qui bouclait jusqu'à hit max_tokens). Comme tous les
+# Qwen-reasoning il route sa génération dans reasoning_content au
+# lieu de content — le fallback `content or reasoning` côté
+# llm_complete s'en occupe.
+DEFAULT_MODEL = os.environ.get("LLM_MODEL", "qwen3.5-27b-claude-4.6-opus-reasoning-distilled")
+DEFAULT_TIMEOUT = float(os.environ.get("LLM_TIMEOUT", "600"))
 DEBUG_DUMP_DIR = os.environ.get("LLM_DEBUG_DUMP", "")
 
 
