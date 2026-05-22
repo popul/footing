@@ -344,7 +344,7 @@ def garmin_push(user_id, payload):
 # ============================================================
 # Plan storage + LLM generation
 # ============================================================
-PLAN_DAYS = ('Mardi', 'Jeudi', 'Dimanche')
+PLAN_DAYS = ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche')
 DAY_OFFSET = {'Lundi': 0, 'Mardi': 1, 'Mercredi': 2, 'Jeudi': 3,
               'Vendredi': 4, 'Samedi': 5, 'Dimanche': 6}
 DISTANCE_MIN_WEEKS = {'5K': 6, '10K': 8, 'HM': 10, 'M': 14}
@@ -596,10 +596,15 @@ def build_plan_prompt(inputs, n_weeks):
     race_date = inputs['raceDate']
     gear = (inputs.get('gear') or '').strip()
 
-    valid_days = ['Mardi', 'Mercredi', 'Jeudi', 'Vendredi'] if days_per_week >= 4 else ['Mardi', 'Jeudi']
-    if days_per_week >= 4:
-        valid_days = valid_days[:days_per_week - 1]
-    valid_days = valid_days + [long_run_day]
+    # Pool de jours utilisables pour les séances de semaine (= tous les
+    # jours SAUF la sortie longue), espacés au mieux pour laisser de la
+    # récup entre 2 séances dures (cf. principe "Repos = entraînement"
+    # du Petit Traité).
+    _all = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+    midweek_pool = [d for d in _all if d != long_run_day]
+    # Le LLM choisit days_per_week-1 jours dans le pool (la sortie longue
+    # compte pour 1). On lui passe le pool entier ; il décide.
+    valid_days = midweek_pool + [long_run_day]
 
     return [
         {"role": "system", "content": (

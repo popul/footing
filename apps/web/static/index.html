@@ -1387,7 +1387,7 @@
       </div>
       <div class="modal__field">
         <label for="plan-raceDate">Date course</label>
-        <input id="plan-raceDate" type="date" required>
+        <input id="plan-raceDate" type="date" required onclick="this.showPicker && this.showPicker()">
         <span class="field-error" data-error="raceDate"></span>
       </div>
       <div class="modal__field">
@@ -1397,7 +1397,7 @@
       </div>
       <div class="modal__field">
         <label for="plan-startDate">Date de début</label>
-        <input id="plan-startDate" type="date" required>
+        <input id="plan-startDate" type="date" required onclick="this.showPicker && this.showPicker()">
         <span class="field-error" data-error="startDate"></span>
       </div>
       <div class="modal__field">
@@ -1405,7 +1405,8 @@
         <select id="plan-currentDistance" required>
           <option value="5K">5 km</option>
           <option value="10K" selected>10 km</option>
-          <option value="HM">Semi</option>
+          <option value="HM">Semi-marathon</option>
+          <option value="M">Marathon</option>
         </select>
         <span class="field-error" data-error="currentDistance"></span>
       </div>
@@ -1431,14 +1432,47 @@
       <div class="modal__field">
         <label for="plan-longRunDay">Sortie longue</label>
         <select id="plan-longRunDay">
-          <option value="Dimanche" selected>Dimanche</option>
+          <option value="Lundi">Lundi</option>
+          <option value="Mardi">Mardi</option>
+          <option value="Mercredi">Mercredi</option>
+          <option value="Jeudi">Jeudi</option>
+          <option value="Vendredi">Vendredi</option>
           <option value="Samedi">Samedi</option>
+          <option value="Dimanche" selected>Dimanche</option>
         </select>
         <span class="field-error" data-error="longRunDay"></span>
       </div>
       <div class="modal__field">
-        <label for="plan-gear">Matériel (optionnel)</label>
-        <input id="plan-gear" type="text" placeholder="ex Forerunner 165" autocomplete="off">
+        <label for="plan-gear">Montre (optionnel)</label>
+        <input id="plan-gear" type="text" list="garmin-watches" placeholder="ex Forerunner 165" autocomplete="off">
+        <datalist id="garmin-watches">
+          <!-- Forerunner — focus running, génération courante (2024-2025) -->
+          <option value="Garmin Forerunner 55"></option>
+          <option value="Garmin Forerunner 165"></option>
+          <option value="Garmin Forerunner 165 Music"></option>
+          <option value="Garmin Forerunner 265"></option>
+          <option value="Garmin Forerunner 265S"></option>
+          <option value="Garmin Forerunner 965"></option>
+          <!-- Forerunner — génération précédente (2022, toujours dispos) -->
+          <option value="Garmin Forerunner 255"></option>
+          <option value="Garmin Forerunner 255S"></option>
+          <option value="Garmin Forerunner 255 Music"></option>
+          <option value="Garmin Forerunner 255S Music"></option>
+          <option value="Garmin Forerunner 955"></option>
+          <option value="Garmin Forerunner 955 Solar"></option>
+          <!-- Multi-sport (running + cardio + GPS) dans le budget -->
+          <option value="Garmin Venu 3"></option>
+          <option value="Garmin Venu 3S"></option>
+          <option value="Garmin Vivoactive 5"></option>
+          <option value="Garmin Vivoactive 6"></option>
+          <option value="Garmin Instinct 2"></option>
+          <option value="Garmin Instinct 2S"></option>
+          <option value="Garmin Instinct 2 Solar"></option>
+          <option value="Garmin Instinct 2X Solar"></option>
+          <option value="Garmin Instinct 3"></option>
+          <option value="Garmin Fenix 7S"></option>
+          <option value="Garmin Fenix 7"></option>
+        </datalist>
         <span class="field-error" data-error="gear"></span>
       </div>
     </div>
@@ -1538,15 +1572,12 @@ function currentWeekNum() {
   const diff = daysBetween(PLAN_START, today);
   return Math.min(plan.length, Math.floor(diff / 7) + 1);
 }
+const DAY_KEYS = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 function todayDayKey() {
-  const idx = new Date().getDay();
-  if (idx === 0) return 'Dimanche';
-  if (idx === 2) return 'Mardi';
-  if (idx === 4) return 'Jeudi';
-  return null;
+  return DAY_KEYS[new Date().getDay()] || null;
 }
 
-const DAY_OFFSET = { Mardi: 1, Jeudi: 3, Dimanche: 6 };
+const DAY_OFFSET = { Lundi: 0, Mardi: 1, Mercredi: 2, Jeudi: 3, Vendredi: 4, Samedi: 5, Dimanche: 6 };
 function dateForSession(weekNum, dayKey) {
   const offset = DAY_OFFSET[dayKey];
   if (offset == null) return null;
