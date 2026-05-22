@@ -1950,6 +1950,7 @@ async function loadDynamicPlan() {
       PLAN_START = new Date(y, m - 1, d);
     }
     document.body.classList.add('has-plan');
+    window.__hasPlan = true;
     renderPlanMeta(data);
     return true;
   } catch { return false; }
@@ -2296,16 +2297,37 @@ async function handleGeneratedPlan(plan) {
   const warnings = (plan._warnings && plan._warnings.length)
     ? `\n\n⚠ Remarques :\n• ${plan._warnings.join('\n• ')}`
     : '';
-  if (!confirm(`Plan généré : ${plan.weeks.length} semaines.${warnings}\n\nRemplacer le plan actuel ? Cette action écrase l'état actuel.`)) {
+  // Détecte si l'utilisateur a déjà un plan persisté ; sinon le confirm
+  // dit "Adopter ce plan ?" plutôt que "Remplacer le plan actuel ?".
+  const hadPrevPlan = (typeof window !== 'undefined') && window.__hasPlan === true;
+  const action = hadPrevPlan
+    ? `Remplacer le plan actuel ? Cette action écrase l'état des séances cochées.`
+    : `Adopter ce plan ?`;
+  if (!confirm(`Plan généré : ${plan.weeks.length} semaines.${warnings}\n\n${action}`)) {
     resetSubmit();
     disableForm(false);
     return;
   }
-  await fetch('/api/plan', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(plan),
-  });
+  // PUT en try/catch : si fetch échoue (cookie outpost expiré pendant
+  // une génération longue, réseau coupé), on garde le plan en
+  // localStorage et on prompt l'utilisateur de recharger plutôt que
+  // perdre le travail du LLM.
+  try {
+    const r = await fetch('/api/plan', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(plan),
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  } catch (ex) {
+    try { localStorage.setItem('footing_plan_pending', JSON.stringify(plan)); } catch {}
+    showPlanTopError(
+      `Sauvegarde échouée (${ex.message}). Le plan est gardé localement — recharge la page pour réessayer.`
+    );
+    resetSubmit();
+    disableForm(false);
+    return;
+  }
   state = {};
   saveState();
   closePlanModal();
@@ -2510,8 +2532,33 @@ async function showWhoami() {
   }
 }
 
+// Retry de PUT /api/plan : si une génération précédente a réussi mais
+// le save a échoué (cookie expiré, réseau), le plan est conservé en
+// localStorage pour pouvoir être rejoué au reload de la page.
+async function flushPendingPlan() {
+  const raw = localStorage.getItem('footing_plan_pending');
+  if (!raw) return;
+  let plan;
+  try { plan = JSON.parse(raw); } catch { localStorage.removeItem('footing_plan_pending'); return; }
+  try {
+    const r = await fetch('/api/plan', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: raw,
+    });
+    if (!r.ok) return;  // garder en attente
+    localStorage.removeItem('footing_plan_pending');
+    state = {};
+    saveState();
+    location.reload();
+  } catch {
+    // garder en attente, retry au prochain reload
+  }
+}
+
 (async () => {
   showWhoami();
+  await flushPendingPlan();
   await loadDynamicPlan();
   await loadState();
   refresh();
