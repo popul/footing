@@ -1,0 +1,927 @@
+{
+  "raceDate": "2026-10-11",
+  "raceDistance": "10K",
+  "targetTime": "60:00",
+  "title": "Sub 60:00",
+  "pitch": "Passer de 65:00 à 60:00 sur 10 km. Garmin Forerunner 165 Music.",
+  "gear": "Garmin Forerunner 165 Music",
+  "paces": [
+    {"label": "Endurance fondamentale", "pace": "7:00 – 7:30", "highlight": false},
+    {"label": "Trot récupération", "pace": "7:30 – 8:00", "highlight": false},
+    {"label": "Sortie longue", "pace": "6:45 – 7:15", "highlight": false},
+    {"label": "Allure seuil (tempo)", "pace": "6:15 – 6:30", "highlight": false},
+    {"label": "10 km — objectif", "pace": "6:00", "highlight": true},
+    {"label": "Allure spécifique course", "pace": "5:55 – 6:05", "highlight": false},
+    {"label": "VO2max (intervalles courts)", "pace": "5:30 – 5:45", "highlight": false},
+    {"label": "Vitesse pure (lignes droites)", "pace": "5:00 – 5:20", "highlight": false}
+  ],
+  "raceStrategy": [
+    {"km": "1", "pace": "6:05/km — départ posé, ne pas s'emballer"},
+    {"km": "2", "pace": "6:02/km"},
+    {"km": "3", "pace": "6:00/km — calage sur la cible"},
+    {"km": "4", "pace": "6:00/km"},
+    {"km": "5 — passage", "pace": "passage 30:10 – 30:15"},
+    {"km": "6 – 7", "pace": "5:58/km"},
+    {"km": "8", "pace": "5:55/km — pousser progressif"},
+    {"km": "9", "pace": "accélération si sensations OK"},
+    {"km": "10", "pace": "finir au mental"}
+  ],
+  "keySessions": [
+    {"when": "Semaine 7", "description": "6 × 2 min à allure VO2max", "note": "fin de phase Base — vérifie que la condition cardio progresse"},
+    {"when": "Semaine 11", "description": "4 × 8 min à allure seuil", "note": "séance pivot de la phase Seuil"},
+    {"when": "Semaine 15", "description": "6 × 1000 m à allure 60:00", "note": "doit passer sans s'écrouler — confirme que l'allure cible est tenable"},
+    {"when": "Semaine 18", "description": "Test 5 km à allure 60:00 (= 30 min)", "note": "dernière grosse vérification 3 semaines avant la course"},
+    {"when": "Semaine 19", "description": "5 × 800 m à allure 60:00", "note": "rappel d'allure en affûtage, avec récup généreuse"}
+  ],
+  "rules": [
+    "Les footings doivent rester faciles, à une allure où la conversation reste possible (7:00 – 7:30/km pour toi). Ne jamais pousser sur les séances d'endurance fondamentale — c'est exactement ce qui construit la base aérobie.",
+    "70 à 80 % du volume hebdomadaire doit être en endurance fondamentale. C'est le principe central : l'amateur court trop vite ses séances faciles, et trop lentement ses séances rapides. Pas de zone grise.",
+    "Ne pas tout transformer en test. Une bonne séance dure laisse de la marge. « J'aurais pu faire une rep de plus » est meilleur que « je suis explosé ».",
+    "Respecter les semaines allégées (S4, S8, S12, S16). Elles ne sont pas optionnelles — elles servent à assimiler l'entraînement et à recharger.",
+    "Le repos est un entraînement. Au moins un jour facile ou repos entre deux séances dures. C'est pendant la nuit qui suit qu'on progresse, pas pendant la séance elle-même.",
+    "En cas de fatigue ou de douleur, remplacer la séance rapide par 45 min facile, du repos ou du cross-training. Mieux vaut perdre une séance que perdre trois semaines."
+  ],
+  "objectives": {
+    "A": "60:00",
+    "B": "58:30",
+    "C": "62:00",
+    "comment": "Avec ce plan et un bon suivi, le résultat le plus probable est entre 60:00 et 62:00. Atteindre 60:00 demande que les séances spécifiques passent franchement (S15, S17 et S18 sans s'écrouler), que la récupération soit bonne, que les footings restent vraiment faciles, et que la course soit bien gérée — pas de départ trop rapide."
+  },
+  "weeks": [
+    {
+      "num": 1, "phase": "Base", "light": false, "volume": "13–15 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "Footing découverte + 4 lignes droites",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "15 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites (relâché, pas en force)"},
+            {"do": "5 min retour au calme", "pace": "7:30 – 8:00/km"}
+          ],
+          "note": "Reprendre tranquillement. Le but ce mois est de tenir l'aérobie sans casser.",
+          "garmin": {"name": "S01 Mar · Découverte + lignes droites", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"other","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":300},"pace":[480,450]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 30 min",
+          "items": [
+            {"do": "30 min endurance fondamentale, allure conversation", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S01 Jeu · Footing 30 min", "steps": [
+            {"type":"other","dur":{"time":1800},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h00",
+          "items": [
+            {"do": "1h en endurance facile, sans accélération", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S01 Dim · SL 60 min", "steps": [
+            {"type":"other","dur":{"time":3600},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 2, "phase": "Base", "light": false, "volume": "14–16 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "5 × 30 sec rapide / 1 min lente",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "5 × 30 sec rapide", "pace": "5:00 – 5:20/km"},
+            {"do": "récup 1 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S02 Mar · 5×30s vitesse", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":5,"steps":[
+              {"type":"interval","dur":{"time":30},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 35 min",
+          "items": [
+            {"do": "35 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S02 Jeu · Footing 35 min", "steps": [
+            {"type":"other","dur":{"time":2100},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h05",
+          "items": [
+            {"do": "1h05 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S02 Dim · SL 65 min", "steps": [
+            {"type":"other","dur":{"time":3900},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 3, "phase": "Base", "light": false, "volume": "15–17 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "6 × 30 sec rapide / 1 min lente",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "6 × 30 sec rapide", "pace": "5:00 – 5:20/km"},
+            {"do": "récup 1 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S03 Mar · 6×30s vitesse", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":6,"steps":[
+              {"type":"interval","dur":{"time":30},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 35 min + 4 lignes droites",
+          "items": [
+            {"do": "35 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites, relâché"}
+          ],
+          "garmin": {"name": "S03 Jeu · Footing + LD", "steps": [
+            {"type":"other","dur":{"time":2100},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h10",
+          "items": [
+            {"do": "1h10 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S03 Dim · SL 70 min", "steps": [
+            {"type":"other","dur":{"time":4200},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 4, "phase": "Base", "light": true, "volume": "11–13 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "Footing 35 min + lignes droites",
+          "items": [
+            {"do": "35 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites"}
+          ],
+          "note": "Semaine allégée. Pas de qualité dure — on assimile.",
+          "garmin": {"name": "S04 Mar · Footing + LD (allégée)", "steps": [
+            {"type":"other","dur":{"time":2100},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 30 min",
+          "items": [
+            {"do": "30 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S04 Jeu · Footing 30 min", "steps": [
+            {"type":"other","dur":{"time":1800},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 55 min",
+          "items": [
+            {"do": "55 min en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S04 Dim · SL 55 min", "steps": [
+            {"type":"other","dur":{"time":3300},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 5, "phase": "Base", "light": false, "volume": "16–18 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "Côtes courtes 8 × 30 sec",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "8 × 30 sec en côte (montée moyenne, effort fort mais propre)"},
+            {"do": "Récup : redescente trot 1 min", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Les côtes courtes renforcent les jambes sans abîmer (vs sprint plat).",
+          "garmin": {"name": "S05 Mar · 8 côtes 30 sec", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":8,"steps":[
+              {"type":"interval","dur":{"time":30},"pace":[345,330]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 40 min",
+          "items": [
+            {"do": "40 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S05 Jeu · Footing 40 min", "steps": [
+            {"type":"other","dur":{"time":2400},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h15",
+          "items": [
+            {"do": "1h15 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S05 Dim · SL 75 min", "steps": [
+            {"type":"other","dur":{"time":4500},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 6, "phase": "Base", "light": false, "volume": "17–19 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "8 × 1 min rapide / 1 min lente",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "8 × 1 min rapide", "pace": "5:30 – 5:45/km"},
+            {"do": "récup 1 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S06 Mar · 8×1 min VO2", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":8,"steps":[
+              {"type":"interval","dur":{"time":60},"pace":[345,330]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 40 min",
+          "items": [
+            {"do": "40 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S06 Jeu · Footing 40 min", "steps": [
+            {"type":"other","dur":{"time":2400},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h20",
+          "items": [
+            {"do": "1h20 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S06 Dim · SL 80 min", "steps": [
+            {"type":"other","dur":{"time":4800},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 7, "phase": "Base", "light": false, "volume": "18–20 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "6 × 2 min à allure VO2max",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "6 × 2 min à allure VO2max", "pace": "5:30 – 5:45/km"},
+            {"do": "récup 1 min 30 trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Séance repère fin de phase Base. Doit passer sans s'écrouler.",
+          "garmin": {"name": "S07 Mar · 6×2 min VO2max", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":6,"steps":[
+              {"type":"interval","dur":{"time":120},"pace":[345,330]},
+              {"type":"recovery","dur":{"time":90},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 45 min + 4 lignes droites",
+          "items": [
+            {"do": "45 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites"}
+          ],
+          "garmin": {"name": "S07 Jeu · Footing 45 + LD", "steps": [
+            {"type":"other","dur":{"time":2700},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h25",
+          "items": [
+            {"do": "1h25 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S07 Dim · SL 85 min", "steps": [
+            {"type":"other","dur":{"time":5100},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 8, "phase": "Seuil", "light": true, "volume": "15–17 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "2 × 6 min à allure seuil (intro)",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "2 × 6 min à allure seuil — découverte", "pace": "6:15 – 6:30/km"},
+            {"do": "récup 3 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Première séance de seuil. Semaine allégée donc volume bas.",
+          "garmin": {"name": "S08 Mar · 2×6 min seuil", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":2,"steps":[
+              {"type":"interval","dur":{"time":360},"pace":[390,375]},
+              {"type":"recovery","dur":{"time":180},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 35 min",
+          "items": [
+            {"do": "35 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S08 Jeu · Footing 35 min", "steps": [
+            {"type":"other","dur":{"time":2100},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h15",
+          "items": [
+            {"do": "1h15 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S08 Dim · SL 75 min", "steps": [
+            {"type":"other","dur":{"time":4500},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 9, "phase": "Seuil", "light": false, "volume": "19–21 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "3 × 8 min à allure seuil",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "3 × 8 min à allure seuil", "pace": "6:15 – 6:30/km"},
+            {"do": "récup 2 min 30 trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S09 Mar · 3×8 min seuil", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":3,"steps":[
+              {"type":"interval","dur":{"time":480},"pace":[390,375]},
+              {"type":"recovery","dur":{"time":150},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 45 min",
+          "items": [
+            {"do": "45 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S09 Jeu · Footing 45 min", "steps": [
+            {"type":"other","dur":{"time":2700},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h30",
+          "items": [
+            {"do": "1h30 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S09 Dim · SL 90 min", "steps": [
+            {"type":"other","dur":{"time":5400},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 10, "phase": "Seuil", "light": false, "volume": "21–23 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "2 × 12 min à allure seuil",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "2 × 12 min à allure seuil — gérer la durée", "pace": "6:15 – 6:30/km"},
+            {"do": "récup 3 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S10 Mar · 2×12 min seuil", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":2,"steps":[
+              {"type":"interval","dur":{"time":720},"pace":[390,375]},
+              {"type":"recovery","dur":{"time":180},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 50 min + 4 lignes droites",
+          "items": [
+            {"do": "50 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites"}
+          ],
+          "garmin": {"name": "S10 Jeu · Footing 50 + LD", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h35",
+          "items": [
+            {"do": "1h35 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S10 Dim · SL 95 min", "steps": [
+            {"type":"other","dur":{"time":5700},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 11, "phase": "Seuil", "light": false, "volume": "23–25 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "4 × 8 min à allure seuil",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 8 min à allure seuil", "pace": "6:15 – 6:30/km"},
+            {"do": "récup 2 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Séance pivot de la phase Seuil. Doit passer avec un effort soutenu mais contrôlable.",
+          "garmin": {"name": "S11 Mar · 4×8 min seuil", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":480},"pace":[390,375]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 50 min",
+          "items": [
+            {"do": "50 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S11 Jeu · Footing 50 min", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h40",
+          "items": [
+            {"do": "1h40 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S11 Dim · SL 100 min", "steps": [
+            {"type":"other","dur":{"time":6000},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 12, "phase": "Seuil", "light": true, "volume": "17–19 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "2 × 10 min à allure seuil",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "2 × 10 min à allure seuil — sans forcer", "pace": "6:15 – 6:30/km"},
+            {"do": "récup 3 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Semaine allégée.",
+          "garmin": {"name": "S12 Mar · 2×10 min seuil (allégée)", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":2,"steps":[
+              {"type":"interval","dur":{"time":600},"pace":[390,375]},
+              {"type":"recovery","dur":{"time":180},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 40 min",
+          "items": [
+            {"do": "40 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S12 Jeu · Footing 40 min", "steps": [
+            {"type":"other","dur":{"time":2400},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h20",
+          "items": [
+            {"do": "1h20 en endurance facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S12 Dim · SL 80 min", "steps": [
+            {"type":"other","dur":{"time":4800},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 13, "phase": "Spécifique", "light": false, "volume": "24–26 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "4 × 1000 m à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 1000 m à allure cible course (60:00 → 6:00/km)", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 2 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Première séance d'allure spécifique. Calibre bien — pas plus vite que la cible.",
+          "garmin": {"name": "S13 Mar · 4×1000m allure 60:00", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"dist":1000},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 50 min + 4 lignes droites",
+          "items": [
+            {"do": "50 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites"}
+          ],
+          "garmin": {"name": "S13 Jeu · Footing 50 + LD", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h45 avec 15 min spécifique",
+          "items": [
+            {"do": "1h en endurance facile", "pace": "6:45 – 7:15/km"},
+            {"do": "15 min à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "30 min retour facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S13 Dim · SL 1h45 + 15' spé", "steps": [
+            {"type":"other","dur":{"time":3600},"pace":[435,405]},
+            {"type":"interval","dur":{"time":900},"pace":[365,355]},
+            {"type":"other","dur":{"time":1800},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 14, "phase": "Spécifique", "light": false, "volume": "25–27 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "5 × 1000 m à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "5 × 1000 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 2 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S14 Mar · 5×1000m allure 60:00", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"repeat","count":5,"steps":[
+              {"type":"interval","dur":{"dist":1000},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 50 min",
+          "items": [
+            {"do": "50 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S14 Jeu · Footing 50 min", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h45 progressive",
+          "items": [
+            {"do": "1h en endurance facile", "pace": "7:00 – 7:30/km"},
+            {"do": "30 min en allure progressive vers la cible", "pace": "6:15 – 6:30/km"},
+            {"do": "15 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S14 Dim · SL 1h45 progressive", "steps": [
+            {"type":"other","dur":{"time":3600},"pace":[450,420]},
+            {"type":"other","dur":{"time":1800},"pace":[390,375]},
+            {"type":"cooldown","dur":{"time":900},"pace":[450,420]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 15, "phase": "Spécifique", "light": false, "volume": "27–29 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "6 × 1000 m à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "6 × 1000 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 2 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Séance pivot phase Spécifique. Tenir 6 × 1000 m à allure 60:00 = base solide pour le jour J.",
+          "garmin": {"name": "S15 Mar · 6×1000m allure 60:00", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"repeat","count":6,"steps":[
+              {"type":"interval","dur":{"dist":1000},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 55 min",
+          "items": [
+            {"do": "55 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S15 Jeu · Footing 55 min", "steps": [
+            {"type":"other","dur":{"time":3300},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h50 avec 20 min spécifique",
+          "items": [
+            {"do": "55 min en endurance facile", "pace": "6:45 – 7:15/km"},
+            {"do": "20 min à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "35 min retour facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S15 Dim · SL 1h50 + 20' spé", "steps": [
+            {"type":"other","dur":{"time":3300},"pace":[435,405]},
+            {"type":"interval","dur":{"time":1200},"pace":[365,355]},
+            {"type":"other","dur":{"time":2100},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 16, "phase": "Spécifique", "light": true, "volume": "21–23 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "3 × 1500 m à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "3 × 1500 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 3 min trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Semaine allégée mais on garde l'allure spécifique pour ne pas perdre la calibration.",
+          "garmin": {"name": "S16 Mar · 3×1500m allure 60:00", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"repeat","count":3,"steps":[
+              {"type":"interval","dur":{"dist":1500},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":180},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 45 min",
+          "items": [
+            {"do": "45 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S16 Jeu · Footing 45 min", "steps": [
+            {"type":"other","dur":{"time":2700},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h30 progressive",
+          "items": [
+            {"do": "45 min en endurance facile", "pace": "7:00 – 7:30/km"},
+            {"do": "30 min en allure progressive vers la cible", "pace": "6:15 – 6:30/km"},
+            {"do": "15 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S16 Dim · SL 90 min progressive", "steps": [
+            {"type":"other","dur":{"time":2700},"pace":[450,420]},
+            {"type":"other","dur":{"time":1800},"pace":[390,375]},
+            {"type":"cooldown","dur":{"time":900},"pace":[450,420]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 17, "phase": "Spécifique", "light": false, "volume": "25–27 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "5 × 1500 m à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "5 × 1500 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 2 min 30 trot entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Plus grosse séance spécifique du plan. Si elle passe, le 60:00 est crédible.",
+          "garmin": {"name": "S17 Mar · 5×1500m allure 60:00", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"repeat","count":5,"steps":[
+              {"type":"interval","dur":{"dist":1500},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":150},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing facile 50 min",
+          "items": [
+            {"do": "50 min endurance fondamentale", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S17 Jeu · Footing 50 min", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h50 avec 25 min spécifique",
+          "items": [
+            {"do": "50 min en endurance facile", "pace": "6:45 – 7:15/km"},
+            {"do": "25 min à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "35 min retour facile", "pace": "6:45 – 7:15/km"}
+          ],
+          "garmin": {"name": "S17 Dim · SL 1h50 + 25' spé", "steps": [
+            {"type":"other","dur":{"time":3000},"pace":[435,405]},
+            {"type":"interval","dur":{"time":1500},"pace":[365,355]},
+            {"type":"other","dur":{"time":2100},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 18, "phase": "Spécifique", "light": false, "volume": "22–24 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "Test 5 km à allure 60:00",
+          "items": [
+            {"do": "20 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "5 km à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "5 min trot récup", "pace": "7:30 – 8:00/km"},
+            {"do": "1 km à allure plus rapide", "pace": "5:45 – 5:55/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Test grandeur nature 3 semaines avant la course. Le 5 km à 30:00 doit passer sans s'écrouler.",
+          "garmin": {"name": "S18 Mar · Test 5 km + 1 km", "steps": [
+            {"type":"warmup","dur":{"time":1200},"pace":[450,420]},
+            {"type":"interval","dur":{"dist":5000},"pace":[365,355]},
+            {"type":"recovery","dur":{"time":300},"pace":[480,450]},
+            {"type":"interval","dur":{"dist":1000},"pace":[355,345]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 45 min + 4 lignes droites",
+          "items": [
+            {"do": "45 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "4 × 20 sec en lignes droites"}
+          ],
+          "garmin": {"name": "S18 Jeu · Footing 45 + LD", "steps": [
+            {"type":"other","dur":{"time":2700},"pace":[450,420]},
+            {"type":"repeat","count":4,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie longue 1h40 progressive",
+          "items": [
+            {"do": "1h en endurance facile", "pace": "7:00 – 7:30/km"},
+            {"do": "30 min en allure progressive", "pace": "6:15 – 6:30/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "garmin": {"name": "S18 Dim · SL 1h40 progressive", "steps": [
+            {"type":"other","dur":{"time":3600},"pace":[450,420]},
+            {"type":"other","dur":{"time":1800},"pace":[390,375]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 19, "phase": "Affûtage", "light": false, "volume": "16–18 km",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "5 × 800 m à allure 60:00 (rappel)",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "5 × 800 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 2 min trot généreuse entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Affûtage. Sensations doivent être faciles, on garde la fraîcheur.",
+          "garmin": {"name": "S19 Mar · 5×800m rappel allure", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":5,"steps":[
+              {"type":"interval","dur":{"dist":800},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Footing 40 min + 6 lignes droites",
+          "items": [
+            {"do": "40 min endurance fondamentale", "pace": "7:00 – 7:30/km"},
+            {"do": "6 × 20 sec en lignes droites (relâché, ne pas en force)"}
+          ],
+          "garmin": {"name": "S19 Jeu · Footing 40 + 6 LD", "steps": [
+            {"type":"other","dur":{"time":2400},"pace":[450,420]},
+            {"type":"repeat","count":6,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":60},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "Sortie 1h endurance facile",
+          "items": [
+            {"do": "1h en endurance facile, sans aucun forçage", "pace": "6:45 – 7:15/km"}
+          ],
+          "note": "Pas de sortie longue cette semaine — on commence à se reposer.",
+          "garmin": {"name": "S19 Dim · Endurance 60 min", "steps": [
+            {"type":"other","dur":{"time":3600},"pace":[435,405]}
+          ]}
+        }
+      ]
+    },
+    {
+      "num": 20, "phase": "Affûtage", "light": false, "race": true, "volume": "Course",
+      "sessions": [
+        {
+          "day": "Mardi", "title": "3 × 1000 m allure 60:00 (calage final)",
+          "items": [
+            {"do": "15 min échauffement", "pace": "7:00 – 7:30/km"},
+            {"do": "3 × 1000 m à allure cible course", "pace": "5:55 – 6:05/km"},
+            {"do": "récup 3 min trot généreuse entre", "pace": "7:30 – 8:00/km"},
+            {"do": "10 min retour au calme", "pace": "7:00 – 7:30/km"}
+          ],
+          "note": "Dernière séance d'allure spécifique. Doit être facile — pas chercher à pousser.",
+          "garmin": {"name": "S20 Mar · 3×1000m calage final", "steps": [
+            {"type":"warmup","dur":{"time":900},"pace":[450,420]},
+            {"type":"repeat","count":3,"steps":[
+              {"type":"interval","dur":{"dist":1000},"pace":[365,355]},
+              {"type":"recovery","dur":{"time":180},"pace":[480,450]}
+            ]},
+            {"type":"cooldown","dur":{"time":600},"pace":[450,420]}
+          ]}
+        },
+        {
+          "day": "Jeudi", "title": "Déverrouillage 30 min + 5 sprints courts",
+          "items": [
+            {"do": "30 min en endurance très facile", "pace": "7:00 – 7:30/km"},
+            {"do": "5 × 20 sec rapides (déverrouillage des jambes)", "pace": "5:00 – 5:20/km"},
+            {"do": "récup complète entre"}
+          ],
+          "note": "Avant-course : faire travailler les jambes sans les fatiguer.",
+          "garmin": {"name": "S20 Jeu · Déverrouillage", "steps": [
+            {"type":"other","dur":{"time":1800},"pace":[450,420]},
+            {"type":"repeat","count":5,"steps":[
+              {"type":"interval","dur":{"time":20},"pace":[320,300]},
+              {"type":"recovery","dur":{"time":120},"pace":[480,450]}
+            ]}
+          ]}
+        },
+        {
+          "day": "Dimanche", "title": "COURSE — 10 km",
+          "items": [
+            {"do": "Objectif 60:00"},
+            {"do": "Départ posé : 6:05/km sur le 1er km, ne pas se laisser entraîner"},
+            {"do": "Passage 5 km vers 30:10 – 30:15"},
+            {"do": "Accélération progressive après le 7e km si sensations OK"}
+          ],
+          "note": "Course officielle du 11 octobre 2026. Bon courage Audrey !"
+        }
+      ]
+    }
+  ]
+}

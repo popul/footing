@@ -1,0 +1,3831 @@
+{
+  "raceDate": "2026-10-11",
+  "raceDistance": "10K",
+  "targetTime": "45:00",
+  "weeks": [
+    {
+      "num": 1,
+      "phase": "Base + vitesse propre",
+      "light": false,
+      "volume": "30–34 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Vitesse légère",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "10 × 30 sec rapide / 1 min lente",
+              "pace": "~4:10–4:25/km"
+            },
+            {
+              "do": "10 min retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "note": "14 km/h sur les fractions rapides (≈4:10–4:25/km).",
+          "garmin": {
+            "name": "S01 Mardi · Vitesse légère",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 10,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 30
+                    },
+                    "pace": [
+                      265,
+                      250
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil facile",
+          "items": [
+            {
+              "do": "20 min endurance",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "3 × 8 min",
+              "pace": "4:55–5:00/km"
+            },
+            {
+              "do": "Récup 2 min trot",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S01 Jeudi · Seuil facile",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 480
+                    },
+                    "pace": [
+                      300,
+                      295
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h10 endurance fondamentale",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S01 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 2,
+      "phase": "Base + vitesse propre",
+      "light": false,
+      "volume": "32–35 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "8 × 400 m",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "8 × 400 m",
+              "pace": "4:25–4:20/km"
+            },
+            {
+              "do": "Récup 1 min 15",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S02 Mardi · 8 × 400 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 8,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 400
+                    },
+                    "pace": [
+                      265,
+                      260
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 75
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Tempo progressif",
+          "items": [
+            {
+              "do": "20 min endurance",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "20 min",
+              "pace": "4:55–4:50/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S02 Jeudi · Tempo progressif",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  295,
+                  290
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h15 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "note": "Finir 10 dernières min vers 5:30/km si bonnes sensations.",
+          "garmin": {
+            "name": "S02 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4500
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 3,
+      "phase": "Base + vitesse propre",
+      "light": false,
+      "volume": "33–36 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Côtes courtes",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "10 × 20 sec en côte fort mais propre"
+            },
+            {
+              "do": "Récup en redescendant"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S03 Mardi · Côtes courtes",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 10,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": null
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Blocs seuil",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "4 × 6 min",
+              "pace": "4:50/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S03 Jeudi · Blocs seuil",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 4,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 360
+                    },
+                    "pace": [
+                      295,
+                      285
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h15 à 1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S03 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4500
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 4,
+      "phase": "Base + vitesse propre",
+      "light": true,
+      "volume": "28–32 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Rappel vitesse",
+          "items": [
+            {
+              "do": "45 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "6 × 20 sec rapides en fin de séance",
+              "pace": "~4:00–4:10/km"
+            }
+          ],
+          "garmin": {
+            "name": "S04 Mardi · Rappel vitesse",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 2700
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": [
+                      250,
+                      240
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil court",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "2 × 10 min",
+              "pace": "4:55/km"
+            },
+            {
+              "do": "Récup 3 min",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S04 Jeudi · Seuil court",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 2,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 600
+                    },
+                    "pace": [
+                      300,
+                      290
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 180
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue réduite",
+          "items": [
+            {
+              "do": "1h05 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S04 Dim · Sortie longue réduite",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 3900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 5,
+      "phase": "Base + vitesse propre",
+      "light": false,
+      "volume": "34–37 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "8 × 500 m",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "8 × 500 m",
+              "pace": "4:20/km"
+            },
+            {
+              "do": "Récup 1 min 15 à 1 min 30",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S05 Mardi · 8 × 500 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 8,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 500
+                    },
+                    "pace": [
+                      265,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 75
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil continu",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "25 min",
+              "pace": "4:50–4:55/km"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S05 Jeudi · Seuil continu",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "time": 1500
+                },
+                "pace": [
+                  295,
+                  290
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "Option : 3 × 5 min en 2e moitié",
+              "pace": "5:20/km"
+            }
+          ],
+          "garmin": {
+            "name": "S05 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 6,
+      "phase": "Développement du seuil",
+      "light": false,
+      "volume": "35–38 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "10 × 400 m",
+          "items": [
+            {
+              "do": "10 × 400 m",
+              "pace": "4:15–4:20/km"
+            },
+            {
+              "do": "Récup 1 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S06 Mardi · 10 × 400 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 10,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 400
+                    },
+                    "pace": [
+                      260,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "3 × 2 km",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:50/km"
+            },
+            {
+              "do": "Récup 2 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S06 Jeudi · 3 × 2 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      295,
+                      285
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 150
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S06 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 7,
+      "phase": "Développement du seuil",
+      "light": false,
+      "volume": "35–39 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "7 × 600 m",
+          "items": [
+            {
+              "do": "7 × 600 m",
+              "pace": "4:20/km"
+            },
+            {
+              "do": "Récup 1 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S07 Mardi · 7 × 600 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 7,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 600
+                    },
+                    "pace": [
+                      265,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 90
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Tempo 2 × 15 min",
+          "items": [
+            {
+              "do": "2 × 15 min",
+              "pace": "4:50 puis 4:45/km"
+            },
+            {
+              "do": "Récup 3 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S07 Jeudi · Tempo 2 × 15 min",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 2,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 900
+                    },
+                    "pace": [
+                      290,
+                      285
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 180
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 à 1h25 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S07 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 8,
+      "phase": "Développement du seuil",
+      "light": true,
+      "volume": "30–33 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Allégé",
+          "items": [
+            {
+              "do": "45 à 50 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "6 lignes droites de 15 à 20 sec"
+            }
+          ],
+          "garmin": {
+            "name": "S08 Mardi · Allégé",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 2700
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": null
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil court",
+          "items": [
+            {
+              "do": "3 × 8 min",
+              "pace": "4:50/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S08 Jeudi · Seuil court",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 480
+                    },
+                    "pace": [
+                      295,
+                      285
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h10 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S08 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 9,
+      "phase": "Développement du seuil",
+      "light": false,
+      "volume": "36–39 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "6 × 800 m",
+          "items": [
+            {
+              "do": "6 × 800 m",
+              "pace": "4:20–4:25/km"
+            },
+            {
+              "do": "Récup 1 min 45",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S09 Mardi · 6 × 800 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 800
+                    },
+                    "pace": [
+                      265,
+                      260
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 105
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil long",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:45/km"
+            },
+            {
+              "do": "Récup 2 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S09 Jeudi · Seuil long",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      290,
+                      280
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 150
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h25 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S09 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 5100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 10,
+      "phase": "Développement du seuil",
+      "light": false,
+      "volume": "33–36 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "12 × 300 m",
+          "items": [
+            {
+              "do": "12 × 300 m",
+              "pace": "4:05–4:15/km"
+            },
+            {
+              "do": "Récup 1 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S10 Mardi · 12 × 300 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 12,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 300
+                    },
+                    "pace": [
+                      255,
+                      245
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Test contrôlé 5 km",
+          "items": [
+            {
+              "do": "20 min échauffement",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "5 km soutenu mais pas sprinté",
+              "pace": "~4:45–4:50/km"
+            },
+            {
+              "do": "Viser 23:45 à 24:15"
+            },
+            {
+              "do": "Retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "note": "Si le 5 km passe vers 24 min sans finir détruit, la progression est bien engagée.",
+          "garmin": {
+            "name": "S10 Jeudi · Test 5 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "dist": 5000
+                },
+                "pace": [
+                  290,
+                  285
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h15 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S10 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4500
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 11,
+      "phase": "Spécifique 10 km",
+      "light": false,
+      "volume": "36–39 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "8 × 500 m",
+          "items": [
+            {
+              "do": "8 × 500 m",
+              "pace": "4:15/km"
+            },
+            {
+              "do": "Récup 1 min 15",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S11 Mardi · 8 × 500 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 8,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 500
+                    },
+                    "pace": [
+                      260,
+                      250
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 75
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "3 × 2 km",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:42–4:45/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S11 Jeudi · 3 × 2 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      285,
+                      282
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h25 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S11 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 5100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 12,
+      "phase": "Spécifique 10 km",
+      "light": false,
+      "volume": "35–38 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "5 × 1000 m",
+          "items": [
+            {
+              "do": "5 × 1000 m",
+              "pace": "4:30–4:35/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S12 Mardi · 5 × 1000 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 5,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      275,
+                      270
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil 25–30 min",
+          "items": [
+            {
+              "do": "25 à 30 min",
+              "pace": "4:45–4:50/km"
+            }
+          ],
+          "garmin": {
+            "name": "S12 Jeudi · Seuil 25 min",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "time": 1500
+                },
+                "pace": [
+                  290,
+                  285
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S12 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 13,
+      "phase": "Spécifique 10 km",
+      "light": true,
+      "volume": "30–33 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Allégé",
+          "items": [
+            {
+              "do": "45 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "6 × 20 sec rapides",
+              "pace": "~4:00–4:10/km"
+            }
+          ],
+          "garmin": {
+            "name": "S13 Mardi · Allégé",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 2700
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": [
+                      250,
+                      240
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "2 × 2 km",
+          "items": [
+            {
+              "do": "2 × 2 km",
+              "pace": "4:40/km"
+            },
+            {
+              "do": "Récup 3 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S13 Jeudi · 2 × 2 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 2,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      285,
+                      275
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 180
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h10 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S13 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 14,
+      "phase": "Spécifique 10 km",
+      "light": false,
+      "volume": "36–40 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "10 × 400 m",
+          "items": [
+            {
+              "do": "10 × 400 m",
+              "pace": "4:10–4:15/km"
+            },
+            {
+              "do": "Récup 1 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S14 Mardi · 10 × 400 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 10,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 400
+                    },
+                    "pace": [
+                      255,
+                      250
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "4 × 1,5 km",
+          "items": [
+            {
+              "do": "4 × 1,5 km",
+              "pace": "4:38–4:40/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S14 Jeudi · 4 × 1,5 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 4,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1500
+                    },
+                    "pace": [
+                      280,
+                      278
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h25 facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "Finir 15 min plus rapide si bonnes sensations",
+              "pace": "5:20–5:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S14 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 5100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 15,
+      "phase": "Spécifique 10 km",
+      "light": false,
+      "volume": "37–40 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "6 × 800 m",
+          "items": [
+            {
+              "do": "6 × 800 m",
+              "pace": "4:15–4:20/km"
+            },
+            {
+              "do": "Récup 1 min 45",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S15 Mardi · 6 × 800 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 800
+                    },
+                    "pace": [
+                      260,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 105
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "3 × 2 km",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:38/km"
+            },
+            {
+              "do": "Récup 2 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S15 Jeudi · 3 × 2 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      283,
+                      273
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 150
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h25 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S15 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 5100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 16,
+      "phase": "Spécifique 10 km",
+      "light": false,
+      "volume": "35–38 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "5 × 1000 m",
+          "items": [
+            {
+              "do": "5 × 1000 m",
+              "pace": "4:25–4:30/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S16 Mardi · 5 × 1000 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 5,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      270,
+                      265
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Pivot 2 × 3 km",
+          "items": [
+            {
+              "do": "2 × 3 km",
+              "pace": "4:40/km"
+            },
+            {
+              "do": "Récup 3 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "note": "Séance pivot. À ce stade 4:40/km doit devenir dur mais contrôlable.",
+          "garmin": {
+            "name": "S16 Jeudi · Pivot 2 × 3 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 2,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 3000
+                    },
+                    "pace": [
+                      285,
+                      275
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 180
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S16 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 17,
+      "phase": "Bloc objectif 45 min",
+      "light": false,
+      "volume": "36–40 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "12 × 400 m",
+          "items": [
+            {
+              "do": "12 × 400 m",
+              "pace": "4:05–4:10/km"
+            },
+            {
+              "do": "Récup 1 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S17 Mardi · 12 × 400 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 12,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 400
+                    },
+                    "pace": [
+                      250,
+                      245
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "3 × 2 km",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:35/km"
+            },
+            {
+              "do": "Récup 2 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S17 Jeudi · 3 × 2 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      280,
+                      270
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 150
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h25 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S17 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 5100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 18,
+      "phase": "Bloc objectif 45 min",
+      "light": false,
+      "volume": "35–38 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "6 × 1000 m",
+          "items": [
+            {
+              "do": "6 × 1000 m",
+              "pace": "4:25–4:30/km"
+            },
+            {
+              "do": "Récup 1 min 45 à 2 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S18 Mardi · 6 × 1000 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      270,
+                      265
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 105
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Seuil 30 min",
+          "items": [
+            {
+              "do": "30 min",
+              "pace": "4:45/km"
+            },
+            {
+              "do": "Ne pas aller plus vite"
+            }
+          ],
+          "garmin": {
+            "name": "S18 Jeudi · Seuil 30 min",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "time": 1800
+                },
+                "pace": [
+                  290,
+                  280
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S18 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 19,
+      "phase": "Bloc objectif 45 min",
+      "light": false,
+      "volume": "35–38 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "5 × 800 m",
+          "items": [
+            {
+              "do": "5 × 800 m",
+              "pace": "4:15/km"
+            },
+            {
+              "do": "Récup 1 min 45",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S19 Mardi · 5 × 800 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 5,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 800
+                    },
+                    "pace": [
+                      260,
+                      250
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 105
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Spécifique forte",
+          "items": [
+            {
+              "do": "3 × 2 km",
+              "pace": "4:30–4:33/km"
+            },
+            {
+              "do": "Récup 2 min 30",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "note": "Très importante. Si elle passe correctement, l'objectif 45 min devient crédible.",
+          "garmin": {
+            "name": "S19 Jeudi · Spécifique forte",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 2000
+                    },
+                    "pace": [
+                      273,
+                      270
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 150
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h20 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S19 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4800
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 20,
+      "phase": "Bloc objectif 45 min",
+      "light": false,
+      "volume": "32–36 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "4 × 1000 m + 4 × 200 m",
+          "items": [
+            {
+              "do": "4 × 1000 m",
+              "pace": "4:25/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "4 × 200 m rapides mais relâchés",
+              "pace": "~4:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S20 Mardi · 4 × 1000 + 4 × 200",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 4,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      270,
+                      260
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 4,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 200
+                    },
+                    "pace": [
+                      245,
+                      235
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Test spécifique",
+          "items": [
+            {
+              "do": "5 km",
+              "pace": "4:35/km"
+            },
+            {
+              "do": "5 min récupération",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "1 km",
+              "pace": "4:25–4:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S20 Jeudi · Test spécifique",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "dist": 5000
+                },
+                "pace": [
+                  280,
+                  270
+                ]
+              },
+              {
+                "type": "recovery",
+                "dur": {
+                  "time": 300
+                },
+                "pace": [
+                  420,
+                  390
+                ]
+              },
+              {
+                "type": "interval",
+                "dur": {
+                  "dist": 1000
+                },
+                "pace": [
+                  270,
+                  265
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h15 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S20 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4500
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 21,
+      "phase": "Affûtage",
+      "light": false,
+      "volume": "30–34 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "8 × 400 m",
+          "items": [
+            {
+              "do": "8 × 400 m",
+              "pace": "4:10/km"
+            },
+            {
+              "do": "Récup 1 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S21 Mardi · 8 × 400 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 8,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 400
+                    },
+                    "pace": [
+                      255,
+                      245
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 60
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "2 × 3 km",
+          "items": [
+            {
+              "do": "2 × 3 km",
+              "pace": "4:35/km"
+            },
+            {
+              "do": "Récup 3 min",
+              "pace": "6:30–7:00/km"
+            }
+          ],
+          "garmin": {
+            "name": "S21 Jeudi · 2 × 3 km",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 2,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 3000
+                    },
+                    "pace": [
+                      280,
+                      270
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 180
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h10 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S21 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 4200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 22,
+      "phase": "Affûtage",
+      "light": true,
+      "volume": "26–30 km",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "5 × 1000 m",
+          "items": [
+            {
+              "do": "5 × 1000 m",
+              "pace": "4:28–4:30/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "Finir avec de la marge"
+            }
+          ],
+          "garmin": {
+            "name": "S22 Mardi · 5 × 1000 m",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 900
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 5,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      270,
+                      268
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Allégé",
+          "items": [
+            {
+              "do": "40 à 45 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "6 × 20 sec rapides",
+              "pace": "~4:00–4:10/km"
+            }
+          ],
+          "garmin": {
+            "name": "S22 Jeudi · Allégé",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 2400
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 6,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": [
+                      250,
+                      240
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "Sortie longue",
+          "items": [
+            {
+              "do": "1h00 facile",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S22 Dim · Sortie longue",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 3600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "num": 23,
+      "phase": "Affûtage",
+      "light": false,
+      "volume": "Course",
+      "sessions": [
+        {
+          "day": "Mardi",
+          "title": "Rappel allure",
+          "items": [
+            {
+              "do": "20 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "3 × 1000 m",
+              "pace": "4:30/km"
+            },
+            {
+              "do": "Récup 2 min",
+              "pace": "6:30–7:00/km"
+            },
+            {
+              "do": "10 min retour au calme",
+              "pace": "5:50–6:30/km"
+            }
+          ],
+          "garmin": {
+            "name": "S23 Mardi · Rappel allure",
+            "steps": [
+              {
+                "type": "warmup",
+                "dur": {
+                  "time": 1200
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 3,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "dist": 1000
+                    },
+                    "pace": [
+                      275,
+                      265
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "time": 120
+                    },
+                    "pace": [
+                      420,
+                      390
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "cooldown",
+                "dur": {
+                  "time": 600
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Jeudi",
+          "title": "Déverrouillage",
+          "items": [
+            {
+              "do": "35 à 40 min facile",
+              "pace": "5:50–6:30/km"
+            },
+            {
+              "do": "5 × 20 sec rapides",
+              "pace": "~4:00–4:10/km"
+            },
+            {
+              "do": "Récupération complète"
+            }
+          ],
+          "garmin": {
+            "name": "S23 Jeudi · Déverrouillage",
+            "steps": [
+              {
+                "type": "other",
+                "dur": {
+                  "time": 2100
+                },
+                "pace": [
+                  390,
+                  350
+                ]
+              },
+              {
+                "type": "repeat",
+                "count": 5,
+                "steps": [
+                  {
+                    "type": "interval",
+                    "dur": {
+                      "time": 20
+                    },
+                    "pace": [
+                      250,
+                      240
+                    ]
+                  },
+                  {
+                    "type": "recovery",
+                    "dur": {
+                      "lap": true
+                    },
+                    "pace": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "day": "Dimanche",
+          "title": "COURSE — 10 km",
+          "items": [
+            {
+              "do": "Objectif 45:00",
+              "pace": "4:30/km"
+            },
+            {
+              "do": "Passage 5 km vers 22:40 – 22:45"
+            }
+          ],
+          "note": "Course officielle — 11 octobre 2026. Ne pas partir trop vite."
+        }
+      ],
+      "race": true
+    }
+  ],
+  "title": "Sub 45:00",
+  "pitch": "Passer de 51 min à 45 min à la Garmin Forerunner 165.",
+  "gear": "Garmin Forerunner 165",
+  "paces": [
+    {
+      "label": "Endurance fondamentale",
+      "pace": "5:50 – 6:30",
+      "highlight": false
+    },
+    {
+      "label": "Endurance active",
+      "pace": "5:20 – 5:40",
+      "highlight": false
+    },
+    {
+      "label": "Seuil léger",
+      "pace": "4:55 – 4:45",
+      "highlight": false
+    },
+    {
+      "label": "Seuil soutenu",
+      "pace": "4:45 – 4:35",
+      "highlight": false
+    },
+    {
+      "label": "10 km — actuel",
+      "pace": "5:05",
+      "highlight": false
+    },
+    {
+      "label": "10 km — objectif",
+      "pace": "4:30",
+      "highlight": true
+    },
+    {
+      "label": "Intervalles courts",
+      "pace": "4:20 – 4:05",
+      "highlight": false
+    },
+    {
+      "label": "30 sec rapide (≈14 km/h)",
+      "pace": "4:10 – 4:25",
+      "highlight": false
+    }
+  ],
+  "raceStrategy": [
+    {
+      "km": "1",
+      "pace": "4:35/km"
+    },
+    {
+      "km": "2",
+      "pace": "4:33/km"
+    },
+    {
+      "km": "3",
+      "pace": "4:32/km"
+    },
+    {
+      "km": "4",
+      "pace": "4:30/km"
+    },
+    {
+      "km": "5",
+      "pace": "passage 22:40 – 22:45"
+    },
+    {
+      "km": "6 – 8",
+      "pace": "4:28 – 4:30/km"
+    },
+    {
+      "km": "9",
+      "pace": "accélération progressive"
+    },
+    {
+      "km": "10",
+      "pace": "finir au mental"
+    }
+  ],
+  "keySessions": [
+    {
+      "when": "Fin juin",
+      "description": "3 × 2 km à 4:45/km",
+      "note": ""
+    },
+    {
+      "when": "Fin juillet",
+      "description": "5 × 1000 m à 4:30 – 4:35/km",
+      "note": ""
+    },
+    {
+      "when": "Fin août",
+      "description": "3 × 2 km à 4:35/km",
+      "note": ""
+    },
+    {
+      "when": "Mi-septembre",
+      "description": "3 × 2 km à 4:30 – 4:33/km",
+      "note": ""
+    },
+    {
+      "when": "Fin septembre",
+      "description": "5 × 1000 m à 4:28 – 4:30/km",
+      "note": "avec marge"
+    }
+  ],
+  "rules": [
+    "Les footings doivent rester faciles. 5:50 – 6:30/km. Éviter le 5:10 – 5:20/km qui fatigue sans rapporter.",
+    "Ne pas transformer chaque séance en test. Une bonne séance = il reste de la marge. « J'aurais pu faire une rep de plus » est meilleur que « je suis explosé ».",
+    "Respecter les semaines allégées. Pas optionnelles — elles servent à assimiler.",
+    "En cas de fatigue ou douleur. Remplacer la séance rapide par 45 min facile, repos, ou vélo / nat. Mieux vaut perdre une séance que perdre trois semaines."
+  ],
+  "objectives": {
+    "A": "45:00",
+    "B": "46:00 – 46:30",
+    "C": "sous 48:00",
+    "comment": "Avec ce plan et un bon suivi, le résultat le plus probable est 46 – 47 min. Le 45:00 est ambitieux mais cohérent si les séances spécifiques passent, la récupération est bonne, les footings restent faciles, l'affûtage est respecté, et la course est bien gérée."
+  }
+}

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "footing-agent"
+version = "0.1.0"
+description = "Agent générateur de plans d'entraînement footing (LM Studio / Qwen)"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8",
+]
+
+[project.scripts]
+footing-agent = "footing_agent.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["footing_agent*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live: hits the real LM Studio endpoint (skipped if unreachable)",
+]
+addopts = "-ra -q"

@@ -9,3 +9,8 @@ venv/
 node_modules/
 data/
 .env
+
+# agent dev venv
+apps/agent/.venv
+apps/agent/.pytest_cache
+apps/agent/*.egg-info
