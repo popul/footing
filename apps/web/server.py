@@ -21,8 +21,14 @@ from socketserver import ThreadingMixIn
 STATIC_DIR = os.environ.get('STATIC_DIR', '/app/static')
 DATA_DIR = os.environ.get('DATA_DIR', '/data')
 LLM_BASE_URL = os.environ.get('LLM_BASE_URL', 'http://macbookprom5.home:1234/v1')
-LLM_MODEL = os.environ.get('LLM_MODEL', 'qwen/qwen3.6-35b-a3b')
-LLM_TIMEOUT = float(os.environ.get('LLM_TIMEOUT', '300'))
+# Modèle aligné sur le default de apps/agent/footing_agent/llm.py.
+# Distillé sur Claude Opus 4.6 pour le reasoning : suit les critères
+# d'acceptance sans dégénérer (qwen/qwen3.6-35b-a3b hallucinait
+# race=true au mauvais endroit ; mlx-community/qwen3.5-35b-a3b
+# bouclait jusqu'à hit max_tokens). Reasoning model = plus lent,
+# d'où le timeout bumpé à 600s.
+LLM_MODEL = os.environ.get('LLM_MODEL', 'qwen3.5-27b-claude-4.6-opus-reasoning-distilled')
+LLM_TIMEOUT = float(os.environ.get('LLM_TIMEOUT', '600'))
 PORT = int(os.environ.get('PORT', '8080'))
 # Fallback user when USER_HEADER absent (dev local, smoke tests).
 DEFAULT_USER = os.environ.get('DEFAULT_USER', 'default')
