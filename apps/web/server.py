@@ -87,7 +87,13 @@ def _garth_dir(user_id):
 # ============================================================
 # Garmin Connect — tokens loaded lazily, push workout + schedule
 # ============================================================
-SPORT_RUNNING = {"sportTypeId": 1, "sportTypeKey": "running"}
+# Sports supportés par le workout-service Garmin (IDs vérifiés en réel).
+# La clé courte est celle du champ optionnel `garmin.sport` du plan.
+SPORT_TYPES = {
+    "running":  {"sportTypeId": 1, "sportTypeKey": "running"},
+    "cycling":  {"sportTypeId": 2, "sportTypeKey": "cycling"},
+    "strength": {"sportTypeId": 5, "sportTypeKey": "strength_training"},
+}
 STEP_TYPE_MAP = {
     "warmup":   (1, "warmup"),
     "cooldown": (2, "cooldown"),
@@ -158,14 +164,15 @@ def _build_steps(steps, counter):
     return out
 
 
-def build_workout(name, steps):
+def build_workout(name, steps, sport="running"):
     counter = [0]
+    sport_type = SPORT_TYPES[sport]
     return {
         "workoutName": name[:80],
-        "sportType": SPORT_RUNNING,
+        "sportType": sport_type,
         "workoutSegments": [{
             "segmentOrder": 1,
-            "sportType": SPORT_RUNNING,
+            "sportType": sport_type,
             "workoutSteps": _build_steps(steps, counter),
         }],
     }
@@ -322,17 +329,20 @@ def garmin_push(user_id, payload):
     name = payload.get('name') or 'Workout'
     steps = payload.get('steps') or []
     iso_date = payload.get('date')
+    sport = payload.get('sport') or 'running'
     if not steps:
         raise ValueError('steps vide')
     if not iso_date:
         raise ValueError('date manquante')
+    if sport not in SPORT_TYPES:
+        raise ValueError(f'sport inconnu: {sport}')
     _date.fromisoformat(iso_date)
 
     garth, err = garmin_resume(user_id)
     if err:
         raise RuntimeError(err)
 
-    workout = build_workout(name, steps)
+    workout = build_workout(name, steps, sport)
     garth_dir = _garth_dir(user_id)
     with _get_lock(_garmin_locks, user_id):
         created = garth.connectapi('/workout-service/workout', method='POST', json=workout)
@@ -494,6 +504,10 @@ PLAN_SCHEMA = {
                                     "additionalProperties": False,
                                     "properties": {
                                         "name": {"type": "string"},
+                                        "sport": {
+                                            "type": "string",
+                                            "enum": list(SPORT_TYPES),
+                                        },
                                         "steps": {
                                             "type": "array",
                                             "items": _TOP_STEP_SCHEMA,

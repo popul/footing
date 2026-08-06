@@ -95,6 +95,10 @@ PLAN_SCHEMA = {
                                     "additionalProperties": False,
                                     "properties": {
                                         "name": {"type": "string"},
+                                        "sport": {
+                                            "type": "string",
+                                            "enum": ["running", "cycling", "strength"],
+                                        },
                                         "steps": {
                                             "type": "array",
                                             "items": _TOP_STEP_SCHEMA,

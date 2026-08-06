@@ -1746,7 +1746,7 @@ async function pushSessionToGarmin(weekNum, idx, btn) {
     const r = await fetch('/api/garmin/push', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: sess.garmin.name, steps: sess.garmin.steps, date }),
+      body: JSON.stringify({ name: sess.garmin.name, steps: sess.garmin.steps, sport: sess.garmin.sport, date }),
     });
     const body = await r.json().catch(() => ({}));
     if (!r.ok) {
