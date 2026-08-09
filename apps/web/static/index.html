@@ -1591,7 +1591,7 @@ function todayDayKey() {
 const DAY_OFFSET = { Lundi: 0, Mardi: 1, Mercredi: 2, Jeudi: 3, Vendredi: 4, Samedi: 5, Dimanche: 6 };
 function dateForSession(weekNum, dayKey) {
   const offset = DAY_OFFSET[dayKey];
-  if (offset == null) return null;
+  if (offset == null || !PLAN_START) return null;
   const d = new Date(PLAN_START);
   d.setDate(d.getDate() + (weekNum - 1) * 7 + offset);
   const y = d.getFullYear();
@@ -1964,6 +1964,12 @@ async function loadDynamicPlan() {
     if (data._inputs && data._inputs.startDate) {
       const [y, m, d] = data._inputs.startDate.split('-').map(Number);
       PLAN_START = new Date(y, m - 1, d);
+    }
+    if (!PLAN_START && RACE_DATE && plan.length) {
+      // Fallback sans _inputs.startDate : la course est le dimanche de la
+      // dernière semaine → lundi de S1 = course − 6j − (N−1) semaines.
+      PLAN_START = new Date(RACE_DATE);
+      PLAN_START.setDate(PLAN_START.getDate() - 6 - (plan.length - 1) * 7);
     }
     document.body.classList.add('has-plan');
     window.__hasPlan = true;
