@@ -80,8 +80,12 @@ def _plan_file(user_id):
     return os.path.join(_user_dir(user_id), 'plan.json')
 
 
-def _garth_dir(user_id):
-    return os.path.join(_user_dir(user_id), '.garth')
+def _garmin_dir(user_id):
+    return os.path.join(_user_dir(user_id), '.garmin')
+
+
+def _garmin_token_file(user_id):
+    return os.path.join(_garmin_dir(user_id), 'garmin_tokens.json')
 
 
 # ============================================================
@@ -178,19 +182,23 @@ def build_workout(name, steps, sport="running"):
     }
 
 
-def _import_garth():
-    import garth  # noqa: F401
-    return garth
+def _import_garmin():
+    from garminconnect import Garmin  # noqa: F401
+    return Garmin
 
 
 def garmin_resume(user_id):
-    garth_dir = _garth_dir(user_id)
-    if not os.path.isdir(garth_dir):
+    # On teste le fichier de jetons, pas le dossier : un dossier vide (ou un
+    # ancien .garth) doit donner « non connecté » plutôt qu'une erreur d'auth.
+    if not os.path.isfile(_garmin_token_file(user_id)):
         return None, 'non connecté'
     try:
-        garth = _import_garth()
-        garth.resume(garth_dir)
-        return garth, None
+        Garmin = _import_garmin()
+        api = Garmin()
+        # login() retient le chemin du tokenstore : un jeton rafraîchi en cours
+        # de route est réécrit sur le disque sans qu'on ait à le demander.
+        api.login(tokenstore=_garmin_dir(user_id))
+        return api, None
     except Exception as e:
         return None, f'{type(e).__name__}: {e}'
 
@@ -206,20 +214,20 @@ def _short_garmin_name(prof):
 
 
 def garmin_status(user_id):
-    garth, err = garmin_resume(user_id)
+    api, err = garmin_resume(user_id)
     if err:
         return {'ok': False, 'error': err}
     try:
-        prof = garth.connectapi('/userprofile-service/socialProfile')
+        prof = api.connectapi('/userprofile-service/socialProfile')
         return {'ok': True, 'name': _short_garmin_name(prof)}
     except Exception as e:
         return {'ok': False, 'error': f'{type(e).__name__}: {e}'}
 
 
 def garmin_logout(user_id):
-    garth_dir = _garth_dir(user_id)
-    if os.path.isdir(garth_dir):
-        shutil.rmtree(garth_dir, ignore_errors=True)
+    token_dir = _garmin_dir(user_id)
+    if os.path.isdir(token_dir):
+        shutil.rmtree(token_dir, ignore_errors=True)
     return {'ok': True}
 
 
@@ -244,7 +252,7 @@ login_sessions = {}  # sid -> LoginSession (user_id stocké sur la session)
 
 def _login_worker(sess, email, password):
     try:
-        garth = _import_garth()
+        Garmin = _import_garmin()
 
         def prompt_mfa():
             sess.mfa_requested.set()
@@ -252,15 +260,13 @@ def _login_worker(sess, email, password):
                 raise RuntimeError('MFA timeout (5 min sans code)')
             return sess.mfa_code or ''
 
+        token_dir = _garmin_dir(sess.user_id)
+        os.makedirs(token_dir, exist_ok=True)
+        api = Garmin(email, password, prompt_mfa=prompt_mfa)
+        # login() écrit les jetons dans tokenstore une fois la connexion faite.
+        api.login(tokenstore=token_dir)
         try:
-            garth.login(email, password, prompt_mfa=prompt_mfa)
-        except TypeError:
-            garth.login(email, password)
-        garth_dir = _garth_dir(sess.user_id)
-        os.makedirs(garth_dir, exist_ok=True)
-        garth.save(garth_dir)
-        try:
-            prof = garth.connectapi('/userprofile-service/socialProfile')
+            prof = api.connectapi('/userprofile-service/socialProfile')
             sess.name = _short_garmin_name(prof)
         except Exception:
             pass
@@ -338,22 +344,17 @@ def garmin_push(user_id, payload):
         raise ValueError(f'sport inconnu: {sport}')
     _date.fromisoformat(iso_date)
 
-    garth, err = garmin_resume(user_id)
+    api, err = garmin_resume(user_id)
     if err:
         raise RuntimeError(err)
 
     workout = build_workout(name, steps, sport)
-    garth_dir = _garth_dir(user_id)
     with _get_lock(_garmin_locks, user_id):
-        created = garth.connectapi('/workout-service/workout', method='POST', json=workout)
-        wid = created.get('workoutId')
+        created = api.upload_workout(workout)
+        wid = (created or {}).get('workoutId')
         if not wid:
             raise RuntimeError(f'no workoutId in response: {created}')
-        garth.connectapi(f'/workout-service/schedule/{wid}', method='POST', json={'date': iso_date})
-        try:
-            garth.save(garth_dir)
-        except Exception:
-            pass
+        api.schedule_workout(wid, iso_date)
     return {'workoutId': wid, 'date': iso_date}
 
 

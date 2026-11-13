@@ -41,7 +41,7 @@ footing-web pod (Python http.server)
    - namespace tout sur /data/<user>/...
      ├── state.json    (séances cochées)
      ├── plan.json     (plan d'entraînement actif)
-     └── .garth/       (tokens Garmin Connect)
+     └── .garmin/      (jetons Garmin Connect)
 ```
 
 ## CI / CD
